@@ -3941,11 +3941,11 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     </footer>
 
     <sc-if value="{{ consentBadge }}" hint-placeholder-val="{{ false }}">
-      <button onClick="{{ openConsent }}" aria-label="Ustawienia plików cookie" style="position:fixed;left:18px;bottom:{{ consentBadgeBottom }};z-index:8900;width:42px;height:42px;border-radius:50%;border:1px solid #e2e8f0;background:#fff;box-shadow:0 8px 22px rgba(15,23,42,.16);cursor:pointer;font:700 15px 'Open Sans';color:#2563EB;transition:transform .15s" style-hover="transform:translateY(-2px)">✱</button>
+      <button onClick="{{ openConsent }}" aria-label="Ustawienia plików cookie" data-zgoda="plakietka" style="position:fixed;left:18px;bottom:{{ consentBadgeBottom }};z-index:8900;width:42px;height:42px;border-radius:50%;border:1px solid #e2e8f0;background:#fff;box-shadow:0 8px 22px rgba(15,23,42,.16);cursor:pointer;font:700 15px 'Open Sans';color:#2563EB;transition:transform .15s" style-hover="transform:translateY(-2px)">✱</button>
     </sc-if>
 
     <sc-if value="{{ consentOpen }}" hint-placeholder-val="{{ false }}">
-      <div role="dialog" aria-label="Zgoda na pliki cookie" style="position:fixed;left:20px;bottom:20px;z-index:9000;width:{{ consentWidth }};max-width:calc(100vw - 40px);max-height:calc(100vh - 40px);overflow:auto;background:#fff;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 26px 64px rgba(15,23,42,.24);padding:24px">
+      <div role="dialog" aria-label="Zgoda na pliki cookie" data-zgoda="panel" style="position:fixed;left:20px;bottom:20px;z-index:9000;width:{{ consentWidth }};max-width:calc(100vw - 40px);max-height:calc(100vh - 40px);overflow:auto;background:#fff;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 26px 64px rgba(15,23,42,.24);padding:24px">
         <p style="margin:0 0 10px;font:600 16.9px 'Montserrat';color:#0F172A">Cenimy Twoją prywatność</p>
         <p style="margin:0 0 18px;font:400 13.5px/1.65 'Open Sans';color:#64748B">Używamy niezbędnych plików cookie do działania serwisu. Za Twoją zgodą uruchomimy statystykę i marketing. Możesz zaakceptować wszystkie, odmówić lub wybrać preferencje. Zgodę możesz później zmienić. Szczegóły w polityce prywatności i cookies.</p>
 
