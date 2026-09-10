@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Ewidencja czasu pracy — wzór miesięcznej karty | BioSys</title>
+<meta name="description" content="Wzór miesięcznej karty ewidencji czasu pracy do wydruku: godziny rozpoczęcia i zakończenia, przerwy, nadgodziny, praca w nocy i kody nieobecności. Format A4, przygotowany przez BioSys.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+doc-page:not(:defined){visibility:hidden}
+body{margin:0}
+</style>
+<script src="doc-page.js"></script>
+</helmet>
+<doc-page size="a4" orientation="landscape" margin="0">
+  <section style="box-sizing:border-box;width:100%;height:780px;padding:28px 38px 20px;background:#fff;display:flex;flex-direction:column;gap:11px;font-family:'Open Sans',sans-serif;color:#0F172A">
+
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:28px">
+      <div style="display:flex;align-items:center;gap:12px;flex:none">
+        <img src="../assets/biosys-logo-cropped.webp" alt="BioSys" width="132" height="33" style="height:33px;width:auto;display:block;object-fit:contain">
+        <span style="font:700 10px/1.2 'Montserrat',sans-serif;letter-spacing:.07em;border-left:3px solid #0FA9B4;padding-left:11px;color:#2563EB">CZAS POD<br>KONTROLĄ</span>
+      </div>
+      <div style="text-align:right">
+        <p style="margin:0 0 3px;font:700 9px 'Montserrat',sans-serif;letter-spacing:.09em;color:#2563EB">EWIDENCJA CZASU PRACY</p>
+        <p style="margin:0;font:600 19px/1.2 'Montserrat',sans-serif;color:#0F172A">Miesięczna karta pracownika</p>
+      </div>
+    </div>
+    <span style="display:block;height:3px;border-radius:2px;background:linear-gradient(90deg,#2563EB,#0FA9B4 55%,#F59E0B)"></span>
+
+    <div style="display:flex;gap:10px">
+      <div style="flex:2.2 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">IMIĘ I NAZWISKO PRACOWNIKA</p>
+        <span style="display:block;height:15px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1.6 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">STANOWISKO / DZIAŁ</p>
+        <span style="display:block;height:15px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">MIESIĄC I ROK</p>
+        <span style="display:block;height:15px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">WYMIAR ETATU</p>
+        <span style="display:block;height:15px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1.2 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">OKRES ROZLICZENIOWY</p>
+        <span style="display:block;height:15px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+    </div>
+
+    <table style="width:100%;border-collapse:collapse;table-layout:fixed;font:400 9px/1.25 'Open Sans',sans-serif">
+      <thead>
+        <tr style="background:#0F172A;color:#fff">
+          <th style="width:34px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.02em">Dzień</th>
+          <th style="width:48px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Dzień tyg.</th>
+          <th style="width:74px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Rozpoczęcie</th>
+          <th style="width:74px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Zakończenie</th>
+          <th style="width:60px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Przerwa</th>
+          <th style="width:88px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Godziny przepracowane</th>
+          <th style="width:74px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">w tym nadgodziny</th>
+          <th style="width:64px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Praca w nocy</th>
+          <th style="width:74px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Nieobecność (kod)</th>
+          <th style="width:140px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Podpis pracownika</th>
+          <th style="border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Uwagi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <sc-for list="{{ days }}" as="d" hint-placeholder-count="31">
+          <tr style="{{ d.rowStyle }}">
+            <td style="border:1px solid #cbd5e1;height:13px;text-align:center;font:700 8.5px 'Open Sans',sans-serif;color:#334155">{{ d.n }}</td>
+            <td style="border:1px solid #cbd5e1;height:13px"></td>
+            <td style="border:1px solid #cbd5e1;height:13px"></td>
+            <td style="border:1px solid #cbd5e1;height:13px"></td>
+            <td style="border:1px solid #cbd5e1;height:13px"></td>
+            <td style="border:1px solid #cbd5e1;height:13px"></td>
+            <td style="border:1px solid #cbd5e1;height:13px"></td>
+            <td style="border:1px solid #cbd5e1;height:13px"></td>
+            <td style="border:1px solid #cbd5e1;height:13px"></td>
+            <td style="border:1px solid #cbd5e1;height:13px"></td>
+            <td style="border:1px solid #cbd5e1;height:13px"></td>
+          </tr>
+        </sc-for>
+        <tr style="background:#EFF6FF">
+          <td colspan="5" style="border:1px solid #94a3b8;padding:5px 8px;text-align:right;font:700 9px 'Open Sans',sans-serif;color:#1D4ED8">SUMA ZA MIESIĄC</td>
+          <td style="border:1px solid #94a3b8;height:17px"></td>
+          <td style="border:1px solid #94a3b8;height:17px"></td>
+          <td style="border:1px solid #94a3b8;height:17px"></td>
+          <td style="border:1px solid #94a3b8;height:17px"></td>
+          <td colspan="2" style="border:1px solid #94a3b8;height:17px"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <div style="flex:1 1 0;min-width:0">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#2563EB">KODY NIEOBECNOŚCI</p>
+        <p style="margin:0;font:400 8.2px/1.5 'Open Sans',sans-serif;color:#475569">UW — urlop wypoczynkowy · UŻ — urlop na żądanie · UB — urlop bezpłatny · UO — urlop okolicznościowy · OP — opieka nad dzieckiem · CH — zwolnienie lekarskie · NN — nieobecność nieusprawiedliwiona · DW — dzień wolny · Ś — święto · WP — wyjście prywatne · DEL — delegacja · SZK — szkolenie</p>
+      </div>
+      <div style="flex:none;width:300px;display:flex;gap:14px">
+        <div style="flex:1">
+          <span style="display:block;height:26px;border-bottom:1px solid #94a3b8"></span>
+          <p style="margin:4px 0 0;font:400 7.5px 'Open Sans',sans-serif;color:#64748B;text-align:center">Podpis pracownika</p>
+        </div>
+        <div style="flex:1">
+          <span style="display:block;height:26px;border-bottom:1px solid #94a3b8"></span>
+          <p style="margin:4px 0 0;font:400 7.5px 'Open Sans',sans-serif;color:#64748B;text-align:center">Podpis przełożonego</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid #e2e8f0;padding-top:8px">
+      <p style="margin:0;font:400 7.5px/1.5 'Open Sans',sans-serif;color:#94a3b8;max-width:640px">Wzór do samodzielnego wypełnienia. Ewidencję czasu pracy pracodawca prowadzi na podstawie art. 149 Kodeksu pracy; zakres danych określa rozporządzenie w sprawie dokumentacji pracowniczej. Prowadzenie ewidencji w systemie RCP eliminuje ręczne wypełnianie tej karty.</p>
+      <p style="margin:0;font:700 7.5px 'Open Sans',sans-serif;color:#2563EB;white-space:nowrap">BioSys sp. z o.o. · biosys.pl</p>
+    </div>
+
+  </section>
+</doc-page>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      days: Array.from({ length: 31 }, (_, i) => ({
+        n: String(i + 1),
+        rowStyle: 'background:' + (i % 2 ? '#F8FAFC' : '#fff')
+      }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

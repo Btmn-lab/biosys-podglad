@@ -1,0 +1,72 @@
+# BioSys
+
+> BioSys łączy rejestrację czasu pracy, poprawę bezpieczeństwa i obliczanie czasu zleceń i czynności w jeden spójny proces — od pracownika do zarządu…
+
+BioSys projektuje i wdraża systemy rejestracji czasu pracy (RCP), kontroli dostępu (KD)
+oraz rozliczania zleceń produkcyjnych. Działa na terenie całej Polski, z oddziałami
+w Gdańsku, Poznaniu, Warszawie i Wrocławiu.
+
+Skróty stosowane w serwisie: **RCP** — rejestracja czasu pracy, **KD** — kontrola dostępu.
+
+Kontakt: biuro@biosys.pl, +48 12 378 95 37, osiedle Na Stawach 6/24, 34-200 Sucha Beskidzka.
+
+## Systemy
+
+- [System RCP](https://biosys.pl/sol-rcp/): Etatomierz to autorskie oprogramowanie BioSys do rejestracji i rozliczania czasu pracy. Zbiera zdarzenia z czytników, terminali i aplikacji
+- [System kontroli dostępu](https://biosys.pl/sol-kd/): Niezależnie od tego, czy zarządzasz biurem, siecią magazynów, czy zakładem produkcyjnym — System BioSys działa jak cyfrowy stróż Twojej firmy
+- [Task Timer — rozliczanie produkcji](https://biosys.pl/sol-tasktimer/): TaskTimer to system dla firm, które działają w oparciu o zlecenia produkcyjne lub indywidualne projekty. System umożliwia rejestrację i kontrolę
+
+## Rejestracja czasu pracy
+
+- [Rejestracja czasu pracy](https://biosys.pl/rcp/): System RCP BioSys rejestruje obecność pracowników, prowadzi ewidencję czasu pracy i przygotowuje dane do rozliczeń kadrowo-płacowych. Działa w
+- [Rozliczanie czasu pracy](https://biosys.pl/rcp-rozliczanie/): Automatyczne przeliczanie godzin, nadgodzin i dodatków na podstawie zarejestrowanych zdarzeń. Dane gotowe do przekazania do systemu kadrowo-płacowego.
+- [Ewidencja czasu pracy](https://biosys.pl/rcp-ewidencja/): Kompletna, cyfrowa dokumentacja czasu pracy każdego pracownika. Zastępuje papierowe listy obecności i arkusze prowadzone ręcznie.
+- [Zdalna rejestracja czasu pracy](https://biosys.pl/rcp-zdalna/): Rejestracja rozpoczęcia i zakończenia pracy poza siedzibą firmy — dla pracy zdalnej, hybrydowej i zespołów mobilnych.
+
+## Rozwiązania dla branż
+
+- [RCP dla produkcji](https://biosys.pl/produkcja/): Zarządzanie wydajnością na hali produkcyjnej opiera się na dyscyplinie i wysokiej dostępności zespołu. Problemy ze spóźnieniami, przeciągającymi się…
+- [RCP dla HR i zarządu](https://biosys.pl/hr/): Zatory informacyjne, błędy w rozliczeniach i papierowe listy obecności to codzienność, która hamuje wiele działów Kadr. System Rejestracji Czasu
+- [Kontrola dostępu dla magazynu](https://biosys.pl/magazyn/): Pełna kontrola nad przepływem osób w rozległych halach magazynowych i centrach logistycznych to fundament bezpieczeństwa i ciągłości operacyjnej
+- [RCP dla biur i jednostek publicznych](https://biosys.pl/biura/): Zarządzanie czasem pracy zespołów biurowych i rozliczanie modelu hybrydowego wymaga elastyczności połączonej z jasnymi procedurami. System BioSys RCP
+- [RCP i KD dla ochrony zdrowia](https://biosys.pl/zdrowie/): Sektor ochrony zdrowia wymaga rozwiązań informatycznych o najwyższym rygorze bezpieczeństwa, niezawodności i kompatybilności. Rozwiązania BioSys z
+- [System RCP dla wielu oddziałów](https://biosys.pl/oddzialy/): Sieć oddziałów, magazynów czy punktów usługowych rozproszonych w wielu lokalizacjach utrudnia jednolite zarządzanie czasem pracy i dostępem. System
+
+## Sprzęt
+
+- [Rejestratory czasu pracy](https://biosys.pl/skd-rejestratory-czasu/): Urządzenie przy wejściu, na którym pracownik zaznacza początek i koniec pracy oraz przerwy. Zamiast podpisu na liście zostaje zapis, z którego kadry…
+- [Kontrolery dostępu](https://biosys.pl/skd-kontrolery/): Element, który decyduje, czy przejście się otworzy. Kontroler sprawdza uprawnienie, zwalnia drzwi, bramkę albo kołowrót i zapisuje każde wejście
+- [Identyfikatory zbliżeniowe](https://biosys.pl/skd-czytniki-kart/): To, czym pracownik potwierdza, kim jest — karta, brelok, opaska albo naklejka. Wystarczy zbliżyć identyfikator do urządzenia przy wejściu, żeby…
+- [Panele dotykowe POS](https://biosys.pl/skd-infokiosk/): Stanowisko dla pracowników, którzy nie mają służbowego komputera. Po zbliżeniu karty widzą stan urlopu, przepracowane godziny i grafik zmian, mogą
+- [Bramki obrotowe i kołowroty](https://biosys.pl/skd-kolowroty/): Kołowroty trójramienne przepuszczają dokładnie jedną osobę na jedną autoryzację. Ramiona zwalniają się po zbliżeniu karty, wpisaniu kodu PIN lub
+- [Bramki uchylne](https://biosys.pl/skd-bramki-uchylne/): Bramki ze skrzydłami uchylnymi do recepcji, biur i przejść o dużym natężeniu ruchu. Przepuszczają osoby szybciej niż kołowrót, a szerokie przejście…
+- [Bramy wysokie](https://biosys.pl/skd-bramy-wysokie/): Pełnowymiarowe bramy obrotowe uniemożliwiające przejście nad lub pod konstrukcją. Stosowane na obiektach sportowych, terenach przemysłowych i
+- [Kurtyny podczerwieni](https://biosys.pl/skd-kurtyny/): Bariery optyczne wykrywające przejście osoby w świetle wiązek podczerwieni. Stosowane w bramkach i przejściach kontrolowanych do liczenia osób
+- [Zasilacze](https://biosys.pl/skd-zasilacze/): Zasilanie dobrane do liczby przejść i wymagań ciągłości pracy: zasilacz buforowy z podtrzymaniem akumulatorowym, zasilacz impulsowy do instalacji bez…
+- [Urządzenia ryglujące](https://biosys.pl/skd-ryglujace/): Elementy wykonawcze, które fizycznie utrzymują drzwi zamknięte i zwalniają je po autoryzacji: zwory elektromagnetyczne trzymające skrzydło siłą…
+- [Przyciski otwarcia i ewakuacji](https://biosys.pl/skd-przycisk/): Elementy bezpieczeństwa umożliwiające awaryjne otwarcie przejścia. Po wciśnięciu przycisku zasilanie elementu blokującego zostaje odcięte, a drzwi…
+- [Nośniki zbliżeniowe RFID](https://biosys.pl/skd-nosniki/): Identyfikatory, którymi pracownik rejestruje zdarzenia i otwiera przejścia. Każda karta ma swój niepowtarzalny numer ID — po tym numerze rozpoznawany
+
+## Baza wiedzy
+
+- [Baza wiedzy o RCP](https://biosys.pl/wiedza/): Kompletne opracowanie o rejestracji czasu pracy: czym jest ewidencja czasu pracy, jakie obowiązki nakłada Kodeks pracy, jak działa system RCP, jakimi…
+- [Baza wiedzy o kontroli dostępu](https://biosys.pl/wiedza-kd/): Opracowanie o kontroli dostępu: z czego składa się system KD, jak wygląda identyfikacja pracownika, jak projektuje się strefy i uprawnienia, jakie…
+- [Baza wiedzy o zleceniach produkcyjnych](https://biosys.pl/wiedza-tt/): Opracowanie o rozliczaniu zleceń produkcyjnych: czym różni się czas technologiczny od rzeczywistego, jak rejestruje się czynności w ramach zlecenia…
+- [Materiały do pobrania](https://biosys.pl/wiedza-pobierz/): Wzory, z których korzysta się na co dzień w kadrach i na produkcji: miesięczna karta ewidencji czasu pracy, karta pracy do rozliczenia zlecenia
+
+## Firma
+
+- [O nas](https://biosys.pl/onas/): Projektujemy i wdrażamy systemy Rejestracji Czasu Pracy i Kontroli Dostępu dla firm produkcyjnych, logistycznych, biurowych i placówek medycznych
+- [Case study](https://biosys.pl/onas-case/): Każde wdrożenie zaczyna się od procesu, który dziś kosztuje najwięcej czasu. Poniżej opisy wdrożeń: sytuacja wyjściowa, zakres prac i efekt po…
+- [Referencje klientów](https://biosys.pl/onas-referencje/): Nasze systemy pracują w firmach produkcyjnych, placówkach medycznych, logistyce i administracji publicznej. Poniżej firmy, które wystawiły nam list…
+- [Kariera](https://biosys.pl/onas-praca/): Jesteśmy BioSys. Tworzymy zaawansowane oprogramowanie i produkujemy urządzenia, które pomagają firmom efektywnie zarządzać czasem pracy oraz dbać o…
+- [Kontakt](https://biosys.pl/kontakt/): Obsługujemy zgłoszenia serwisowe obecnych klientów i rozmawiamy z firmami, które dopiero szukają systemu. Wybierz ścieżkę, która dotyczy Ciebie.
+- [Blog](https://biosys.pl/blog/): Artykuły o rejestracji czasu pracy, kontroli dostępu i automatyzacji procesów kadrowych — pisane przez ludzi, którzy wdrażają te systemy na
+- [Panel klienta](https://biosys.pl/panel/): Systemy ewidencji i rejestracji czasu pracy oraz kontroli dostępu wymagają opieki serwisowej na lata. Panel Klienta to miejsce, w którym zgłaszasz…
+- [Polityka prywatności](https://biosys.pl/polityka/): Szanowni Państwo, z dniem 25 maja 2018 r. zmieniają się obowiązujące przepisy z zakresu ochrony danych osobowych. Zaczyna obowiązywać Ogólne…
+- [Regulamin](https://biosys.pl/regulamin/): Wszelkie informacje zawarte na tej stronie internetowej mają charakter informacyjny i nie stanowią oferty handlowej w rozumieniu art. 66 §1 Kodeksu
+
+## Uwagi
+
+- Treść serwisu jest w języku polskim.
+- Pełny spis adresów: https://biosys.pl/sitemap.xml

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BioSys — podgląd heatmapy</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#0F172A;color:#F8FAFC;font:400 14px/1.5 'Open Sans',system-ui,sans-serif}
+  a{color:#38BDF8}
+  header{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end;padding:14px 18px;background:#0F172A;border-bottom:1px solid #1e293b}
+  label{display:flex;flex-direction:column;gap:5px;font:600 11px/1 'Open Sans';letter-spacing:.08em;color:#64748B;text-transform:uppercase}
+  input,select{font:400 13px 'Open Sans';color:#0F172A;background:#F8FAFC;border:1px solid #cbd5e1;border-radius:8px;padding:8px 10px;min-width:120px}
+  button{font:600 13px 'Open Sans';color:#fff;background:#2563EB;border:none;border-radius:8px;padding:10px 16px;cursor:pointer}
+  button:hover{background:#1d4ed8}
+  button.ghost{background:#1e293b;color:#E2E8F0}
+  main{display:flex;flex-wrap:wrap;gap:18px;padding:18px}
+  #stage{flex:1 1 720px;min-width:320px;background:#F8FAFC;border-radius:12px;overflow:auto;max-height:calc(100vh - 130px)}
+  #inner{position:relative;transform-origin:0 0}
+  #inner iframe{display:block;border:0;background:#fff}
+  #heat{position:absolute;left:0;top:0;pointer-events:none}
+  aside{flex:0 0 300px;display:flex;flex-direction:column;gap:16px}
+  .card{background:#111e36;border:1px solid #1e293b;border-radius:12px;padding:16px}
+  .card h2{margin:0 0 12px;font:700 12px/1 'Open Sans';letter-spacing:.1em;color:#38BDF8;text-transform:uppercase}
+  .row{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:4px 0}
+  .row span:last-child{color:#94a3b8;font-variant-numeric:tabular-nums}
+  .bar{position:relative;height:20px;border-radius:5px;background:#1e293b;overflow:hidden;margin-bottom:5px}
+  .bar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#2563EB,#14B8A6)}
+  .bar b{position:absolute;left:8px;top:0;line-height:20px;font:600 11px 'Open Sans';color:#fff}
+  .muted{color:#64748B;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <label>Adres strony<input id="url" value="/" size="22"></label>
+  <label>Token<input id="token" type="password" size="14"></label>
+  <label>Podstrona<select id="page"><option value="">wszystkie</option></select></label>
+  <label>Od<input id="from" type="date"></label>
+  <label>Do<input id="to" type="date"></label>
+  <label>Urządzenie<select id="dev"><option value="">wszystkie</option><option value="d">desktop</option><option value="t">tablet</option><option value="m">mobile</option></select></label>
+  <label>Widok<select id="mode"><option value="clicks">kliknięcia</option><option value="moves">ruch kursora</option></select></label>
+  <label>Szerokość<select id="vw"><option value="1440">1440</option><option value="1280">1280</option><option value="768">768</option><option value="390">390</option></select></label>
+  <label>Intensywność<input id="gain" type="range" min="1" max="10" value="4" style="min-width:110px;padding:0"></label>
+  <button id="load">Wczytaj</button>
+  <button id="toggle" class="ghost">Ukryj warstwę</button>
+</header>
+
+<main>
+  <div id="stage"><div id="inner"><iframe id="frame" name="bs-heatmap-view" title="Podglądana strona"></iframe><canvas id="heat"></canvas></div></div>
+  <aside>
+    <div class="card"><h2>Podsumowanie</h2><div id="stats"><p class="muted">Podaj token i wczytaj dane.</p></div></div>
+    <div class="card"><h2>Głębokość scrolla</h2><div id="scroll"></div></div>
+    <div class="card"><h2>Najczęściej klikane</h2><div id="clicks"><p class="muted">—</p></div></div>
+    <div class="card"><h2>Podstrony</h2><div id="pages"><p class="muted">—</p></div></div>
+  </aside>
+</main>
+
+<script>
+const API = '/backend/heatmap.php';
+const $ = id => document.getElementById(id);
+const state = { data: null, visible: true };
+
+const today = new Date().toISOString().slice(0, 10);
+$('to').value = today;
+$('from').value = new Date(Date.now() - 13 * 864e5).toISOString().slice(0, 10);
+try {
+  const t = localStorage.getItem('bs_hm_token'); if (t) $('token').value = t;
+  const u = localStorage.getItem('bs_hm_url'); if (u) $('url').value = u;
+} catch (e) {}
+
+function q() {
+  const p = new URLSearchParams({
+    token: $('token').value.trim(), from: $('from').value, to: $('to').value,
+    mode: $('mode').value, dev: $('dev').value, page: $('page').value
+  });
+  return API + '?' + p.toString();
+}
+
+async function load() {
+  try { localStorage.setItem('bs_hm_token', $('token').value.trim()); localStorage.setItem('bs_hm_url', $('url').value.trim()); } catch (e) {}
+  $('stats').innerHTML = '<p class="muted">Wczytywanie…</p>';
+  let d;
+  try {
+    const r = await fetch(q());
+    d = await r.json();
+  } catch (e) { $('stats').innerHTML = '<p class="muted">Brak połączenia z backendem.</p>'; return; }
+  if (!d.ok) { $('stats').innerHTML = '<p class="muted">' + (d.error || 'Błąd') + '</p>'; return; }
+  state.data = d;
+  fillPages(d.pages);
+  renderStats(d);
+  mountFrame();
+}
+
+function fillPages(pages) {
+  const sel = $('page'), cur = sel.value;
+  sel.innerHTML = '<option value="">wszystkie</option>';
+  Object.keys(pages || {}).forEach(p => {
+    const o = document.createElement('option'); o.value = p; o.textContent = p + '  (' + pages[p] + ')'; sel.appendChild(o);
+  });
+  sel.value = cur;
+  const list = Object.entries(pages || {}).slice(0, 12)
+    .map(([p, n]) => '<div class="row"><span>' + esc(p) + '</span><span>' + n + '</span></div>').join('');
+  $('pages').innerHTML = list || '<p class="muted">Brak danych.</p>';
+}
+
+function renderStats(d) {
+  $('stats').innerHTML =
+    row('Sesje', d.sessions) + row('Punkty na mapie', d.points.length) +
+    row('Wysokość strony', (d.docHeight || 0) + ' px') + row('Zakres', d.from + ' → ' + d.to);
+  const max = d.scroll[0] || 1;
+  $('scroll').innerHTML = d.scroll.map((v, i) => i % 2 ? '' :
+    '<div class="bar"><i style="width:' + Math.round(v / max * 100) + '%"></i><b>' + (i * 5) + '% — ' + Math.round(v / max * 100) + '% osób</b></div>').join('');
+  const clicks = Object.entries(d.topClicks || {});
+  $('clicks').innerHTML = clicks.length
+    ? clicks.map(([k, n]) => '<div class="row"><span>' + esc(k) + '</span><span>' + n + '</span></div>').join('')
+    : '<p class="muted">Brak kliknięć w elementy.</p>';
+}
+const row = (a, b) => '<div class="row"><span>' + a + '</span><span>' + b + '</span></div>';
+const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+function mountFrame() {
+  const d = state.data, vw = +$('vw').value;
+  const url = $('url').value.trim() + (state.data.page || '');
+  const f = $('frame');
+  const h = Math.max(d.docHeight || 0, 2000);
+  f.style.width = vw + 'px'; f.style.height = h + 'px';
+  if (f.dataset.src !== url) { f.src = url; f.dataset.src = url; }
+  const stage = $('stage'), scale = Math.min(1, (stage.clientWidth - 4) / vw);
+  $('inner').style.transform = 'scale(' + scale + ')';
+  $('inner').style.width = vw + 'px';
+  $('inner').style.height = h + 'px';
+  stage.style.height = Math.min(h * scale + 4, window.innerHeight - 130) + 'px';
+  draw(vw, h);
+}
+
+function draw(vw, h) {
+  const d = state.data, c = $('heat');
+  c.width = vw; c.height = h; c.style.width = vw + 'px'; c.style.height = h + 'px';
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0, 0, vw, h);
+  if (!state.visible || !d.points.length) return;
+
+  const radius = $('mode').value === 'clicks' ? 26 : 34;
+  const gain = +$('gain').value / 10;
+  ctx.globalCompositeOperation = 'lighter';
+  d.points.forEach(([xp, y]) => {
+    const x = xp / 1000 * vw;
+    if (y > h) return;
+    const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
+    g.addColorStop(0, 'rgba(255,255,255,' + gain + ')');
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(x, y, radius, 0, 6.2832); ctx.fill();
+  });
+  ctx.globalCompositeOperation = 'source-over';
+
+  // Kolorowanie: paleta BioSys od Sky Blue przez Turquoise do Amber.
+  const img = ctx.getImageData(0, 0, vw, h), px = img.data;
+  const stops = [[0, 56, 189, 248], [0.45, 20, 184, 166], [0.75, 245, 158, 11], [1, 180, 83, 9]];
+  for (let i = 0; i < px.length; i += 4) {
+    const a = px[i + 3] / 255;
+    if (a < 0.04) { px[i + 3] = 0; continue; }
+    const t = Math.min(1, a);
+    let k = 0; while (k < stops.length - 2 && t > stops[k + 1][0]) k++;
+    const s0 = stops[k], s1 = stops[k + 1];
+    const f = (t - s0[0]) / (s1[0] - s0[0] || 1);
+    px[i] = s0[1] + (s1[1] - s0[1]) * f;
+    px[i + 1] = s0[2] + (s1[2] - s0[2]) * f;
+    px[i + 2] = s0[3] + (s1[3] - s0[3]) * f;
+    px[i + 3] = Math.min(215, 60 + t * 210);
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
+$('load').onclick = load;
+$('toggle').onclick = () => {
+  state.visible = !state.visible;
+  $('toggle').textContent = state.visible ? 'Ukryj warstwę' : 'Pokaż warstwę';
+  if (state.data) draw(+$('vw').value, $('heat').height);
+};
+['mode', 'dev', 'page'].forEach(id => $(id).onchange = load);
+$('vw').onchange = () => state.data && mountFrame();
+$('gain').oninput = () => state.data && draw(+$('vw').value, $('heat').height);
+window.addEventListener('resize', () => state.data && mountFrame());
+</script>
+</body>
+</html>

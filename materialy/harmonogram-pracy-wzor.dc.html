@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Harmonogram (grafik) pracy — wzór miesięczny do druku | BioSys</title>
+<meta name="description" content="Wzór miesięcznego harmonogramu pracy dla zespołu: dni 1–31, oznaczenia zmian, wolne i nieobecności, norma godzin i różnica. Format A4, przygotowany przez BioSys.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+doc-page:not(:defined){visibility:hidden}
+body{margin:0}
+</style>
+<script src="doc-page.js"></script>
+</helmet>
+<doc-page size="a4" orientation="landscape" margin="0">
+  <section style="box-sizing:border-box;width:100%;height:780px;padding:30px 34px 22px;background:#fff;display:flex;flex-direction:column;gap:13px;font-family:'Open Sans',sans-serif;color:#0F172A">
+
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:28px">
+      <div style="display:flex;align-items:center;gap:12px;flex:none">
+        <img src="../assets/biosys-logo-cropped.webp" alt="BioSys" width="132" height="33" style="height:33px;width:auto;display:block;object-fit:contain">
+        <span style="font:700 10px/1.2 'Montserrat',sans-serif;letter-spacing:.07em;border-left:3px solid #0FA9B4;padding-left:11px;color:#2563EB">CZAS POD<br>KONTROLĄ</span>
+      </div>
+      <div style="text-align:right">
+        <p style="margin:0 0 3px;font:700 9px 'Montserrat',sans-serif;letter-spacing:.09em;color:#2563EB">PLANOWANIE PRACY</p>
+        <p style="margin:0;font:600 19px/1.2 'Montserrat',sans-serif;color:#0F172A">Harmonogram pracy — miesiąc</p>
+      </div>
+    </div>
+    <span style="display:block;height:3px;border-radius:2px;background:linear-gradient(90deg,#2563EB,#38BDF8 50%,#0FA9B4)"></span>
+
+    <div style="display:flex;gap:10px">
+      <div style="flex:1.6 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">DZIAŁ / BRYGADA</p>
+        <span style="display:block;height:15px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">MIESIĄC I ROK</p>
+        <span style="display:block;height:15px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1.2 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">OKRES ROZLICZENIOWY</p>
+        <span style="display:block;height:15px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">SYSTEM CZASU PRACY</p>
+        <span style="display:block;height:15px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1.2 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">NORMA GODZIN W MIESIĄCU</p>
+        <span style="display:block;height:15px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+    </div>
+
+    <table style="width:100%;border-collapse:collapse;table-layout:fixed;font:400 8px/1.2 'Open Sans',sans-serif">
+      <thead>
+        <tr style="background:#0F172A;color:#fff">
+          <th style="width:150px;border:1px solid #0F172A;padding:5px 6px;font:700 8px 'Open Sans',sans-serif;text-align:left">Pracownik</th>
+          <sc-for list="{{ days }}" as="d" hint-placeholder-count="31">
+            <th style="border:1px solid #334155;padding:5px 0;font:700 7.5px 'Open Sans',sans-serif;text-align:center">{{ d }}</th>
+          </sc-for>
+          <th style="width:52px;border:1px solid #0F172A;padding:5px 2px;font:700 7.5px 'Open Sans',sans-serif">Plan godz.</th>
+          <th style="width:52px;border:1px solid #0F172A;padding:5px 2px;font:700 7.5px 'Open Sans',sans-serif">Norma</th>
+          <th style="width:52px;border:1px solid #0F172A;padding:5px 2px;font:700 7.5px 'Open Sans',sans-serif">Różnica</th>
+        </tr>
+      </thead>
+      <tbody>
+        <sc-for list="{{ rows }}" as="r" hint-placeholder-count="15">
+          <tr style="{{ r.rowStyle }}">
+            <td style="border:1px solid #cbd5e1;height:26px;padding:0 5px"></td>
+            <sc-for list="{{ days }}" as="dd" hint-placeholder-count="31">
+              <td style="border:1px solid #dbe3ec;height:26px"></td>
+            </sc-for>
+            <td style="border:1px solid #cbd5e1;height:26px"></td>
+            <td style="border:1px solid #cbd5e1;height:26px"></td>
+            <td style="border:1px solid #cbd5e1;height:26px"></td>
+          </tr>
+        </sc-for>
+      </tbody>
+    </table>
+
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <div style="flex:1 1 0;min-width:0">
+        <p style="margin:0 0 5px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#2563EB">OZNACZENIA</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ legend }}" as="lg" hint-placeholder-count="9">
+            <span style="display:inline-flex;align-items:center;gap:6px;border:1px solid #e2e8f0;border-radius:5px;padding:4px 8px;background:#F8FAFC">
+              <span style="{{ lg.badgeStyle }}">{{ lg.k }}</span>
+              <span style="font:400 8px 'Open Sans',sans-serif;color:#475569">{{ lg.d }}</span>
+            </span>
+          </sc-for>
+        </div>
+      </div>
+      <div style="flex:none;width:230px;display:flex;gap:14px">
+        <div style="flex:1">
+          <span style="display:block;height:26px;border-bottom:1px solid #94a3b8"></span>
+          <p style="margin:4px 0 0;font:400 7.5px 'Open Sans',sans-serif;color:#64748B;text-align:center">Sporządził</p>
+        </div>
+        <div style="flex:1">
+          <span style="display:block;height:26px;border-bottom:1px solid #94a3b8"></span>
+          <p style="margin:4px 0 0;font:400 7.5px 'Open Sans',sans-serif;color:#64748B;text-align:center">Zatwierdził</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid #e2e8f0;padding-top:8px">
+      <p style="margin:0;font:400 7.5px/1.5 'Open Sans',sans-serif;color:#94a3b8;max-width:660px">Wzór do samodzielnego wypełnienia. Harmonogram przekazuje się pracownikowi co najmniej tydzień przed rozpoczęciem okresu, na jaki został sporządzony (art. 129 § 3 Kodeksu pracy). W systemie BioSys grafik układa się dla grup i porównuje z normą automatycznie.</p>
+      <p style="margin:0;font:700 7.5px 'Open Sans',sans-serif;color:#2563EB;white-space:nowrap">BioSys sp. z o.o. · biosys.pl</p>
+    </div>
+
+  </section>
+</doc-page>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const badge = col => "flex:none;min-width:19px;text-align:center;font:700 8px 'Open Sans',sans-serif;color:#fff;background:" + col + ";border-radius:4px;padding:2px 4px";
+    return {
+      days: Array.from({ length: 31 }, (_, i) => String(i + 1)),
+      rows: Array.from({ length: 15 }, (_, i) => ({
+        rowStyle: 'background:' + (i % 2 ? '#F8FAFC' : '#fff')
+      })),
+      legend: [
+        { k: 'I', d: 'zmiana pierwsza', badgeStyle: badge('#2563EB') },
+        { k: 'II', d: 'zmiana druga', badgeStyle: badge('#38BDF8') },
+        { k: 'III', d: 'zmiana nocna', badgeStyle: badge('#0F172A') },
+        { k: 'D', d: 'dzienna 8 h', badgeStyle: badge('#0FA9B4') },
+        { k: 'W', d: 'dzień wolny', badgeStyle: badge('#64748B') },
+        { k: 'Ś', d: 'święto', badgeStyle: badge('#B45309') },
+        { k: 'U', d: 'urlop', badgeStyle: badge('#0D8577') },
+        { k: 'CH', d: 'zwolnienie lekarskie', badgeStyle: badge('#94a3b8') },
+        { k: 'DEL', d: 'delegacja', badgeStyle: badge('#F59E0B') }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

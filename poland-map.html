@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Oddziały BioSys — mapa Polski</title>
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:transparent;font-family:'Montserrat',system-ui,sans-serif}
+  #map{display:block}
+  .city-label{font:600 12px 'Montserrat';fill:#0F172A;pointer-events:none}
+  .city-label.on{font-weight:700;fill:#106A73}
+</style>
+</head>
+<body>
+<svg id="map" width="320" height="250" role="img" aria-label="Mapa Polski z oddziałami BioSys"></svg>
+<script>
+const CITIES = [
+  { city: 'Gdańsk',   lon: 18.6466, lat: 54.3520, dx: 0,   dy: -14 },
+  { city: 'Poznań',   lon: 16.9252, lat: 52.4064, dx: -4,  dy: -14 },
+  { city: 'Warszawa', lon: 21.0122, lat: 52.2297, dx: 6,   dy: -14 },
+  { city: 'Wrocław',  lon: 17.0385, lat: 51.1079, dx: -2,  dy: 18 }
+];
+
+const svg = d3.select('#map');
+const W = 320, H = 250;
+
+d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json').then(topology => {
+  const countries = topojson.feature(topology, topology.objects.countries);
+  const poland = countries.features.find(f => f.properties.name === 'Poland');
+  const neighbours = countries.features.filter(f => f.properties.name !== 'Poland');
+
+  const projection = d3.geoMercator().fitExtent([[14, 14], [W - 14, H - 14]], poland);
+  const path = d3.geoPath(projection);
+
+  svg.append('g').selectAll('path').data(neighbours).join('path')
+    .attr('d', path).attr('fill', '#eef1f5').attr('stroke', '#e2e8f0').attr('stroke-width', 0.8);
+
+  svg.append('path').datum(poland).attr('d', path)
+    .attr('fill', '#dbeafe').attr('stroke', '#2563EB').attr('stroke-width', 1.4);
+
+  const g = svg.append('g');
+  CITIES.forEach(c => {
+    const [x, y] = projection([c.lon, c.lat]);
+    const node = g.append('g').style('cursor', 'default');
+    const halo = node.append('circle').attr('cx', x).attr('cy', y).attr('r', 0).attr('fill', 'rgba(15,169,180,.2)');
+    const dot = node.append('circle').attr('cx', x).attr('cy', y).attr('r', 6)
+      .attr('fill', '#2563EB').attr('stroke', '#fff').attr('stroke-width', 2);
+    const label = node.append('text').attr('class', 'city-label')
+      .attr('x', x + c.dx).attr('y', y + c.dy).attr('text-anchor', 'middle').text(c.city);
+
+    const set = on => {
+      halo.attr('r', on ? 16 : 0);
+      dot.attr('r', on ? 9 : 6).attr('fill', on ? '#0FA9B4' : '#2563EB');
+      label.classed('on', on);
+    };
+    node.on('mouseenter', () => { set(true); post(c.city); })
+        .on('mouseleave', () => { set(false); post(null); });
+    c._set = set;
+  });
+
+  window.addEventListener('message', e => {
+    const active = e.data && e.data.biosysBranch;
+    CITIES.forEach(c => c._set(c.city === active));
+  });
+});
+
+function post(city) {
+  parent.postMessage({ biosysMapHover: city }, '*');
+}
+</script>
+<template id="__bundler_thumbnail" data-bg-color="#ffffff">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="800" fill="#fff"/><path d="M300 220 L620 170 L880 260 L900 520 L640 640 L340 560 Z" fill="#2563EB" opacity=".18" stroke="#2563EB" stroke-width="14"/><circle cx="470" cy="330" r="34" fill="#0FA9B4"/><circle cx="700" cy="300" r="34" fill="#0FA9B4"/><circle cx="560" cy="500" r="34" fill="#0FA9B4"/><circle cx="790" cy="470" r="34" fill="#0FA9B4"/></svg>
+</template>
+</body>
+</html>

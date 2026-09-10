@@ -1,0 +1,35 @@
+# robots.txt — BioSys (do katalogu głównego domeny)
+User-agent: *
+Allow: /
+
+# narzędzia i backend poza indeksem
+Disallow: /heatmap-viewer.html
+Disallow: /backend/
+Disallow: /assets/pub-lite/
+Disallow: /*?utm_
+
+# Roboty modeli językowych — wpisane z nazwy, bo o widoczność w odpowiedziach AI
+# zabiegamy świadomie. Reguła "User-agent: *" i tak by je przepuściła; nazwane wpisy
+# zapisują tę decyzję wprost, żeby nikt jej przypadkiem nie odwrócił.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://biosys.pl/sitemap.xml
+
+# Streszczenie serwisu dla modeli językowych
+# https://biosys.pl/llms.txt

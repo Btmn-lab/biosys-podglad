@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Karta pracy — wzór rozliczenia zlecenia produkcyjnego | BioSys</title>
+<meta name="description" content="Wzór karty pracy do rozliczenia zlecenia produkcyjnego: czynności i etapy, czas rzeczywisty, czas technologiczny, odchylenie, awarie i przestoje. Format A4, przygotowany przez BioSys.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+doc-page:not(:defined){visibility:hidden}
+body{margin:0}
+</style>
+<script src="doc-page.js"></script>
+</helmet>
+<doc-page size="a4" orientation="landscape" margin="0">
+  <section style="box-sizing:border-box;width:100%;height:780px;padding:28px 38px 20px;background:#fff;display:flex;flex-direction:column;gap:11px;font-family:'Open Sans',sans-serif;color:#0F172A">
+
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:28px">
+      <div style="display:flex;align-items:center;gap:12px;flex:none">
+        <img src="../assets/biosys-logo-cropped.webp" alt="BioSys" width="132" height="33" style="height:33px;width:auto;display:block;object-fit:contain">
+        <span style="font:700 10px/1.2 'Montserrat',sans-serif;letter-spacing:.07em;border-left:3px solid #0FA9B4;padding-left:11px;color:#2563EB">CZAS POD<br>KONTROLĄ</span>
+      </div>
+      <div style="text-align:right">
+        <p style="margin:0 0 3px;font:700 9px 'Montserrat',sans-serif;letter-spacing:.09em;color:#B45309">ZLECENIA PRODUKCYJNE</p>
+        <p style="margin:0;font:600 19px/1.2 'Montserrat',sans-serif;color:#0F172A">Karta pracy — rozliczenie zlecenia</p>
+      </div>
+    </div>
+    <span style="display:block;height:3px;border-radius:2px;background:linear-gradient(90deg,#F59E0B,#0FA9B4 55%,#2563EB)"></span>
+
+    <div style="display:flex;gap:10px">
+      <div style="flex:1 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">NUMER ZLECENIA</p>
+        <span style="display:block;height:15.4px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1.8 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">KLIENT / PRODUKT</p>
+        <span style="display:block;height:15.4px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1.6 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">PRACOWNIK / BRYGADA</p>
+        <span style="display:block;height:15.4px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1.2 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">STANOWISKO / MASZYNA</p>
+        <span style="display:block;height:15.4px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:6px;padding:7px 10px">
+        <p style="margin:0 0 4px;font:700 7.5px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">DATA</p>
+        <span style="display:block;height:15.4px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+    </div>
+
+    <div>
+      <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#B45309">CZYNNOŚCI I ETAPY ZLECENIA</p>
+      <table style="width:100%;border-collapse:collapse;table-layout:fixed;font:400 9px/1.25 'Open Sans',sans-serif">
+        <thead>
+          <tr style="background:#0F172A;color:#fff">
+            <th style="width:30px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Lp.</th>
+            <th style="border:1px solid #0F172A;padding:5px 6px;font:700 8px 'Open Sans',sans-serif;text-align:left">Czynność / etap</th>
+            <th style="width:60px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Od</th>
+            <th style="width:60px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Do</th>
+            <th style="width:74px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Czas rzeczywisty</th>
+            <th style="width:74px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Czas technologiczny</th>
+            <th style="width:66px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Odchylenie</th>
+            <th style="width:74px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Ilość wykonana</th>
+            <th style="width:150px;border:1px solid #0F172A;padding:5px 2px;font:700 8px 'Open Sans',sans-serif">Uwagi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <sc-for list="{{ rows }}" as="r" hint-placeholder-count="18">
+            <tr style="{{ r.rowStyle }}">
+              <td style="border:1px solid #cbd5e1;height:15.4px;text-align:center;font:700 8.5px 'Open Sans',sans-serif;color:#334155">{{ r.n }}</td>
+              <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+              <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+              <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+              <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+              <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+              <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+              <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+              <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+            </tr>
+          </sc-for>
+          <tr style="background:#FEF3C7">
+            <td colspan="4" style="border:1px solid #B45309;padding:5px 8px;text-align:right;font:700 9px 'Open Sans',sans-serif;color:#78350F">RAZEM ZLECENIE</td>
+            <td style="border:1px solid #B45309;height:18px"></td>
+            <td style="border:1px solid #B45309;height:18px"></td>
+            <td style="border:1px solid #B45309;height:18px"></td>
+            <td style="border:1px solid #B45309;height:18px"></td>
+            <td style="border:1px solid #B45309;height:18px"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <div style="flex:1.7 1 0;min-width:0">
+        <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#2563EB">ZDARZENIA SPECJALNE — AWARIE, PRZESTOJE, ZDARZENIA LOSOWE</p>
+        <table style="width:100%;border-collapse:collapse;table-layout:fixed;font:400 9px/1.25 'Open Sans',sans-serif">
+          <thead>
+            <tr style="background:#EFF6FF;color:#1D4ED8">
+              <th style="width:96px;border:1px solid #94a3b8;padding:4px 2px;font:700 8px 'Open Sans',sans-serif">Rodzaj</th>
+              <th style="width:54px;border:1px solid #94a3b8;padding:4px 2px;font:700 8px 'Open Sans',sans-serif">Od</th>
+              <th style="width:54px;border:1px solid #94a3b8;padding:4px 2px;font:700 8px 'Open Sans',sans-serif">Do</th>
+              <th style="width:60px;border:1px solid #94a3b8;padding:4px 2px;font:700 8px 'Open Sans',sans-serif">Czas</th>
+              <th style="width:110px;border:1px solid #94a3b8;padding:4px 2px;font:700 8px 'Open Sans',sans-serif">Miejsce / maszyna</th>
+              <th style="border:1px solid #94a3b8;padding:4px 2px;font:700 8px 'Open Sans',sans-serif">Opis i przyczyna</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ events }}" as="e" hint-placeholder-count="4">
+              <tr>
+                <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+                <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+                <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+                <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+                <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+                <td style="border:1px solid #cbd5e1;height:15.4px"></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+      <div style="flex:1 1 0;min-width:0;border:1px solid #FCD34D;border-radius:6px;background:#FFFBEB;padding:9px 11px">
+        <p style="margin:0 0 4px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#B45309">JAK CZYTAĆ ODCHYLENIE</p>
+        <p style="margin:0;font:400 8.2px/1.55 'Open Sans',sans-serif;color:#475569">Odchylenie to różnica między czasem rzeczywistym a technologicznym. Wartość dodatnia oznacza etap trwający dłużej niż norma — to on generuje koszt wyższy od kalkulacji. Powtarzające się odchylenia są podstawą do korekty normy: dzisiejszy czas rzeczywisty staje się czasem technologicznym jutro.</p>
+      </div>
+      <div style="flex:none;width:210px;display:flex;gap:12px">
+        <div style="flex:1">
+          <span style="display:block;height:28px;border-bottom:1px solid #94a3b8"></span>
+          <p style="margin:4px 0 0;font:400 7.5px 'Open Sans',sans-serif;color:#64748B;text-align:center">Podpis pracownika</p>
+        </div>
+        <div style="flex:1">
+          <span style="display:block;height:28px;border-bottom:1px solid #94a3b8"></span>
+          <p style="margin:4px 0 0;font:400 7.5px 'Open Sans',sans-serif;color:#64748B;text-align:center">Podpis mistrza</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid #e2e8f0;padding-top:8px">
+      <p style="margin:0;font:400 7.5px/1.5 'Open Sans',sans-serif;color:#94a3b8;max-width:640px">Wzór do samodzielnego wypełnienia. W systemie Task Timer te same dane pracownik rejestruje na terminalu POS lub stacji PC, a sumy częściowe i łączny czas zlecenia przeliczają się w trybie rzeczywistym.</p>
+      <p style="margin:0;font:700 7.5px 'Open Sans',sans-serif;color:#2563EB;white-space:nowrap">BioSys sp. z o.o. · biosys.pl</p>
+    </div>
+
+  </section>
+</doc-page>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      rows: Array.from({ length: 18 }, (_, i) => ({
+        n: String(i + 1),
+        rowStyle: 'background:' + (i % 2 ? '#F8FAFC' : '#fff')
+      })),
+      events: Array.from({ length: 4 }, (_, i) => ({ n: i }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

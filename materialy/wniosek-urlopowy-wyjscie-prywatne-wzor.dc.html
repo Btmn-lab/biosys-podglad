@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Wniosek urlopowy i wyjście prywatne — wzór do druku | BioSys</title>
+<meta name="description" content="Wzór wniosku o urlop oraz zgody na wyjście prywatne w czasie pracy: rodzaj urlopu, termin, zastępstwo, godziny wyjścia i zasady odpracowania. Format A4, przygotowany przez BioSys.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+doc-page:not(:defined){visibility:hidden}
+body{margin:0}
+</style>
+<script src="doc-page.js"></script>
+</helmet>
+<doc-page size="a4" margin="0">
+  <section style="box-sizing:border-box;width:100%;height:1046px;padding:34px 40px 24px;background:#fff;display:flex;flex-direction:column;gap:16px;font-family:'Open Sans',sans-serif;color:#0F172A">
+
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:22px">
+      <div style="display:flex;align-items:center;gap:12px;flex:none">
+        <img src="../assets/biosys-logo-cropped.webp" alt="BioSys" width="132" height="33" style="height:33px;width:auto;display:block;object-fit:contain">
+        <span style="font:700 10px/1.2 'Montserrat',sans-serif;letter-spacing:.07em;border-left:3px solid #0FA9B4;padding-left:11px;color:#2563EB">CZAS POD<br>KONTROLĄ</span>
+      </div>
+      <div style="text-align:right">
+        <p style="margin:0 0 3px;font:700 9px 'Montserrat',sans-serif;letter-spacing:.09em;color:#0D8577">KADRY I NIEOBECNOŚCI</p>
+        <p style="margin:0;font:600 17px/1.2 'Montserrat',sans-serif;color:#0F172A">Wniosek urlopowy i wyjście prywatne</p>
+      </div>
+    </div>
+    <span style="display:block;height:3px;border-radius:2px;background:linear-gradient(90deg,#0FA9B4,#2563EB 60%,#F59E0B)"></span>
+
+    <div style="display:flex;gap:12px">
+      <div style="flex:2 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:7px;padding:9px 12px">
+        <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">IMIĘ I NAZWISKO PRACOWNIKA</p>
+        <span style="display:block;height:23px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1.5 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:7px;padding:9px 12px">
+        <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">STANOWISKO / DZIAŁ</p>
+        <span style="display:block;height:23px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+      <div style="flex:1 1 0;min-width:0;border:1px solid #cbd5e1;border-radius:7px;padding:9px 12px">
+        <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">DATA ZŁOŻENIA</p>
+        <span style="display:block;height:23px;border-bottom:1px dotted #94a3b8"></span>
+      </div>
+    </div>
+
+    <div style="border:1px solid #cbd5e1;border-radius:10px;overflow:hidden">
+      <div style="background:#EFF6FF;padding:8px 14px;display:flex;align-items:baseline;gap:10px">
+        <span style="font:700 11px 'Montserrat',sans-serif;color:#1D4ED8">A. WNIOSEK O UDZIELENIE URLOPU</span>
+        <span style="font:400 8.5px 'Open Sans',sans-serif;color:#64748B">wypełnia pracownik</span>
+      </div>
+      <div style="padding:13px 14px;display:flex;flex-direction:column;gap:12px">
+        <div>
+          <p style="margin:0 0 6px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">RODZAJ URLOPU — ZAZNACZ JEDNO POLE</p>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px 14px">
+            <sc-for list="{{ leaveTypes }}" as="lt" hint-placeholder-count="6">
+              <span style="display:flex;align-items:center;gap:8px;font:400 10px/1.3 'Open Sans',sans-serif;color:#334155">
+                <span style="flex:none;width:13px;height:13px;border:1.4px solid #64748B;border-radius:3px;display:block"></span>
+                <span>{{ lt }}</span>
+              </span>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px">
+          <div style="flex:1 1 0;min-width:0">
+            <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">TERMIN OD</p>
+            <span style="display:block;height:24px;border-bottom:1px solid #94a3b8"></span>
+          </div>
+          <div style="flex:1 1 0;min-width:0">
+            <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">TERMIN DO</p>
+            <span style="display:block;height:24px;border-bottom:1px solid #94a3b8"></span>
+          </div>
+          <div style="flex:1 1 0;min-width:0">
+            <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">LICZBA DNI</p>
+            <span style="display:block;height:24px;border-bottom:1px solid #94a3b8"></span>
+          </div>
+          <div style="flex:1.6 1 0;min-width:0">
+            <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">ZASTĘPSTWO — IMIĘ I NAZWISKO</p>
+            <span style="display:block;height:24px;border-bottom:1px solid #94a3b8"></span>
+          </div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-end;padding-top:4px">
+          <div style="flex:1">
+            <span style="display:block;height:33px;border-bottom:1px solid #94a3b8"></span>
+            <p style="margin:4px 0 0;font:400 8px 'Open Sans',sans-serif;color:#64748B">Podpis pracownika</p>
+          </div>
+          <div style="flex:1">
+            <span style="display:block;height:33px;border-bottom:1px solid #94a3b8"></span>
+            <p style="margin:4px 0 0;font:400 8px 'Open Sans',sans-serif;color:#64748B">Zgoda przełożonego (data i podpis)</p>
+          </div>
+          <div style="flex:1">
+            <span style="display:block;height:33px;border-bottom:1px solid #94a3b8"></span>
+            <p style="margin:4px 0 0;font:400 8px 'Open Sans',sans-serif;color:#64748B">Potwierdzenie kadr</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="border:1px solid #cbd5e1;border-radius:10px;overflow:hidden">
+      <div style="background:#ECFDF5;padding:8px 14px;display:flex;align-items:baseline;gap:10px">
+        <span style="font:700 11px 'Montserrat',sans-serif;color:#0D8577">B. WYJŚCIE PRYWATNE W CZASIE PRACY</span>
+        <span style="font:400 8.5px 'Open Sans',sans-serif;color:#64748B">wypełnia pracownik przed wyjściem</span>
+      </div>
+      <div style="padding:13px 14px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px">
+          <div style="flex:1 1 0;min-width:0">
+            <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">DATA</p>
+            <span style="display:block;height:24px;border-bottom:1px solid #94a3b8"></span>
+          </div>
+          <div style="flex:1 1 0;min-width:0">
+            <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">GODZINA WYJŚCIA</p>
+            <span style="display:block;height:24px;border-bottom:1px solid #94a3b8"></span>
+          </div>
+          <div style="flex:1 1 0;min-width:0">
+            <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">GODZINA POWROTU</p>
+            <span style="display:block;height:24px;border-bottom:1px solid #94a3b8"></span>
+          </div>
+          <div style="flex:1 1 0;min-width:0">
+            <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">CZAS NIEOBECNOŚCI</p>
+            <span style="display:block;height:24px;border-bottom:1px solid #94a3b8"></span>
+          </div>
+        </div>
+        <div>
+          <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">CEL WYJŚCIA</p>
+          <span style="display:block;height:24px;border-bottom:1px dotted #94a3b8"></span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-end">
+          <div style="flex:1.4 1 0;min-width:0">
+            <p style="margin:0 0 5px;font:700 8px 'Open Sans',sans-serif;letter-spacing:.08em;color:#64748B">TERMIN ODPRACOWANIA — DATA I GODZINY</p>
+            <span style="display:block;height:24px;border-bottom:1px solid #94a3b8"></span>
+          </div>
+          <div style="flex:1 1 0;min-width:0">
+            <span style="display:block;height:33px;border-bottom:1px solid #94a3b8"></span>
+            <p style="margin:4px 0 0;font:400 8px 'Open Sans',sans-serif;color:#64748B">Podpis pracownika</p>
+          </div>
+          <div style="flex:1 1 0;min-width:0">
+            <span style="display:block;height:33px;border-bottom:1px solid #94a3b8"></span>
+            <p style="margin:4px 0 0;font:400 8px 'Open Sans',sans-serif;color:#64748B">Zgoda przełożonego</p>
+          </div>
+        </div>
+        <p style="margin:0;font:400 8.5px/1.55 'Open Sans',sans-serif;color:#475569;background:#F8FAFC;border-left:3px solid #0FA9B4;padding:8px 11px;border-radius:0 6px 6px 0">Zgodnie z art. 151 § 2<sup>1</sup> Kodeksu pracy czas odpracowania wyjścia prywatnego, udzielonego na pisemny wniosek pracownika, nie stanowi pracy w godzinach nadliczbowych. Odpracowanie nie może naruszać prawa pracownika do odpoczynku dobowego i tygodniowego.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid #e2e8f0;padding-top:9px">
+      <p style="margin:0;font:400 8px/1.5 'Open Sans',sans-serif;color:#94a3b8;max-width:520px">Wzór do samodzielnego wypełnienia. W systemie BioSys pracownik składa oba wnioski elektronicznie w portalu pracowniczym, a saldo urlopu widzi w swoim profilu bez pytania kadr.</p>
+      <p style="margin:0;font:700 8px 'Open Sans',sans-serif;color:#2563EB;white-space:nowrap">BioSys sp. z o.o. · biosys.pl</p>
+    </div>
+
+  </section>
+</doc-page>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      leaveTypes: [
+        'wypoczynkowy',
+        'na żądanie',
+        'bezpłatny',
+        'okolicznościowy',
+        'opieka nad dzieckiem (art. 188 KP)',
+        'inny — wpisz jaki'
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>
