@@ -4,28 +4,28 @@ window.__TRESC = RES => {
 // Zdjęcia wplecione między pulpity w karuzeli hero (strona główna).
 // Kolejność paneli: 0 pulpit RCP, 1 foto, 2 pulpit KD, 3 foto, 4 foto, 5 pulpit Task Timer, 6 foto, 7 foto.
 const HERO_PHOTO_AT = {
-  1: RES('heroph1','assets/m/hero-bramki-recepcja.webp'),
-  3: RES('heroph2','assets/m/hero-kolowrot-biurowiec.webp'),
-  4: RES('heroph3','assets/m/hero-bramki-lobby.webp'),
-  6: RES('heroph4','assets/m/hero-bramka-skrzydlowa.webp'),
-  7: RES('heroph5','assets/m/hero-rejestrator-scienny.webp')
+  1: RES('heroph1','/biosys-podglad/assets/m/hero-bramki-recepcja.webp'),
+  3: RES('heroph2','/biosys-podglad/assets/m/hero-kolowrot-biurowiec.webp'),
+  4: RES('heroph3','/biosys-podglad/assets/m/hero-bramki-lobby.webp'),
+  6: RES('heroph4','/biosys-podglad/assets/m/hero-bramka-skrzydlowa.webp'),
+  7: RES('heroph5','/biosys-podglad/assets/m/hero-rejestrator-scienny.webp')
 };
 const KD_MINI = [
-  {img:RES('brus1','assets/brus1.webp'), cap:'Bramka w recepcji'},
-  {img:RES('ts1000','assets/ts1000.webp'), cap:'Przejście jednoosobowe w zakładzie'},
-  {img:RES('bw1','assets/bw-1.webp'), cap:'Przejście pełnej wysokości'},
-  {img:RES('rejestrator1','assets/rejestrator-1.webp'), cap:'Czytnik przy drzwiach'},
-  {img:RES('rfidkarta','assets/rfid-karta.webp'), cap:'Identyfikator pracownika'},
-  {img:RES('bramawysoka2','assets/m/brama-wysoka-2.webp'), cap:'Kołowrót pełnej wysokości na wejściu do zakładu'},
-  {img:RES('bramawysoka5','assets/m/brama-wysoka-5.webp'), cap:'Kołowrót z czytnikami w obu kierunkach'},
-  {img:RES('bramawysoka4','assets/brama-wysoka-4.webp'), cap:'Kołowrót przy portierni'},
-  {img:RES('antenauhf3','assets/m/antena-uhf-3.webp'), cap:'Anteny UHF na wjeździe na teren'},
-  {img:RES('antenauhf2','assets/antena-uhf-2.webp'), cap:'Antena UHF nad przejazdem przy szlabanie'}
+  {img:RES('brus1','/biosys-podglad/assets/brus1.webp'), cap:'Bramka w recepcji'},
+  {img:RES('ts1000','/biosys-podglad/assets/ts1000.webp'), cap:'Przejście jednoosobowe w zakładzie'},
+  {img:RES('bw1','/biosys-podglad/assets/bw-1.webp'), cap:'Przejście pełnej wysokości'},
+  {img:RES('rejestrator1','/biosys-podglad/assets/rejestrator-1.webp'), cap:'Czytnik przy drzwiach'},
+  {img:RES('rfidkarta','/biosys-podglad/assets/rfid-karta.webp'), cap:'Identyfikator pracownika'},
+  {img:RES('bramawysoka2','/biosys-podglad/assets/m/brama-wysoka-2.webp'), cap:'Kołowrót pełnej wysokości na wejściu do zakładu'},
+  {img:RES('bramawysoka5','/biosys-podglad/assets/m/brama-wysoka-5.webp'), cap:'Kołowrót z czytnikami w obu kierunkach'},
+  {img:RES('bramawysoka4','/biosys-podglad/assets/brama-wysoka-4.webp'), cap:'Kołowrót przy portierni'},
+  {img:RES('antenauhf3','/biosys-podglad/assets/m/antena-uhf-3.webp'), cap:'Anteny UHF na wjeździe na teren'},
+  {img:RES('antenauhf2','/biosys-podglad/assets/antena-uhf-2.webp'), cap:'Antena UHF nad przejazdem przy szlabanie'}
 ];
 const CASE_STUDIES = [
 {
   key:'polan', brand:'POLAN Sp. z o.o.', meta:'Przetwory warzywne i owocowe · produkcja i biuro',
-  logo:'assets/cases/polan.svg', logoMaxH:26, logoDark:false,
+  logo:'/biosys-podglad/assets/cases/polan.svg', logoMaxH:26, logoDark:false,
   tags:['RCP','KD','Comarch Optima'],
   title:'Kołowrót zdarzeń – jak połączenie systemu RCP i KD usprawniło działanie firmy POLAN',
   lead:'POLAN to polsko-francuska spółka z o.o., specjalizująca się w produkcji wysokiej jakości przetworów warzywnych i owocowych. Firma od lat stawia na rozwój i nowoczesne technologie, które wspierają codzienną pracę – zarówno na hali produkcyjnej, jak i w biurze.',
@@ -48,7 +48,7 @@ const CASE_STUDIES = [
 },
 {
   key:'bemarc', brand:'Bemarc Sp. z o.o.', meta:'Meble ekspozycyjne i wyposażenie wnętrz · Jasin pod Poznaniem',
-  logo:'assets/cases/bemarc-white.svg', logoMaxH:24, logoDark:true,
+  logo:'/biosys-podglad/assets/cases/bemarc-white.svg', logoMaxH:24, logoDark:true,
   tags:['Web Pracownik'],
   title:'Od tablicy korkowej do cyfrowego HR-u czyli jak Bemarc uporządkował procesy kadrowe z Web Pracownikiem',
   lead:'Bemarc Sp. z o.o. to producent mebli ekspozycyjnych i wyposażenia wnętrz komercyjnych z siedzibą w Jasinie pod Poznaniem. Działa nieprzerwanie od 1980 roku.',
@@ -71,7 +71,7 @@ const CASE_STUDIES = [
 },
 {
   key:'mitsui', brand:'MITSUI HIGH-TEC (EUROPE)', meta:'Precyzyjne rdzenie silnikowe dla motoryzacji · ponad 250 pracowników',
-  logo:'assets/cases/mitsui.svg', logoMaxH:52, logoDark:false,
+  logo:'/biosys-podglad/assets/cases/mitsui.svg', logoMaxH:52, logoDark:false,
   tags:['RCP','enova'],
   title:'Bezbłędny przekaz – jak RCP i integracja z Enovą usprawniły codzienną pracę w MITSUI HIGH-TEC (EUROPE)',
   lead:'MITSUI HIGH-TEC (EUROPE) to firma o japońskich korzeniach, obecna w Polsce od 2018 roku. Specjalizuje się w produkcji precyzyjnych rdzeni silnikowych, dostarczanych do czołowych producentów z branży motoryzacyjnej. Zatrudnia w Polsce ponad 250 pracowników.',
@@ -119,7 +119,7 @@ const CASE_STUDIES = [
 },
 {
   key:'zuk', brand:'ZUK Oświęcim', meta:'Usługi komunalne · praca w wielu lokalizacjach',
-  logo:'assets/cases/zuk.svg', logoMaxH:52, logoDark:false,
+  logo:'/biosys-podglad/assets/cases/zuk.svg', logoMaxH:52, logoDark:false,
   tags:['RCP','enova365'],
   title:'RCP zbudowane na zaufaniu',
   lead:'Zakład Usług Komunalnych Sp. z o.o. w Oświęcimiu odpowiada za realizację kluczowych usług komunalnych na rzecz mieszkańców miasta.',
@@ -191,9 +191,9 @@ const PAGES = [
   aboutBoardTitle:'[Nagłówek sekcji z zarządem]',
   aboutBoardLead:'[Lead — jedno, dwa zdania o zarządzie.]',
   aboutBoard:[
-    {img:'assets/karol-jura.webp', n:'Karol Jura', r:'[Stanowisko]', d:'[Jedno zdanie o tym, za co odpowiada.]'},
-    {img:'assets/pawel-zurek.webp', n:'Paweł Żurek', r:'[Stanowisko]', d:'[Jedno zdanie o tym, za co odpowiada.]'},
-    {img:'assets/andrzej-pilch.webp', n:'Andrzej Pilch', r:'[Stanowisko]', d:'[Jedno zdanie o tym, za co odpowiada.]'}
+    {img:'/biosys-podglad/assets/karol-jura.webp', n:'Karol Jura', r:'[Stanowisko]', d:'[Jedno zdanie o tym, za co odpowiada.]'},
+    {img:'/biosys-podglad/assets/pawel-zurek.webp', n:'Paweł Żurek', r:'[Stanowisko]', d:'[Jedno zdanie o tym, za co odpowiada.]'},
+    {img:'/biosys-podglad/assets/andrzej-pilch.webp', n:'Andrzej Pilch', r:'[Stanowisko]', d:'[Jedno zdanie o tym, za co odpowiada.]'}
   ]
 },
 {
@@ -649,7 +649,7 @@ const PAGES = [
     {n:'04', t:'Placówki medyczne, laboratoria i obiekty strategiczne', c:'#0284C7', ct:'#0369A1', tint:'rgba(56,189,248,.12)', line:'rgba(56,189,248,.34)', icon:'M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6zM12 9.5v5M9.5 12h5', tag:'Maksymalna ochrona', need:'Bezkompromisowa ochrona danych osobowych, leków i badań R&D przed podsłuchem i kopiowaniem.', sol:'Szyfrowana transmisja i karty odporne na klonowanie, pełny audyt każdego wejścia do apteki, serwerowni czy laboratorium.'}
   ],
   kdAreas:[
-    {num:'01', t:'Strefa wjazdu i strefa zewnętrzna', sub:'Obwód obiektu', badge:'PIERWSZA LINIA OBRONY', img:'assets/m/kd-strefa-wjazdu-01.webp',
+    {num:'01', t:'Strefa wjazdu i strefa zewnętrzna', sub:'Obwód obiektu', badge:'PIERWSZA LINIA OBRONY', img:'/biosys-podglad/assets/m/kd-strefa-wjazdu-01.webp',
      icon:'M3 20V9.5l9-5.5 9 5.5V20 M3 20h18 M9 20v-5h6v5',
      d:'Brama wjazdowa i ogrodzenie to pierwsza linia obrony Twojego zakładu. System automatycznie decyduje, kto wjeżdża i wchodzi na teren firmy.',
      items:[
@@ -657,7 +657,7 @@ const PAGES = [
        {t:'Wysokie kołowroty i bramki obrotowe:', d:'bezpieczne, jednopunktowe wejścia dla pieszych przy portierni i na ogrodzeniu obwodowym.'},
        {t:'Doki przeładunkowe i bramy segmentowe:', d:'dostęp do stref magazynowych wyłącznie dla uprawnionych kierowców i operatorów wózków.'}
      ]},
-    {num:'02', t:'Wejścia budynkowe i ruch pieszy', sub:'Recepcje i ciągi komunikacyjne', badge:'PŁYNNY RUCH', img:'assets/m/kd-wejscia-budynkowe-02.webp',
+    {num:'02', t:'Wejścia budynkowe i ruch pieszy', sub:'Recepcje i ciągi komunikacyjne', badge:'PŁYNNY RUCH', img:'/biosys-podglad/assets/m/kd-wejscia-budynkowe-02.webp',
      icon:'M15 4h4.5v16H15 M3.5 12h8.5 M9 9l3 3-3 3',
      d:'Płynne przemieszczanie się pracowników przy jednoczesnej blokadzie dla osób nieupoważnionych.',
      items:[
@@ -667,7 +667,7 @@ const PAGES = [
        {t:'Obsługa wind:', d:'zabezpieczenie dostępu do wind – korzystanie z dźwigów osobowych wyłącznie dla uprawnionych użytkowników.'},
        {t:'Palarnie i strefy wypoczynku:', d:'autoryzacja wejść do wyznaczonych stref relaksu (często połączona z RCP do monitorowania czasu przerw).'}
      ]},
-    {num:'03', t:'Strefa produkcyjna, magazynowa i BHP', sub:'Procedury i higiena', badge:'BEZPIECZEŃSTWO PROCESU', img:'assets/m/kd-strefa-produkcyjna-03.webp',
+    {num:'03', t:'Strefa produkcyjna, magazynowa i BHP', sub:'Procedury i higiena', badge:'BEZPIECZEŃSTWO PROCESU', img:'/biosys-podglad/assets/m/kd-strefa-produkcyjna-03.webp',
      icon:'M3 20h18 M5 20V9l7-5 7 5v11 M9.5 20v-6h5v6',
      d:'Połączenie bezpieczeństwa mienia z rygorystycznymi procedurami higienicznymi i operacyjnymi.',
      items:[
@@ -676,7 +676,7 @@ const PAGES = [
        {t:'Rygorystyczny podział na strefę czystą i brudną:', d:'koniec z migracją pracowników i mieszaniem ciągów komunikacyjnych na produkcji. Karty dostępu blokują przejście personelu z obszarów brudnych (np. magazyn surowca, przyjęcie towaru) do stref czystych (np. konfekcjonowanie, strefa pakowania) bez przejścia wymaganego procesu higienicznego.'},
        {t:'Wejścia na hale produkcyjne i magazynowe:', d:'zabezpieczenie stref z maszynami, surowcami i wyrobami gotowymi przed osobami bez przeszkolenia BHP.'}
      ]},
-    {num:'04', t:'Pomieszczenia krytyczne i specjalne', sub:'Wysoki rygor bezpieczeństwa', badge:'NAJWYŻSZY RYGOR', img:'assets/m/kd-pomieszczenia-krytyczne-04.webp',
+    {num:'04', t:'Pomieszczenia krytyczne i specjalne', sub:'Wysoki rygor bezpieczeństwa', badge:'NAJWYŻSZY RYGOR', img:'/biosys-podglad/assets/m/kd-pomieszczenia-krytyczne-04.webp',
      icon:'M6 11h12v9.5H6z M9 11V8.2a3 3 0 016 0V11 M12 15v2.5',
      d:'Miejsca, które wymagają najwyższego poziomu ochrony danych, mienia i tajemnic handlowych.',
      items:[
@@ -889,10 +889,10 @@ const PAGES = [
   heroVariant:'photo', hasForm:false, hasCtaBand:true,
   ctaLabel:'Powiedz nam, ile osób pracuje w firmie i gdzie ma stanąć urządzenie — dobierzemy wersję i pokażemy ją na żywo.',
   gallery:[
-    {img:RES('rcp400','assets/rcp-400.webp'), cap:'Wersja odporna na pył i wilgoć'},
-    {img:RES('rcp300','assets/rcp-300.webp'), cap:'Wersja z wysokim ekranem'},
-    {img:RES('rcp200','assets/rcp-200.webp'), cap:'Wersja z ekranem dotykowym'},
-    {img:RES('rcp100','assets/rcp-100.webp'), cap:'Wersja z klawiaturą — do hali i magazynu'}
+    {img:RES('rcp400','/biosys-podglad/assets/rcp-400.webp'), cap:'Wersja odporna na pył i wilgoć'},
+    {img:RES('rcp300','/biosys-podglad/assets/rcp-300.webp'), cap:'Wersja z wysokim ekranem'},
+    {img:RES('rcp200','/biosys-podglad/assets/rcp-200.webp'), cap:'Wersja z ekranem dotykowym'},
+    {img:RES('rcp100','/biosys-podglad/assets/rcp-100.webp'), cap:'Wersja z klawiaturą — do hali i magazynu'}
   ],
   galleryTitle:'Jak to wygląda',
   galleryLead:'Kilka wersji urządzeń, które montujemy przy wejściach. Konkretny model dobieramy pod firmę — dostępność zmienia się razem z ofertą naszych dostawców.',
@@ -915,9 +915,9 @@ const PAGES = [
   heroVariant:'photo', hasForm:false, hasCtaBand:true,
   ctaLabel:'Napisz, ile przejść chcesz objąć kontrolą i jak są dziś otwierane — zaproponujemy rozwiązanie.',
   gallery:[
-    {img:RES('brus1','assets/brus1.webp'), cap:'Bramka w recepcji'},
-    {img:RES('ts1000','assets/ts1000.webp'), cap:'Przejście jednoosobowe w zakładzie'},
-    {img:RES('bw1','assets/bw-1.webp'), cap:'Przejście pełnej wysokości'}
+    {img:RES('brus1','/biosys-podglad/assets/brus1.webp'), cap:'Bramka w recepcji'},
+    {img:RES('ts1000','/biosys-podglad/assets/ts1000.webp'), cap:'Przejście jednoosobowe w zakładzie'},
+    {img:RES('bw1','/biosys-podglad/assets/bw-1.webp'), cap:'Przejście pełnej wysokości'}
   ],
   galleryTitle:'Przejścia, którymi steruje kontroler',
   galleryLead:'Te same zasady dostępu obsługują drzwi biurowe, bramki w recepcji i przejścia na terenie zakładu. Wykonanie dobieramy do obiektu — sprzęt kompletujemy u różnych dostawców.',
@@ -940,10 +940,10 @@ const PAGES = [
   heroVariant:'photo', hasForm:false, hasCtaBand:true,
   ctaLabel:'Powiedz, w jakich warunkach pracują Twoi pracownicy — dobierzemy identyfikator, który się u nich sprawdzi.',
   gallery:[
-    {img:RES('rfkarta','assets/rfid-karta.webp'), cap:'Karta z możliwością nadruku'},
-    {img:RES('rfbrelok','assets/rfid-brelok.webp'), cap:'Brelok na kluczach'},
-    {img:RES('rfopaska','assets/rfid-opaska.webp'), cap:'Opaska na rękę — do pracy w rękawicach'},
-    {img:RES('rfnaklejka','assets/m/rfid-naklejka.webp'), cap:'Naklejka na telefon lub kask'}
+    {img:RES('rfkarta','/biosys-podglad/assets/rfid-karta.webp'), cap:'Karta z możliwością nadruku'},
+    {img:RES('rfbrelok','/biosys-podglad/assets/rfid-brelok.webp'), cap:'Brelok na kluczach'},
+    {img:RES('rfopaska','/biosys-podglad/assets/rfid-opaska.webp'), cap:'Opaska na rękę — do pracy w rękawicach'},
+    {img:RES('rfnaklejka','/biosys-podglad/assets/m/rfid-naklejka.webp'), cap:'Naklejka na telefon lub kask'}
   ],
   galleryTitle:'Czym pracownik się identyfikuje',
   galleryLead:'Identyfikator dobiera się do warunków pracy — karta w biurze, brelok lub opaska tam, gdzie karta szybko się niszczy. Każdy ma własny numer, więc rozpoznanie jest jednoznaczne.',
@@ -994,7 +994,7 @@ const PAGES = [
   modelsLead:'Oba modele mają identyczne parametry pracy i różnią się szerokością przejścia oraz konfiguracją czytników.',
   models:[
     {
-      img:RES('ts1000','assets/ts1000.webp'),
+      img:RES('ts1000','/biosys-podglad/assets/ts1000.webp'),
       name:'Kołowrót TS1000',
       desc:'Pojedyncze przejście z głowicą pod czytnik zbliżeniowy i moduł biometryczny. Węższa podstawa — sprawdza się w portierniach i wejściach o ograniczonej szerokości.',
       specs:[
@@ -1011,7 +1011,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('ts1200','assets/ts1200.webp'),
+      img:RES('ts1200','/biosys-podglad/assets/ts1200.webp'),
       name:'Tripod TS1200',
       desc:'Wersja z szerszą podstawą i sygnalizacją stanu przejścia na głowicy, przystosowana do zestawiania w ciągi dwu- i wielotorowe przy wejściach o dużym natężeniu ruchu.',
       specs:[
@@ -1059,7 +1059,7 @@ const PAGES = [
   modelsLead:'Bramka jednoskrzydłowa do zestawiania w ciągi — dwa słupki tworzą przejście dwukierunkowe, kolejne rozbudowują wejście o następne torowiska.',
   models:[
     {
-      img:RES('brus1','assets/brus1.webp'),
+      img:RES('brus1','/biosys-podglad/assets/brus1.webp'),
       name:'Bramka uchylna BS-BRUS1',
       desc:'Słupek ze stali nierdzewnej z czytnikiem zbliżeniowym, sygnalizacją LED na głowicy i szklanym skrzydłem uchylnym. Szerokość przejścia 90 cm obsługuje ruch z wózkiem, bagażem oraz przejście osób z niepełnosprawnościami.',
       specs:[
@@ -1106,7 +1106,7 @@ const PAGES = [
   modelsLead:'Oba modele mają tę samą konstrukcję i parametry pracy — różnią się liczbą przejść w jednej bramie.',
   models:[
     {
-      img:RES('bw1','assets/bw-1.webp'),
+      img:RES('bw1','/biosys-podglad/assets/bw-1.webp'),
       name:'Brama wysoka BS-BW-1',
       desc:'Jedno przejście kontrolowane w konstrukcji pełnej wysokości, z sygnalizacją kierunku na belce górnej i czytnikiem na słupku. Do wejść i wyjść obsługiwanych pojedynczo.',
       specs:[
@@ -1122,7 +1122,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('bw2','assets/m/bw-2.webp'),
+      img:RES('bw2','/biosys-podglad/assets/m/bw-2.webp'),
       name:'Brama wysoka BS-BW-2',
       desc:'Dwa przejścia we wspólnej konstrukcji — osobno dla wejścia i wyjścia albo dwa równoległe torowiska na wejściu o dużym natężeniu ruchu. Każde przejście ma własny czytnik i sygnalizację kierunku.',
       specs:[
@@ -1183,7 +1183,7 @@ const PAGES = [
   modelsLead:'Trzy typy zasilania w pięciu wykonaniach — wybór zależy od tego, czy instalacja ma pracować przy zaniku prądu i jak długo.',
   models:[
     {
-      img:RES('zasbuf12','assets/m/zas-buforowy-12v.webp'),
+      img:RES('zasbuf12','/biosys-podglad/assets/m/zas-buforowy-12v.webp'),
       name:'Zasilacz buforowy 12 V — obudowa metalowa',
       desc:'Zasilacz do podtrzymania zasilania 12 V w obudowie metalowej z wentylacją. Podstawowe rozwiązanie dla kontroli dostępu, gdzie przejścia muszą działać także po zaniku napięcia sieciowego.',
       specs:[
@@ -1194,7 +1194,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('zasbuf18','assets/zas-buforowy-18ah.webp'),
+      img:RES('zasbuf18','/biosys-podglad/assets/zas-buforowy-18ah.webp'),
       name:'Zasilacz buforowy 1,3 / 7 / 18 Ah',
       desc:'Obudowa z miejscem na akumulator o pojemności 1,3 Ah, 7 Ah lub 18 Ah — pojemność dobiera się do liczby przejść i wymaganego czasu podtrzymania.',
       specs:[
@@ -1205,7 +1205,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('zasimpk','assets/zas-impulsowy-kostka.webp'),
+      img:RES('zasimpk','/biosys-podglad/assets/zas-impulsowy-kostka.webp'),
       name:'Zasilacz impulsowy kostkowy',
       desc:'Wtyczkowy zasilacz 12 V do pojedynczego urządzenia — rejestratora czasu pracy, czytnika lub kontrolera przy jednym przejściu. Nie wymaga puszki ani szafki instalacyjnej.',
       specs:[
@@ -1217,7 +1217,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('zasimpp','assets/zas-impulsowy-przewod.webp'),
+      img:RES('zasimpp','/biosys-podglad/assets/zas-impulsowy-przewod.webp'),
       name:'Zasilacz impulsowy z przewodem',
       desc:'Zasilacz 12 V / 1 A z odseparowanym przewodem sieciowym — do montażu w miejscach, gdzie gniazdo jest oddalone od urządzenia lub schowane w kanale kablowym.',
       specs:[
@@ -1229,7 +1229,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('zasups','assets/m/zas-miniups.webp'),
+      img:RES('zasups','/biosys-podglad/assets/m/zas-miniups.webp'),
       name:'Zasilacz awaryjny Mini UPS 12 V',
       desc:'Kompaktowy Mini UPS 12 V z wbudowanym akumulatorem. Włącza się między zasilacz i urządzenie, więc dodaje podtrzymanie do istniejącej instalacji bez wymiany zasilacza i przeróbek okablowania.',
       specs:[
@@ -1271,7 +1271,7 @@ const PAGES = [
   modelsLead:'Zwora elektromagnetyczna z kompletem montażowym oraz trzy typy stabilizatorów, którymi dopasowuje się montaż do konstrukcji drzwi i ościeżnicy.',
   models:[
     {
-      img:RES('zwem300','assets/zwora-em300.webp'),
+      img:RES('zwem300','/biosys-podglad/assets/zwora-em300.webp'),
       name:'Zwora elektromagnetyczna BS EM-300',
       desc:'Zwora natynkowa z płytą zworową i kompletem montażowym: śruby, podkładki, kołki i klucze imbusowe. Elektromagnes utrzymuje skrzydło przez cały czas zasilania, a odcięcie napięcia — po autoryzacji, sygnale z przycisku ewakuacyjnego lub zaniku prądu — zwalnia przejście.',
       specs:[
@@ -1284,7 +1284,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('stabl','assets/stabilizator-l.webp'),
+      img:RES('stabl','/biosys-podglad/assets/stabilizator-l.webp'),
       name:'Stabilizator typu „L”',
       desc:'Para kątowników aluminiowych do montażu zwory tam, gdzie nadproże nie daje pełnej powierzchni oparcia. Kątownik przenosi płaszczyznę montażu zwory na skrzydło lub ościeżnicę drzwi otwieranych na zewnątrz.',
       specs:[
@@ -1295,7 +1295,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('stabu','assets/m/stabilizator-u.webp'),
+      img:RES('stabu','/biosys-podglad/assets/m/stabilizator-u.webp'),
       name:'Stabilizator typu „U”',
       desc:'Profil zamknięty obejmujący skrzydło z trzech stron — do drzwi szklanych bez ramy i bez możliwości wiercenia w skrzydle. Płyta zworowa mocowana jest do profilu, nie do samego skrzydła.',
       specs:[
@@ -1306,7 +1306,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('stabz','assets/stabilizator-z.webp'),
+      img:RES('stabz','/biosys-podglad/assets/stabilizator-z.webp'),
       name:'Stabilizator typu „Z”',
       desc:'Płyta z odsadzeniem przenosząca płaszczyznę mocowania o grubość profilu. Stosowana przy drzwiach z wąską ościeżnicą lub przy przesunięciu skrzydła względem nadproża.',
       specs:[
@@ -1346,7 +1346,7 @@ const PAGES = [
   modelsLead:'Dwa wykonania różniące się funkcją opisaną na obudowie.',
   models:[
     {
-      img:RES('przapwr','assets/przycisk-apw1r.webp'),
+      img:RES('przapwr','/biosys-podglad/assets/przycisk-apw1r.webp'),
       name:'Przycisk ewakuacyjny BS-APW-1-R',
       desc:'Obudowa z opisem „AWARYJNE OTWIERANIE DRZWI — NACISNIJ”. Montaż przy drzwiach na drodze ewakuacyjnej, tam gdzie przejście musi dać się otworzyć bez autoryzacji.',
       specs:[
@@ -1357,7 +1357,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('przapws','assets/przycisk-apw1s.webp'),
+      img:RES('przapws','/biosys-podglad/assets/przycisk-apw1s.webp'),
       name:'Przycisk ewakuacyjny BS-APW-1-S',
       desc:'Obudowa z opisem „ZRESETUJ ZASILANIE RYGLA — WCIŚNIJ”. Stosowany tam, gdzie po otwarciu awaryjnym zasilanie elementu ryglującego trzeba przywrócić ręcznie na miejscu.',
       specs:[
@@ -1398,7 +1398,7 @@ const PAGES = [
   modelsLead:'Identyfikatory RFID są dystrybuowane przez BioSys w różnych wersjach. W zależności od specyfiki wymagań pracodawcy mogą być dystrybuowane w formie:',
   models:[
     {
-      img:RES('rfkarta','assets/rfid-karta.webp'),
+      img:RES('rfkarta','/biosys-podglad/assets/rfid-karta.webp'),
       name:'Karta zbliżeniowa',
       desc:'Wielkość karty bankomatowej. Może posiadać personalny nadruk — czarno-biały lub kolorowy — i pełnić rolę identyfikatora pracowniczego.',
       specs:[
@@ -1409,7 +1409,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('rfbrelok','assets/rfid-brelok.webp'),
+      img:RES('rfbrelok','/biosys-podglad/assets/rfid-brelok.webp'),
       name:'Brelok RFID',
       desc:'Nośnik na kluczach, odporny na uszkodzenia mechaniczne. Sprawdza się tam, gdzie karta w kieszeni odzieży roboczej szybko ulega zniszczeniu.',
       specs:[
@@ -1420,7 +1420,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('rfopaska','assets/rfid-opaska.webp'),
+      img:RES('rfopaska','/biosys-podglad/assets/rfid-opaska.webp'),
       name:'Opaska RFID',
       desc:'Noszona na ręce — do pracy w rękawicach i w wilgotnym otoczeniu, gdzie wyjęcie karty z kieszeni wydłuża każde odbicie.',
       specs:[
@@ -1431,7 +1431,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('rfnaklejka','assets/m/rfid-naklejka.webp'),
+      img:RES('rfnaklejka','/biosys-podglad/assets/m/rfid-naklejka.webp'),
       name:'Naklejka RFID',
       desc:'Przyklejana na telefon, kask lub istniejący identyfikator — pracownik nie nosi przy sobie dodatkowego nośnika.',
       specs:[
@@ -1496,8 +1496,8 @@ const PAGES = [
   docsTitle:'Ogólne Warunki Handlowe',
   docsLead:'OWH mają zastosowanie do umów sprzedaży towarów i usług zawieranych przez BioSys sp. z o.o. z kontrahentami w ramach prowadzonej przez nich działalności gospodarczej lub zawodowej. Sprzedaż nie następuje na rzecz konsumentów.',
   docs:[
-    {name:'OWH od 2021-04-01', desc:'Ogólne Warunki Handlowe BioSys spółka z ograniczoną odpowiedzialnością z dnia 2021-04-01.', href:RES('docowh','assets/docs/owh-biosys.pdf'), meta:'PDF'},
-    {name:'2023-05-15 Oświadczenie BioSys w sprawie biometrii i fotorejestracji', desc:'Stanowisko w sprawie prawnych możliwości stosowania czytników biometrycznych oraz czytników z aparatami fotograficznymi w systemach czasu pracy i kontroli dostępu.', href:RES('docbio','assets/docs/oswiadczenie-biometria-fotorejestracja-2023-05-15.pdf'), meta:'PDF'}
+    {name:'OWH od 2021-04-01', desc:'Ogólne Warunki Handlowe BioSys spółka z ograniczoną odpowiedzialnością z dnia 2021-04-01.', href:RES('docowh','/biosys-podglad/assets/docs/owh-biosys.pdf'), meta:'PDF'},
+    {name:'2023-05-15 Oświadczenie BioSys w sprawie biometrii i fotorejestracji', desc:'Stanowisko w sprawie prawnych możliwości stosowania czytników biometrycznych oraz czytników z aparatami fotograficznymi w systemach czasu pracy i kontroli dostępu.', href:RES('docbio','/biosys-podglad/assets/docs/oswiadczenie-biometria-fotorejestracja-2023-05-15.pdf'), meta:'PDF'}
   ],
   seoTitle:'Regulamin i dokumenty BioSys',
   seoLead:'Poniżej znajdują się dokumenty regulujące współpracę z BioSys sp. z o.o. oraz oświadczenia spółki dotyczące przetwarzania danych.',
@@ -1517,7 +1517,7 @@ const PAGES = [
   ctaLabel:'Chcesz wiedzieć, jak te rozwiązania sprawdzą się u Ciebie? Umów bezpłatną analizę procesu.',
   articles:[
     {
-      cat:'EWIDENCJA CZASU PRACY', img:RES('blog1','assets/blog-1.webp'),
+      cat:'EWIDENCJA CZASU PRACY', img:RES('blog1','/biosys-podglad/assets/blog-1.webp'),
       title:'Ewidencja czasu pracy – od biurokratycznego przymusu do strategicznego atutu Twojej firmy',
       d:'W erze cyfryzacji elektroniczna ewidencja czasu pracy to fundament nowoczesnego HR, który oszczędza czas, pieniądze i rozwiewa obawy związane z audytem czy RODO.',
       blocks:[
@@ -1548,7 +1548,7 @@ const PAGES = [
       ]
     },
     {
-      cat:'SYSTEMY RCP · CZĘŚĆ 1', img:RES('blog2','assets/blog-2.webp'),
+      cat:'SYSTEMY RCP · CZĘŚĆ 1', img:RES('blog2','/biosys-podglad/assets/blog-2.webp'),
       title:'Kiedy rozliczenie czasu pracy przestaje być problemem, czyli jak nowoczesna ewidencja zmieni codzienność Twojej firmy',
       d:'Największy chaos w firmie zaczyna się od kilku kartek papieru. Poznaj cztery filary skutecznego systemu RCP: oprogramowanie, sprzęt, wdrożenie i usługi.',
       blocks:[
@@ -1584,7 +1584,7 @@ const PAGES = [
       ]
     },
     {
-      cat:'SYSTEMY RCP · CZĘŚĆ 2', img:RES('blog3','assets/blog-3.webp'),
+      cat:'SYSTEMY RCP · CZĘŚĆ 2', img:RES('blog3','/biosys-podglad/assets/blog-3.webp'),
       title:'Dlaczego czytnik to nie wszystko? Na co zwrócić uwagę wybierając system RCP',
       d:'Kwestia rejestratora czasu pracy ma znaczenie, nie zaprzeczamy. W 10-stopniowej skali w naszej ocenie czytnik to 2, max 3.',
       blocks:[
@@ -1817,10 +1817,10 @@ const INTEGRATION_LOGOS = [
   };
 });
 const TESTIMONIALS = [
-  {quote:'Od początku zależało nam na tym, aby system wspierał pracę działu kadr, a nie zmieniał naszego podejścia do pracowników. Dzięki automatyzacji zyskaliśmy przejrzysty proces rozliczania czasu pracy i nadgodzin, co ułatwia codzienną pracę wszystkim zaangażowanym.', name:'Sławomir Czekaj', role:'Dyrektor Techniczno-Handlowy', company:'ZUK Oświęcim', logo:'assets/cases/zuk.svg', logoH:26, logoDark:false},
-  {quote:'Dzięki wdrożeniu nowego systemu **zyskaliśmy nie tylko czas, ale też pewność, że dane z których wyliczamy płace są w 100% poprawne**. Nie musimy już przepisywać ich ręcznie, ani sprawdzać czy wszystko się zgadza. Wiemy, że dane raz zatwierdzone w systemie RCP trafią kompletne do systemu Enova. Automatyzacja obecnych procesów i integracja z Enova zmieniły na plus naszą codzienność w zespole.', name:'Monika Sulikowska', role:'sp. ds. personalnych', company:'Mitsui High-tec (Europe) sp. z o.o.', logo:'assets/cases/mitsui.svg', logoH:26, logoDark:false},
-  {quote:'Wprowadzenie systemu przyniosło nam **konkretne, wymierne korzyści**. Dzięki integracji z systemem Comarch Optima procesy kadrowe, które wcześniej były czasochłonne i obarczone ryzykiem błędów – **zostały zautomatyzowane i znacząco skrócone.** Dane o obecnościach są teraz rzetelne i dostępne w czasie rzeczywistym. To była jedna z lepszych decyzji operacyjnych.', name:'Mateusz Pikul', role:'kierownik produkcji', company:'Polan Polsko-Francuska sp. z o.o. joint venture', logo:'assets/cases/polan.svg', logoH:20, logoDark:false},
-  {quote:'Od kiedy wdrożyliśmy elektroniczny panel pracownika nasz **zespół kadrowy oszczędza kilka godzin pracy w skali miesiąca**. Czas ten możemy przeznaczyć na realizację innych projektów. Pracownicy w końcu mają jasność co do grafików i swojego czasu pracy. Komunikują nam, że **wszystko stało się prostsze i bardziej transparentne.**', name:'Paulina Marciniak', role:'dyrektor zarządzający', company:'Bemarc sp. z o.o.', logo:'assets/cases/bemarc-white.svg', logoH:20, logoDark:true}
+  {quote:'Od początku zależało nam na tym, aby system wspierał pracę działu kadr, a nie zmieniał naszego podejścia do pracowników. Dzięki automatyzacji zyskaliśmy przejrzysty proces rozliczania czasu pracy i nadgodzin, co ułatwia codzienną pracę wszystkim zaangażowanym.', name:'Sławomir Czekaj', role:'Dyrektor Techniczno-Handlowy', company:'ZUK Oświęcim', logo:'/biosys-podglad/assets/cases/zuk.svg', logoH:26, logoDark:false},
+  {quote:'Dzięki wdrożeniu nowego systemu **zyskaliśmy nie tylko czas, ale też pewność, że dane z których wyliczamy płace są w 100% poprawne**. Nie musimy już przepisywać ich ręcznie, ani sprawdzać czy wszystko się zgadza. Wiemy, że dane raz zatwierdzone w systemie RCP trafią kompletne do systemu Enova. Automatyzacja obecnych procesów i integracja z Enova zmieniły na plus naszą codzienność w zespole.', name:'Monika Sulikowska', role:'sp. ds. personalnych', company:'Mitsui High-tec (Europe) sp. z o.o.', logo:'/biosys-podglad/assets/cases/mitsui.svg', logoH:26, logoDark:false},
+  {quote:'Wprowadzenie systemu przyniosło nam **konkretne, wymierne korzyści**. Dzięki integracji z systemem Comarch Optima procesy kadrowe, które wcześniej były czasochłonne i obarczone ryzykiem błędów – **zostały zautomatyzowane i znacząco skrócone.** Dane o obecnościach są teraz rzetelne i dostępne w czasie rzeczywistym. To była jedna z lepszych decyzji operacyjnych.', name:'Mateusz Pikul', role:'kierownik produkcji', company:'Polan Polsko-Francuska sp. z o.o. joint venture', logo:'/biosys-podglad/assets/cases/polan.svg', logoH:20, logoDark:false},
+  {quote:'Od kiedy wdrożyliśmy elektroniczny panel pracownika nasz **zespół kadrowy oszczędza kilka godzin pracy w skali miesiąca**. Czas ten możemy przeznaczyć na realizację innych projektów. Pracownicy w końcu mają jasność co do grafików i swojego czasu pracy. Komunikują nam, że **wszystko stało się prostsze i bardziej transparentne.**', name:'Paulina Marciniak', role:'dyrektor zarządzający', company:'Bemarc sp. z o.o.', logo:'/biosys-podglad/assets/cases/bemarc-white.svg', logoH:20, logoDark:true}
 ];
 const FAQ_ITEMS = [
   {q:'Czy system obsługuje różne modele czasu pracy?',a:'Tak. Projekt konfiguracji może uwzględniać różne harmonogramy, okresy rozliczeniowe, wyjątki i role właściwe dla organizacji.'},
@@ -1829,71 +1829,71 @@ const FAQ_ITEMS = [
   {q:'Czy landing pages są gotowe do kampanii?',a:'Tak. Każda strona ma dedykowany nagłówek, opis wyzwań i formularz przygotowany pod parametry kampanii płatnej.'}
 ];
 const REF_CLIENTS = [
-  {"n":"ADIENT","w":"Śląskie","b":["automotive","metal produkcja"],"s":"RCP, KD","m":"ewakuacja, web pracownik","i":"WF-GANG","r":true,"o":false,"f":"assets/ref/lite/adient.webp"},
-  {"n":"AOTiM","w":"Mazowieckie","b":["szpitale/ochrona zdrowia","budżetówka"],"s":"RCP","m":"SLA, integracja, system rozproszony","i":"Optima (Comarch)","r":true,"o":false,"f":"assets/ref/lite/aotim.webp"},
-  {"n":"APTEKI CENTRUM","w":"Warmińsko-mazurskie","b":["handel","szpitale/ochrona zdrowia"],"s":"RCP","m":"system rozproszony","i":"","r":true,"o":false,"f":"assets/ref/lite/apteki-centrum.webp"},
-  {"n":"ARCOM","w":"Małopolskie","b":["budownictwo/materiały/inżynieria"],"s":"RCP","m":"web pracownik, foto","i":"inne","r":true,"o":false,"f":"assets/ref/lite/arcom.webp"},
-  {"n":"ARKA","w":"Zachodniopomorskie","b":["woda/armatura"],"s":"RCP","m":"integracja","i":"Optima (Comarch)","r":true,"o":false,"f":"assets/ref/lite/arka.webp"},
-  {"n":"ASSA ABLOY","w":"Wielkopolskie","b":["usługi"],"s":"RCP, KD","m":"integracja","i":"Enova (Soneta)","r":true,"o":false,"f":"assets/ref/lite/assa-abloy.webp"},
-  {"n":"B&B OPAKOWANIA","w":"Lubuskie","b":["metal produkcja"],"s":"RCP, KD","m":"web pracownik","i":"Enova (Soneta)","r":true,"o":true,"f":"assets/ref/lite/b-b-opakowania.webp"},
-  {"n":"BCP OLSZÓWKA","w":"Śląskie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"web pracownik, foto, system rozproszony","i":"Infomedica","r":true,"o":false,"f":"assets/ref/lite/bcp-olszowka.webp"},
-  {"n":"BIBLIOTEKA JAGIELLOŃSKA W KRAKOWIE","w":"Małopolskie","b":["budżetówka"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/biblioteka-jagiellonska.webp"},
-  {"n":"BIOMASA","w":"Wielkopolskie","b":["eko/zuk/recycling"],"s":"RCP","m":"system rozproszony, integracja","i":"Optima (Comarch)","r":true,"o":false,"f":"assets/ref/lite/biomasa.webp"},
-  {"n":"BITTNER","w":"Mazowieckie","b":["spożywka produkcja"],"s":"RCP","m":"SLA","i":"","r":true,"o":false,"f":"assets/ref/lite/bittner.webp"},
-  {"n":"BIURO DO SPRAW SUBSTANCJI CHEMICZNYCH","w":"Łódzkie","b":["budżetówka"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/biuro-do-spraw-substancji-chemicznych.webp"},
-  {"n":"CEBI","w":"Śląskie","b":["metal produkcja"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/cebi.webp"},
-  {"n":"CONTEYOR","w":"Śląskie","b":["budownictwo/materiały/inżynieria"],"s":"RCP, KD","m":"web pracownik, ewakuacja","i":"","r":true,"o":false,"f":"assets/ref/lite/conteyor.webp"},
-  {"n":"CUKIERNIA BIAŁOGON","w":"Świętokrzyskie","b":["spożywka produkcja"],"s":"RCP","m":"web pracownik","i":"","r":true,"o":false,"f":"assets/ref/lite/cukiernia-bialogon.webp"},
-  {"n":"DALIAN TALENT","w":"Małopolskie","b":["tworzywa sztuczne/szkło produkcja"],"s":"RCP, KD","m":"web pracownik","i":"inne","r":true,"o":true,"f":"assets/ref/lite/dalian-talent.webp"},
-  {"n":"DCRiO","w":"Dolnośląskie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"web pracownik, foto, SLA","i":"inne","r":true,"o":false,"f":"assets/ref/lite/dcrio.webp"},
-  {"n":"DENTIS","w":"Mazowieckie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/dentis.webp"},
-  {"n":"DR GAJDA","w":"Zachodniopomorskie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/dr-gajda.webp"},
-  {"n":"EMITERNET","w":"Śląskie","b":["usługi","elektryka","eko/zuk/recycling"],"s":"RCP","m":"system rozproszony","i":"","r":true,"o":false,"f":"assets/ref/lite/emiternet.webp"},
-  {"n":"ESPEFA","w":"Małopolskie","b":["kosmetyki/farmacja/beauty"],"s":"RCP","m":"SLA","i":"","r":true,"o":false,"f":"assets/ref/lite/espefa.webp"},
-  {"n":"EUROPAPIER","w":"Wielkopolskie","b":["elektryka"],"s":"RCP, KD","m":"web pracownik","i":"","r":true,"o":false,"f":"assets/ref/lite/europapier.webp"},
-  {"n":"EUROPHARMA","w":"Dolnośląskie","b":["kosmetyki/farmacja/beauty"],"s":"RCP","m":"web pracownik","i":"","r":true,"o":false,"f":"assets/ref/lite/europharma.webp"},
-  {"n":"GARDNER AEROSPACE","w":"Podkarpackie","b":["budownictwo/materiały/inżynieria"],"s":"KD","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/gardner-aerospace.webp"},
-  {"n":"GRAND LUBICZ USTKA","w":"Pomorskie","b":["hotele"],"s":"RCP","m":"web pracownik, SLA","i":"Optima (Comarch)","r":true,"o":false,"f":"assets/ref/lite/grand-lubicz-ustka.webp"},
-  {"n":"HERZ","w":"Małopolskie","b":["woda/armatura"],"s":"RCP","m":"integracja","i":"Optima (Comarch)","r":true,"o":false,"f":"assets/ref/lite/herz.webp"},
-  {"n":"INSTALACJE ST","w":"Mazowieckie","b":["tworzywa sztuczne/szkło produkcja"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/instalacje-st.webp"},
-  {"n":"ISKRA ZMIŁS","w":"Świętokrzyskie","b":["metal produkcja"],"s":"RCP, KD","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/iskra-zmils.webp"},
-  {"n":"KLUB FITNESS","w":"Małopolskie","b":["usługi"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/klub-fitness.webp"},
-  {"n":"LABOKLIN","w":"Mazowieckie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"web pracownik","i":"","r":true,"o":false,"f":"assets/ref/lite/laboklin.webp"},
-  {"n":"LANDSTAL","w":"Łódzkie","b":["automotive"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/landstal.webp"},
-  {"n":"LINK2PEOPLE","w":"Mazowieckie","b":["usługi"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/link2people.webp"},
-  {"n":"LX PANTOS","w":"Mazowieckie","b":["logistyka/spedycja/transport"],"s":"RCP","m":"integracja, system rozproszony","i":"TETA","r":true,"o":false,"f":"assets/ref/lite/lx-pantos.webp"},
-  {"n":"MASTER-TECH","w":"Łódzkie","b":["logistyka/spedycja/transport","metal produkcja"],"s":"RCP, KD","m":"ewakuacja","i":"","r":true,"o":false,"f":"assets/ref/lite/master-tech.webp"},
-  {"n":"MEGAGROUP LOGISTIC","w":"Wielkopolskie","b":["logistyka/spedycja/transport"],"s":"RCP","m":"web pracownik","i":"","r":true,"o":false,"f":"assets/ref/lite/megagroup-logistic.webp"},
-  {"n":"MITSUI","w":"Opolskie","b":["automotive","metal produkcja"],"s":"RCP","m":"web pracownik","i":"Optima (Comarch)","r":true,"o":false,"f":"assets/ref/lite/mitsui.webp"},
-  {"n":"MUDEUNG","w":"Wielkopolskie","b":["elektryka"],"s":"RCP","m":"","i":"","r":true,"o":true,"f":"assets/ref/lite/mudeung.webp"},
-  {"n":"NACOMI","w":"Śląskie","b":["kosmetyki/farmacja/beauty"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/nacomi.webp"},
-  {"n":"NOV-WELD","w":"Pomorskie","b":["usługi"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/nov-weld.webp"},
-  {"n":"ORKLA CARE","w":"Mazowieckie","b":["kosmetyki/farmacja/beauty"],"s":"RCP, KD","m":"foto","i":"","r":true,"o":false,"f":"assets/ref/lite/orkla-care.webp"},
-  {"n":"PODGIK","w":"Wielkopolskie","b":["budżetówka"],"s":"RCP","m":"web pracownik, SLA","i":"","r":true,"o":false,"f":"assets/ref/lite/podgik.webp"},
-  {"n":"POLAM","w":"Śląskie","b":["metal produkcja"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/polam.webp"},
-  {"n":"POLAN","w":"Małopolskie","b":["spożywka produkcja"],"s":"RCP, KD","m":"integracja","i":"Optima (Comarch)","r":true,"o":true,"f":"assets/ref/lite/polan.webp"},
-  {"n":"POLFA LUBLIN","w":"Lubelskie","b":["kosmetyki/farmacja/beauty"],"s":"RCP, KD","m":"ewakuacja","i":"","r":true,"o":false,"f":"assets/ref/lite/polfa-lublin.webp"},
-  {"n":"POMORSKA IZBA ARCHITEKTÓW","w":"Pomorskie","b":["budownictwo/materiały/inżynieria"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/pomorska-izba-architektow.webp"},
-  {"n":"PROZON","w":"Mazowieckie","b":["usługi","eko/zuk/recycling"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/prozon.webp"},
-  {"n":"RCKIK","w":"Dolnośląskie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/rckik.webp"},
-  {"n":"REYNDERS","w":"Łódzkie","b":["papier"],"s":"RCP, KD","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/reynders.webp"},
-  {"n":"ROZBUD","w":"Podlaskie","b":["metal produkcja","budownictwo/materiały/inżynieria"],"s":"RCP","m":"system rozproszony, foto","i":"","r":true,"o":false,"f":"assets/ref/lite/rozbud.webp"},
-  {"n":"SPECKABLE","w":"Wielkopolskie","b":["budownictwo/materiały/inżynieria","elektryka"],"s":"RCP, KD","m":"web pracownik","i":"","r":true,"o":false,"f":"assets/ref/lite/speckable.webp"},
-  {"n":"STAROSTWO POWIATOWE W BIAŁYMSTOKU","w":"Podlaskie","b":["budżetówka"],"s":"RCP","m":"SLA","i":"","r":true,"o":false,"f":"assets/ref/lite/starostwo-powiatowe-w-bialymstoku.webp"},
-  {"n":"SUN GARDEN","w":"Wielkopolskie","b":["tworzywa sztuczne/szkło produkcja"],"s":"RCP, KD","m":"SLA","i":"","r":true,"o":false,"f":"assets/ref/lite/sun-garden.webp"},
-  {"n":"ŚLĄSKIE CENTRUM USŁUG WSPÓLNYCH","w":"Śląskie","b":["budżetówka"],"s":"KD","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/slaskie-centrum-us-ug-wspolnych.webp"},
-  {"n":"TARSMAK","w":"Małopolskie","b":["spożywka produkcja"],"s":"RCP, KD","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/tarsmak.webp"},
-  {"n":"TECHNOTEX","w":"Dolnośląskie","b":["tekstylia/dziewiarstwo/ubrania"],"s":"RCP, KD","m":"web pracownik","i":"","r":true,"o":false,"f":"assets/ref/lite/technotex.webp"},
-  {"n":"TOHO","w":"Mazowieckie","b":["automotive"],"s":"RCP","m":"foto","i":"","r":true,"o":false,"f":"assets/ref/lite/toho.webp"},
-  {"n":"TOLMET","w":"Łódzkie","b":["automotive","metal produkcja"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/tolmet.webp"},
-  {"n":"UM ŁÓDZKIE","w":"Łódzkie","b":["budżetówka"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/um-odzkie.webp"},
-  {"n":"URZĄD STATYSTYCZNY RZESZÓW","w":"Podkarpackie","b":["budżetówka"],"s":"RCP, KD","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/urzad-statystyczny-rzeszow.webp"},
-  {"n":"VITWORKER","w":"Kujawsko-pomorskie","b":["metal produkcja"],"s":"RCP, ZAD","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/vitworker.webp"},
-  {"n":"WCPiT","w":"Wielkopolskie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"assets/ref/lite/wcpit.webp"},
-  {"n":"WFOŚIGW W GDAŃSKU","w":"Pomorskie","b":["budżetówka"],"s":"RCP","m":"web pracownik","i":"","r":true,"o":false,"f":"assets/ref/lite/wfosigw-w-gdansku.webp"},
-  {"n":"WUP W WARSZAWIE","w":"Mazowieckie","b":["budżetówka"],"s":"RCP","m":"integracja, system rozproszony","i":"Quorum (QNT)","r":true,"o":false,"f":"assets/ref/lite/wup-w-warszawie.webp"},
-  {"n":"XELLA","w":"Mazowieckie","b":["budownictwo/materiały/inżynieria"],"s":"KD","m":"ewakuacja","i":"","r":true,"o":false,"f":"assets/ref/lite/xella.webp"},
-  {"n":"ŻABCZYŃSCY","w":"Mazowieckie","b":["spożywka produkcja"],"s":"RCP, KD","m":"ewakuacja","i":"","r":true,"o":false,"f":"assets/ref/lite/zabczynscy.webp"}
+  {"n":"ADIENT","w":"Śląskie","b":["automotive","metal produkcja"],"s":"RCP, KD","m":"ewakuacja, web pracownik","i":"WF-GANG","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/adient.webp"},
+  {"n":"AOTiM","w":"Mazowieckie","b":["szpitale/ochrona zdrowia","budżetówka"],"s":"RCP","m":"SLA, integracja, system rozproszony","i":"Optima (Comarch)","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/aotim.webp"},
+  {"n":"APTEKI CENTRUM","w":"Warmińsko-mazurskie","b":["handel","szpitale/ochrona zdrowia"],"s":"RCP","m":"system rozproszony","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/apteki-centrum.webp"},
+  {"n":"ARCOM","w":"Małopolskie","b":["budownictwo/materiały/inżynieria"],"s":"RCP","m":"web pracownik, foto","i":"inne","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/arcom.webp"},
+  {"n":"ARKA","w":"Zachodniopomorskie","b":["woda/armatura"],"s":"RCP","m":"integracja","i":"Optima (Comarch)","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/arka.webp"},
+  {"n":"ASSA ABLOY","w":"Wielkopolskie","b":["usługi"],"s":"RCP, KD","m":"integracja","i":"Enova (Soneta)","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/assa-abloy.webp"},
+  {"n":"B&B OPAKOWANIA","w":"Lubuskie","b":["metal produkcja"],"s":"RCP, KD","m":"web pracownik","i":"Enova (Soneta)","r":true,"o":true,"f":"/biosys-podglad/assets/ref/lite/b-b-opakowania.webp"},
+  {"n":"BCP OLSZÓWKA","w":"Śląskie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"web pracownik, foto, system rozproszony","i":"Infomedica","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/bcp-olszowka.webp"},
+  {"n":"BIBLIOTEKA JAGIELLOŃSKA W KRAKOWIE","w":"Małopolskie","b":["budżetówka"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/biblioteka-jagiellonska.webp"},
+  {"n":"BIOMASA","w":"Wielkopolskie","b":["eko/zuk/recycling"],"s":"RCP","m":"system rozproszony, integracja","i":"Optima (Comarch)","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/biomasa.webp"},
+  {"n":"BITTNER","w":"Mazowieckie","b":["spożywka produkcja"],"s":"RCP","m":"SLA","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/bittner.webp"},
+  {"n":"BIURO DO SPRAW SUBSTANCJI CHEMICZNYCH","w":"Łódzkie","b":["budżetówka"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/biuro-do-spraw-substancji-chemicznych.webp"},
+  {"n":"CEBI","w":"Śląskie","b":["metal produkcja"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/cebi.webp"},
+  {"n":"CONTEYOR","w":"Śląskie","b":["budownictwo/materiały/inżynieria"],"s":"RCP, KD","m":"web pracownik, ewakuacja","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/conteyor.webp"},
+  {"n":"CUKIERNIA BIAŁOGON","w":"Świętokrzyskie","b":["spożywka produkcja"],"s":"RCP","m":"web pracownik","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/cukiernia-bialogon.webp"},
+  {"n":"DALIAN TALENT","w":"Małopolskie","b":["tworzywa sztuczne/szkło produkcja"],"s":"RCP, KD","m":"web pracownik","i":"inne","r":true,"o":true,"f":"/biosys-podglad/assets/ref/lite/dalian-talent.webp"},
+  {"n":"DCRiO","w":"Dolnośląskie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"web pracownik, foto, SLA","i":"inne","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/dcrio.webp"},
+  {"n":"DENTIS","w":"Mazowieckie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/dentis.webp"},
+  {"n":"DR GAJDA","w":"Zachodniopomorskie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/dr-gajda.webp"},
+  {"n":"EMITERNET","w":"Śląskie","b":["usługi","elektryka","eko/zuk/recycling"],"s":"RCP","m":"system rozproszony","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/emiternet.webp"},
+  {"n":"ESPEFA","w":"Małopolskie","b":["kosmetyki/farmacja/beauty"],"s":"RCP","m":"SLA","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/espefa.webp"},
+  {"n":"EUROPAPIER","w":"Wielkopolskie","b":["elektryka"],"s":"RCP, KD","m":"web pracownik","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/europapier.webp"},
+  {"n":"EUROPHARMA","w":"Dolnośląskie","b":["kosmetyki/farmacja/beauty"],"s":"RCP","m":"web pracownik","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/europharma.webp"},
+  {"n":"GARDNER AEROSPACE","w":"Podkarpackie","b":["budownictwo/materiały/inżynieria"],"s":"KD","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/gardner-aerospace.webp"},
+  {"n":"GRAND LUBICZ USTKA","w":"Pomorskie","b":["hotele"],"s":"RCP","m":"web pracownik, SLA","i":"Optima (Comarch)","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/grand-lubicz-ustka.webp"},
+  {"n":"HERZ","w":"Małopolskie","b":["woda/armatura"],"s":"RCP","m":"integracja","i":"Optima (Comarch)","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/herz.webp"},
+  {"n":"INSTALACJE ST","w":"Mazowieckie","b":["tworzywa sztuczne/szkło produkcja"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/instalacje-st.webp"},
+  {"n":"ISKRA ZMIŁS","w":"Świętokrzyskie","b":["metal produkcja"],"s":"RCP, KD","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/iskra-zmils.webp"},
+  {"n":"KLUB FITNESS","w":"Małopolskie","b":["usługi"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/klub-fitness.webp"},
+  {"n":"LABOKLIN","w":"Mazowieckie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"web pracownik","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/laboklin.webp"},
+  {"n":"LANDSTAL","w":"Łódzkie","b":["automotive"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/landstal.webp"},
+  {"n":"LINK2PEOPLE","w":"Mazowieckie","b":["usługi"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/link2people.webp"},
+  {"n":"LX PANTOS","w":"Mazowieckie","b":["logistyka/spedycja/transport"],"s":"RCP","m":"integracja, system rozproszony","i":"TETA","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/lx-pantos.webp"},
+  {"n":"MASTER-TECH","w":"Łódzkie","b":["logistyka/spedycja/transport","metal produkcja"],"s":"RCP, KD","m":"ewakuacja","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/master-tech.webp"},
+  {"n":"MEGAGROUP LOGISTIC","w":"Wielkopolskie","b":["logistyka/spedycja/transport"],"s":"RCP","m":"web pracownik","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/megagroup-logistic.webp"},
+  {"n":"MITSUI","w":"Opolskie","b":["automotive","metal produkcja"],"s":"RCP","m":"web pracownik","i":"Optima (Comarch)","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/mitsui.webp"},
+  {"n":"MUDEUNG","w":"Wielkopolskie","b":["elektryka"],"s":"RCP","m":"","i":"","r":true,"o":true,"f":"/biosys-podglad/assets/ref/lite/mudeung.webp"},
+  {"n":"NACOMI","w":"Śląskie","b":["kosmetyki/farmacja/beauty"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/nacomi.webp"},
+  {"n":"NOV-WELD","w":"Pomorskie","b":["usługi"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/nov-weld.webp"},
+  {"n":"ORKLA CARE","w":"Mazowieckie","b":["kosmetyki/farmacja/beauty"],"s":"RCP, KD","m":"foto","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/orkla-care.webp"},
+  {"n":"PODGIK","w":"Wielkopolskie","b":["budżetówka"],"s":"RCP","m":"web pracownik, SLA","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/podgik.webp"},
+  {"n":"POLAM","w":"Śląskie","b":["metal produkcja"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/polam.webp"},
+  {"n":"POLAN","w":"Małopolskie","b":["spożywka produkcja"],"s":"RCP, KD","m":"integracja","i":"Optima (Comarch)","r":true,"o":true,"f":"/biosys-podglad/assets/ref/lite/polan.webp"},
+  {"n":"POLFA LUBLIN","w":"Lubelskie","b":["kosmetyki/farmacja/beauty"],"s":"RCP, KD","m":"ewakuacja","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/polfa-lublin.webp"},
+  {"n":"POMORSKA IZBA ARCHITEKTÓW","w":"Pomorskie","b":["budownictwo/materiały/inżynieria"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/pomorska-izba-architektow.webp"},
+  {"n":"PROZON","w":"Mazowieckie","b":["usługi","eko/zuk/recycling"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/prozon.webp"},
+  {"n":"RCKIK","w":"Dolnośląskie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/rckik.webp"},
+  {"n":"REYNDERS","w":"Łódzkie","b":["papier"],"s":"RCP, KD","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/reynders.webp"},
+  {"n":"ROZBUD","w":"Podlaskie","b":["metal produkcja","budownictwo/materiały/inżynieria"],"s":"RCP","m":"system rozproszony, foto","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/rozbud.webp"},
+  {"n":"SPECKABLE","w":"Wielkopolskie","b":["budownictwo/materiały/inżynieria","elektryka"],"s":"RCP, KD","m":"web pracownik","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/speckable.webp"},
+  {"n":"STAROSTWO POWIATOWE W BIAŁYMSTOKU","w":"Podlaskie","b":["budżetówka"],"s":"RCP","m":"SLA","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/starostwo-powiatowe-w-bialymstoku.webp"},
+  {"n":"SUN GARDEN","w":"Wielkopolskie","b":["tworzywa sztuczne/szkło produkcja"],"s":"RCP, KD","m":"SLA","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/sun-garden.webp"},
+  {"n":"ŚLĄSKIE CENTRUM USŁUG WSPÓLNYCH","w":"Śląskie","b":["budżetówka"],"s":"KD","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/slaskie-centrum-us-ug-wspolnych.webp"},
+  {"n":"TARSMAK","w":"Małopolskie","b":["spożywka produkcja"],"s":"RCP, KD","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/tarsmak.webp"},
+  {"n":"TECHNOTEX","w":"Dolnośląskie","b":["tekstylia/dziewiarstwo/ubrania"],"s":"RCP, KD","m":"web pracownik","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/technotex.webp"},
+  {"n":"TOHO","w":"Mazowieckie","b":["automotive"],"s":"RCP","m":"foto","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/toho.webp"},
+  {"n":"TOLMET","w":"Łódzkie","b":["automotive","metal produkcja"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/tolmet.webp"},
+  {"n":"UM ŁÓDZKIE","w":"Łódzkie","b":["budżetówka"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/um-odzkie.webp"},
+  {"n":"URZĄD STATYSTYCZNY RZESZÓW","w":"Podkarpackie","b":["budżetówka"],"s":"RCP, KD","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/urzad-statystyczny-rzeszow.webp"},
+  {"n":"VITWORKER","w":"Kujawsko-pomorskie","b":["metal produkcja"],"s":"RCP, ZAD","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/vitworker.webp"},
+  {"n":"WCPiT","w":"Wielkopolskie","b":["szpitale/ochrona zdrowia"],"s":"RCP","m":"","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/wcpit.webp"},
+  {"n":"WFOŚIGW W GDAŃSKU","w":"Pomorskie","b":["budżetówka"],"s":"RCP","m":"web pracownik","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/wfosigw-w-gdansku.webp"},
+  {"n":"WUP W WARSZAWIE","w":"Mazowieckie","b":["budżetówka"],"s":"RCP","m":"integracja, system rozproszony","i":"Quorum (QNT)","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/wup-w-warszawie.webp"},
+  {"n":"XELLA","w":"Mazowieckie","b":["budownictwo/materiały/inżynieria"],"s":"KD","m":"ewakuacja","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/xella.webp"},
+  {"n":"ŻABCZYŃSCY","w":"Mazowieckie","b":["spożywka produkcja"],"s":"RCP, KD","m":"ewakuacja","i":"","r":true,"o":false,"f":"/biosys-podglad/assets/ref/lite/zabczynscy.webp"}
 ];
 const REF_BRANCH_LABELS = {
   'metal produkcja':'Przemysł metalowy',

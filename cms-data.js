@@ -7,7 +7,7 @@ const CHECKLIST = ['Zakup lub wynajem','Integracje kadrowo-płacowe','System dos
 const CASE_STUDIES = [
 {
   key:'polan', brand:'POLAN Sp. z o.o.', meta:'Przetwory warzywne i owocowe · produkcja i biuro',
-  logo:'assets/cases/polan.svg', logoMaxH:26, logoDark:false,
+  logo:'/biosys-podglad/assets/cases/polan.svg', logoMaxH:26, logoDark:false,
   tags:['RCP','KD','Comarch Optima'],
   title:'Kołowrót zdarzeń – jak połączenie systemu RCP i KD usprawniło działanie firmy POLAN',
   lead:'POLAN to polsko-francuska spółka z o.o., specjalizująca się w produkcji wysokiej jakości przetworów warzywnych i owocowych. Firma od lat stawia na rozwój i nowoczesne technologie, które wspierają codzienną pracę – zarówno na hali produkcyjnej, jak i w biurze.',
@@ -30,7 +30,7 @@ const CASE_STUDIES = [
 },
 {
   key:'bemarc', brand:'Bemarc Sp. z o.o.', meta:'Meble ekspozycyjne i wyposażenie wnętrz · Jasin pod Poznaniem',
-  logo:'assets/cases/bemarc-white.svg', logoMaxH:24, logoDark:true,
+  logo:'/biosys-podglad/assets/cases/bemarc-white.svg', logoMaxH:24, logoDark:true,
   tags:['Web Pracownik'],
   title:'Od tablicy korkowej do cyfrowego HR-u czyli jak Bemarc uporządkował procesy kadrowe z Web Pracownikiem',
   lead:'Bemarc Sp. z o.o. to producent mebli ekspozycyjnych i wyposażenia wnętrz komercyjnych z siedzibą w Jasinie pod Poznaniem. Działa nieprzerwanie od 1980 roku.',
@@ -53,7 +53,7 @@ const CASE_STUDIES = [
 },
 {
   key:'mitsui', brand:'MITSUI HIGH-TEC (EUROPE)', meta:'Precyzyjne rdzenie silnikowe dla motoryzacji · ponad 250 pracowników',
-  logo:'assets/cases/mitsui.svg', logoMaxH:52, logoDark:false,
+  logo:'/biosys-podglad/assets/cases/mitsui.svg', logoMaxH:52, logoDark:false,
   tags:['RCP','enova'],
   title:'Bezbłędny przekaz – jak RCP i integracja z Enovą usprawniły codzienną pracę w MITSUI HIGH-TEC (EUROPE)',
   lead:'MITSUI HIGH-TEC (EUROPE) to firma o japońskich korzeniach, obecna w Polsce od 2018 roku. Specjalizuje się w produkcji precyzyjnych rdzeni silnikowych, dostarczanych do czołowych producentów z branży motoryzacyjnej. Zatrudnia w Polsce ponad 250 pracowników.',
@@ -101,7 +101,7 @@ const CASE_STUDIES = [
 },
 {
   key:'zuk', brand:'ZUK Oświęcim', meta:'Usługi komunalne · praca w wielu lokalizacjach',
-  logo:'assets/cases/zuk.svg', logoMaxH:52, logoDark:false,
+  logo:'/biosys-podglad/assets/cases/zuk.svg', logoMaxH:52, logoDark:false,
   tags:['RCP','enova365'],
   title:'RCP zbudowane na zaufaniu',
   lead:'Zakład Usług Komunalnych Sp. z o.o. w Oświęcimiu odpowiada za realizację kluczowych usług komunalnych na rzecz mieszkańców miasta.',
@@ -749,10 +749,10 @@ const PAGES = [
   heroVariant:'photo', hasForm:false, hasCtaBand:true,
   ctaLabel:'Powiedz nam, ile osób pracuje w firmie i gdzie ma stanąć urządzenie — dobierzemy wersję i pokażemy ją na żywo.',
   gallery:[
-    {img:RES('rcp400','assets/rcp-400.webp'), cap:'Wersja odporna na pył i wilgoć'},
-    {img:RES('rcp300','assets/rcp-300.webp'), cap:'Wersja z wysokim ekranem'},
-    {img:RES('rcp200','assets/rcp-200.webp'), cap:'Wersja z ekranem dotykowym'},
-    {img:RES('rcp100','assets/rcp-100.webp'), cap:'Wersja z klawiaturą — do hali i magazynu'}
+    {img:RES('rcp400','/biosys-podglad/assets/rcp-400.webp'), cap:'Wersja odporna na pył i wilgoć'},
+    {img:RES('rcp300','/biosys-podglad/assets/rcp-300.webp'), cap:'Wersja z wysokim ekranem'},
+    {img:RES('rcp200','/biosys-podglad/assets/rcp-200.webp'), cap:'Wersja z ekranem dotykowym'},
+    {img:RES('rcp100','/biosys-podglad/assets/rcp-100.webp'), cap:'Wersja z klawiaturą — do hali i magazynu'}
   ],
   galleryTitle:'Jak to wygląda',
   galleryLead:'Kilka wersji urządzeń, które montujemy przy wejściach. Konkretny model dobieramy pod firmę — dostępność zmienia się razem z ofertą naszych dostawców.',
@@ -775,9 +775,9 @@ const PAGES = [
   heroVariant:'photo', hasForm:false, hasCtaBand:true,
   ctaLabel:'Napisz, ile przejść chcesz objąć kontrolą i jak są dziś otwierane — zaproponujemy rozwiązanie.',
   gallery:[
-    {img:RES('brus1','assets/brus1.webp'), cap:'Bramka w recepcji'},
-    {img:RES('ts1000','assets/ts1000.webp'), cap:'Przejście jednoosobowe w zakładzie'},
-    {img:RES('bw1','assets/bw-1.webp'), cap:'Przejście pełnej wysokości'}
+    {img:RES('brus1','/biosys-podglad/assets/brus1.webp'), cap:'Bramka w recepcji'},
+    {img:RES('ts1000','/biosys-podglad/assets/ts1000.webp'), cap:'Przejście jednoosobowe w zakładzie'},
+    {img:RES('bw1','/biosys-podglad/assets/bw-1.webp'), cap:'Przejście pełnej wysokości'}
   ],
   galleryTitle:'Przejścia, którymi steruje kontroler',
   galleryLead:'Te same zasady dostępu obsługują drzwi biurowe, bramki w recepcji i przejścia na terenie zakładu. Wykonanie dobieramy do obiektu — sprzęt kompletujemy u różnych dostawców.',
@@ -800,10 +800,10 @@ const PAGES = [
   heroVariant:'photo', hasForm:false, hasCtaBand:true,
   ctaLabel:'Powiedz, w jakich warunkach pracują Twoi pracownicy — dobierzemy identyfikator, który się u nich sprawdzi.',
   gallery:[
-    {img:RES('rfkarta','assets/rfid-karta.webp'), cap:'Karta z możliwością nadruku'},
-    {img:RES('rfbrelok','assets/rfid-brelok.webp'), cap:'Brelok na kluczach'},
-    {img:RES('rfopaska','assets/rfid-opaska.webp'), cap:'Opaska na rękę — do pracy w rękawicach'},
-    {img:RES('rfnaklejka','assets/rfid-naklejka.webp'), cap:'Naklejka na telefon lub kask'}
+    {img:RES('rfkarta','/biosys-podglad/assets/rfid-karta.webp'), cap:'Karta z możliwością nadruku'},
+    {img:RES('rfbrelok','/biosys-podglad/assets/rfid-brelok.webp'), cap:'Brelok na kluczach'},
+    {img:RES('rfopaska','/biosys-podglad/assets/rfid-opaska.webp'), cap:'Opaska na rękę — do pracy w rękawicach'},
+    {img:RES('rfnaklejka','/biosys-podglad/assets/rfid-naklejka.webp'), cap:'Naklejka na telefon lub kask'}
   ],
   galleryTitle:'Czym pracownik się identyfikuje',
   galleryLead:'Identyfikator dobiera się do warunków pracy — karta w biurze, brelok lub opaska tam, gdzie karta szybko się niszczy. Każdy ma własny numer, więc rozpoznanie jest jednoznaczne.',
@@ -854,7 +854,7 @@ const PAGES = [
   modelsLead:'Oba modele mają identyczne parametry pracy i różnią się szerokością przejścia oraz konfiguracją czytników.',
   models:[
     {
-      img:RES('ts1000','assets/ts1000.webp'),
+      img:RES('ts1000','/biosys-podglad/assets/ts1000.webp'),
       name:'Kołowrót TS1000',
       desc:'Pojedyncze przejście z głowicą pod czytnik zbliżeniowy i moduł biometryczny. Węższa podstawa — sprawdza się w portierniach i wejściach o ograniczonej szerokości.',
       specs:[
@@ -871,7 +871,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('ts1200','assets/ts1200.webp'),
+      img:RES('ts1200','/biosys-podglad/assets/ts1200.webp'),
       name:'Tripod TS1200',
       desc:'Wersja z szerszą podstawą i sygnalizacją stanu przejścia na głowicy, przystosowana do zestawiania w ciągi dwu- i wielotorowe przy wejściach o dużym natężeniu ruchu.',
       specs:[
@@ -919,7 +919,7 @@ const PAGES = [
   modelsLead:'Bramka jednoskrzydłowa do zestawiania w ciągi — dwa słupki tworzą przejście dwukierunkowe, kolejne rozbudowują wejście o następne torowiska.',
   models:[
     {
-      img:RES('brus1','assets/brus1.webp'),
+      img:RES('brus1','/biosys-podglad/assets/brus1.webp'),
       name:'Bramka uchylna BS-BRUS1',
       desc:'Słupek ze stali nierdzewnej z czytnikiem zbliżeniowym, sygnalizacją LED na głowicy i szklanym skrzydłem uchylnym. Szerokość przejścia 90 cm obsługuje ruch z wózkiem, bagażem oraz przejście osób z niepełnosprawnościami.',
       specs:[
@@ -966,7 +966,7 @@ const PAGES = [
   modelsLead:'Oba modele mają tę samą konstrukcję i parametry pracy — różnią się liczbą przejść w jednej bramie.',
   models:[
     {
-      img:RES('bw1','assets/bw-1.webp'),
+      img:RES('bw1','/biosys-podglad/assets/bw-1.webp'),
       name:'Brama wysoka BS-BW-1',
       desc:'Jedno przejście kontrolowane w konstrukcji pełnej wysokości, z sygnalizacją kierunku na belce górnej i czytnikiem na słupku. Do wejść i wyjść obsługiwanych pojedynczo.',
       specs:[
@@ -982,7 +982,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('bw2','assets/bw-2.webp'),
+      img:RES('bw2','/biosys-podglad/assets/bw-2.webp'),
       name:'Brama wysoka BS-BW-2',
       desc:'Dwa przejścia we wspólnej konstrukcji — osobno dla wejścia i wyjścia albo dwa równoległe torowiska na wejściu o dużym natężeniu ruchu. Każde przejście ma własny czytnik i sygnalizację kierunku.',
       specs:[
@@ -1043,7 +1043,7 @@ const PAGES = [
   modelsLead:'Trzy typy zasilania w pięciu wykonaniach — wybór zależy od tego, czy instalacja ma pracować przy zaniku prądu i jak długo.',
   models:[
     {
-      img:RES('zasbuf12','assets/zas-buforowy-12v.webp'),
+      img:RES('zasbuf12','/biosys-podglad/assets/zas-buforowy-12v.webp'),
       name:'Zasilacz buforowy 12 V — obudowa metalowa',
       desc:'Zasilacz do podtrzymania zasilania 12 V w obudowie metalowej z wentylacją. Podstawowe rozwiązanie dla kontroli dostępu, gdzie przejścia muszą działać także po zaniku napięcia sieciowego.',
       specs:[
@@ -1054,7 +1054,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('zasbuf18','assets/zas-buforowy-18ah.webp'),
+      img:RES('zasbuf18','/biosys-podglad/assets/zas-buforowy-18ah.webp'),
       name:'Zasilacz buforowy 1,3 / 7 / 18 Ah',
       desc:'Obudowa z miejscem na akumulator o pojemności 1,3 Ah, 7 Ah lub 18 Ah — pojemność dobiera się do liczby przejść i wymaganego czasu podtrzymania.',
       specs:[
@@ -1065,7 +1065,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('zasimpk','assets/zas-impulsowy-kostka.webp'),
+      img:RES('zasimpk','/biosys-podglad/assets/zas-impulsowy-kostka.webp'),
       name:'Zasilacz impulsowy kostkowy',
       desc:'Wtyczkowy zasilacz 12 V do pojedynczego urządzenia — rejestratora czasu pracy, czytnika lub kontrolera przy jednym przejściu. Nie wymaga puszki ani szafki instalacyjnej.',
       specs:[
@@ -1077,7 +1077,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('zasimpp','assets/zas-impulsowy-przewod.webp'),
+      img:RES('zasimpp','/biosys-podglad/assets/zas-impulsowy-przewod.webp'),
       name:'Zasilacz impulsowy z przewodem',
       desc:'Zasilacz 12 V / 1 A z odseparowanym przewodem sieciowym — do montażu w miejscach, gdzie gniazdo jest oddalone od urządzenia lub schowane w kanale kablowym.',
       specs:[
@@ -1089,7 +1089,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('zasups','assets/zas-miniups.webp'),
+      img:RES('zasups','/biosys-podglad/assets/zas-miniups.webp'),
       name:'Zasilacz awaryjny Mini UPS 12 V',
       desc:'Kompaktowy Mini UPS 12 V z wbudowanym akumulatorem. Włącza się między zasilacz i urządzenie, więc dodaje podtrzymanie do istniejącej instalacji bez wymiany zasilacza i przeróbek okablowania.',
       specs:[
@@ -1131,7 +1131,7 @@ const PAGES = [
   modelsLead:'Zwora elektromagnetyczna z kompletem montażowym oraz trzy typy stabilizatorów, którymi dopasowuje się montaż do konstrukcji drzwi i ościeżnicy.',
   models:[
     {
-      img:RES('zwem300','assets/zwora-em300.webp'),
+      img:RES('zwem300','/biosys-podglad/assets/zwora-em300.webp'),
       name:'Zwora elektromagnetyczna BS EM-300',
       desc:'Zwora natynkowa z płytą zworową i kompletem montażowym: śruby, podkładki, kołki i klucze imbusowe. Elektromagnes utrzymuje skrzydło przez cały czas zasilania, a odcięcie napięcia — po autoryzacji, sygnale z przycisku ewakuacyjnego lub zaniku prądu — zwalnia przejście.',
       specs:[
@@ -1144,7 +1144,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('stabl','assets/stabilizator-l.webp'),
+      img:RES('stabl','/biosys-podglad/assets/stabilizator-l.webp'),
       name:'Stabilizator typu „L”',
       desc:'Para kątowników aluminiowych do montażu zwory tam, gdzie nadproże nie daje pełnej powierzchni oparcia. Kątownik przenosi płaszczyznę montażu zwory na skrzydło lub ościeżnicę drzwi otwieranych na zewnątrz.',
       specs:[
@@ -1155,7 +1155,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('stabu','assets/stabilizator-u.webp'),
+      img:RES('stabu','/biosys-podglad/assets/stabilizator-u.webp'),
       name:'Stabilizator typu „U”',
       desc:'Profil zamknięty obejmujący skrzydło z trzech stron — do drzwi szklanych bez ramy i bez możliwości wiercenia w skrzydle. Płyta zworowa mocowana jest do profilu, nie do samego skrzydła.',
       specs:[
@@ -1166,7 +1166,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('stabz','assets/stabilizator-z.webp'),
+      img:RES('stabz','/biosys-podglad/assets/stabilizator-z.webp'),
       name:'Stabilizator typu „Z”',
       desc:'Płyta z odsadzeniem przenosząca płaszczyznę mocowania o grubość profilu. Stosowana przy drzwiach z wąską ościeżnicą lub przy przesunięciu skrzydła względem nadproża.',
       specs:[
@@ -1206,7 +1206,7 @@ const PAGES = [
   modelsLead:'Dwa wykonania różniące się funkcją opisaną na obudowie.',
   models:[
     {
-      img:RES('przapwr','assets/przycisk-apw1r.webp'),
+      img:RES('przapwr','/biosys-podglad/assets/przycisk-apw1r.webp'),
       name:'Przycisk ewakuacyjny BS-APW-1-R',
       desc:'Obudowa z opisem „AWARYJNE OTWIERANIE DRZWI — NACISNIJ”. Montaż przy drzwiach na drodze ewakuacyjnej, tam gdzie przejście musi dać się otworzyć bez autoryzacji.',
       specs:[
@@ -1217,7 +1217,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('przapws','assets/przycisk-apw1s.webp'),
+      img:RES('przapws','/biosys-podglad/assets/przycisk-apw1s.webp'),
       name:'Przycisk ewakuacyjny BS-APW-1-S',
       desc:'Obudowa z opisem „ZRESETUJ ZASILANIE RYGLA — WCIŚNIJ”. Stosowany tam, gdzie po otwarciu awaryjnym zasilanie elementu ryglującego trzeba przywrócić ręcznie na miejscu.',
       specs:[
@@ -1258,7 +1258,7 @@ const PAGES = [
   modelsLead:'Identyfikatory RFID są dystrybuowane przez BioSys w różnych wersjach. W zależności od specyfiki wymagań pracodawcy mogą być dystrybuowane w formie:',
   models:[
     {
-      img:RES('rfkarta','assets/rfid-karta.webp'),
+      img:RES('rfkarta','/biosys-podglad/assets/rfid-karta.webp'),
       name:'Karta zbliżeniowa',
       desc:'Wielkość karty bankomatowej. Może posiadać personalny nadruk — czarno-biały lub kolorowy — i pełnić rolę identyfikatora pracowniczego.',
       specs:[
@@ -1269,7 +1269,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('rfbrelok','assets/rfid-brelok.webp'),
+      img:RES('rfbrelok','/biosys-podglad/assets/rfid-brelok.webp'),
       name:'Brelok RFID',
       desc:'Nośnik na kluczach, odporny na uszkodzenia mechaniczne. Sprawdza się tam, gdzie karta w kieszeni odzieży roboczej szybko ulega zniszczeniu.',
       specs:[
@@ -1280,7 +1280,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('rfopaska','assets/rfid-opaska.webp'),
+      img:RES('rfopaska','/biosys-podglad/assets/rfid-opaska.webp'),
       name:'Opaska RFID',
       desc:'Noszona na ręce — do pracy w rękawicach i w wilgotnym otoczeniu, gdzie wyjęcie karty z kieszeni wydłuża każde odbicie.',
       specs:[
@@ -1291,7 +1291,7 @@ const PAGES = [
       ]
     },
     {
-      img:RES('rfnaklejka','assets/rfid-naklejka.webp'),
+      img:RES('rfnaklejka','/biosys-podglad/assets/rfid-naklejka.webp'),
       name:'Naklejka RFID',
       desc:'Przyklejana na telefon, kask lub istniejący identyfikator — pracownik nie nosi przy sobie dodatkowego nośnika.',
       specs:[
@@ -1356,8 +1356,8 @@ const PAGES = [
   docsTitle:'Ogólne Warunki Handlowe',
   docsLead:'OWH mają zastosowanie do umów sprzedaży towarów i usług zawieranych przez BioSys sp. z o.o. z kontrahentami w ramach prowadzonej przez nich działalności gospodarczej lub zawodowej. Sprzedaż nie następuje na rzecz konsumentów.',
   docs:[
-    {name:'OWH od 2021-04-01', desc:'Ogólne Warunki Handlowe BioSys spółka z ograniczoną odpowiedzialnością z dnia 2021-04-01.', href:RES('docowh','assets/docs/owh-biosys.pdf'), meta:'PDF'},
-    {name:'2023-05-15 Oświadczenie BioSys w sprawie biometrii i fotorejestracji', desc:'Stanowisko w sprawie prawnych możliwości stosowania czytników biometrycznych oraz czytników z aparatami fotograficznymi w systemach czasu pracy i kontroli dostępu.', href:RES('docbio','assets/docs/oswiadczenie-biometria-fotorejestracja-2023-05-15.pdf'), meta:'PDF'}
+    {name:'OWH od 2021-04-01', desc:'Ogólne Warunki Handlowe BioSys spółka z ograniczoną odpowiedzialnością z dnia 2021-04-01.', href:RES('docowh','/biosys-podglad/assets/docs/owh-biosys.pdf'), meta:'PDF'},
+    {name:'2023-05-15 Oświadczenie BioSys w sprawie biometrii i fotorejestracji', desc:'Stanowisko w sprawie prawnych możliwości stosowania czytników biometrycznych oraz czytników z aparatami fotograficznymi w systemach czasu pracy i kontroli dostępu.', href:RES('docbio','/biosys-podglad/assets/docs/oswiadczenie-biometria-fotorejestracja-2023-05-15.pdf'), meta:'PDF'}
   ],
   seoTitle:'Regulamin i dokumenty BioSys',
   seoLead:'Poniżej znajdują się dokumenty regulujące współpracę z BioSys sp. z o.o. oraz oświadczenia spółki dotyczące przetwarzania danych.',
@@ -1377,7 +1377,7 @@ const PAGES = [
   ctaLabel:'Chcesz wiedzieć, jak te rozwiązania sprawdzą się u Ciebie? Umów bezpłatną analizę procesu.',
   articles:[
     {
-      cat:'EWIDENCJA CZASU PRACY', img:RES('blog1','assets/blog-1.webp'),
+      cat:'EWIDENCJA CZASU PRACY', img:RES('blog1','/biosys-podglad/assets/blog-1.webp'),
       title:'Ewidencja czasu pracy – od biurokratycznego przymusu do strategicznego atutu Twojej firmy',
       d:'W erze cyfryzacji elektroniczna ewidencja czasu pracy to fundament nowoczesnego HR, który oszczędza czas, pieniądze i rozwiewa obawy związane z audytem czy RODO.',
       blocks:[
@@ -1408,7 +1408,7 @@ const PAGES = [
       ]
     },
     {
-      cat:'SYSTEMY RCP · CZĘŚĆ 1', img:RES('blog2','assets/blog-2.webp'),
+      cat:'SYSTEMY RCP · CZĘŚĆ 1', img:RES('blog2','/biosys-podglad/assets/blog-2.webp'),
       title:'Kiedy rozliczenie czasu pracy przestaje być problemem, czyli jak nowoczesna ewidencja zmieni codzienność Twojej firmy',
       d:'Największy chaos w firmie zaczyna się od kilku kartek papieru. Poznaj cztery filary skutecznego systemu RCP: oprogramowanie, sprzęt, wdrożenie i usługi.',
       blocks:[
@@ -1444,7 +1444,7 @@ const PAGES = [
       ]
     },
     {
-      cat:'SYSTEMY RCP · CZĘŚĆ 2', img:RES('blog3','assets/blog-3.webp'),
+      cat:'SYSTEMY RCP · CZĘŚĆ 2', img:RES('blog3','/biosys-podglad/assets/blog-3.webp'),
       title:'Dlaczego czytnik to nie wszystko? Na co zwrócić uwagę wybierając system RCP',
       d:'Kwestia rejestratora czasu pracy ma znaczenie, nie zaprzeczamy. W 10-stopniowej skali w naszej ocenie czytnik to 2, max 3.',
       blocks:[
@@ -1633,10 +1633,10 @@ const TRUST_STATS = [
 ];
 
 const TESTIMONIALS = [
-  {quote:'Od początku zależało nam na tym, aby system wspierał pracę działu kadr, a nie zmieniał naszego podejścia do pracowników. Dzięki automatyzacji zyskaliśmy przejrzysty proces rozliczania czasu pracy i nadgodzin, co ułatwia codzienną pracę wszystkim zaangażowanym.', name:'Sławomir Czekaj', role:'Dyrektor Techniczno-Handlowy', company:'ZUK Oświęcim', logo:'assets/cases/zuk.svg', logoH:26, logoDark:false},
-  {quote:'Dzięki wdrożeniu nowego systemu **zyskaliśmy nie tylko czas, ale też pewność, że dane z których wyliczamy płace są w 100% poprawne**. Nie musimy już przepisywać ich ręcznie, ani sprawdzać czy wszystko się zgadza. Wiemy, że dane raz zatwierdzone w systemie RCP trafią kompletne do systemu Enova. Automatyzacja obecnych procesów i integracja z Enova zmieniły na plus naszą codzienność w zespole.', name:'Monika Sulikowska', role:'sp. ds. personalnych', company:'Mitsui High-tec (Europe) sp. z o.o.', logo:'assets/cases/mitsui.svg', logoH:26, logoDark:false},
-  {quote:'Wprowadzenie systemu przyniosło nam **konkretne, wymierne korzyści**. Dzięki integracji z systemem Comarch Optima procesy kadrowe, które wcześniej były czasochłonne i obarczone ryzykiem błędów – **zostały zautomatyzowane i znacząco skrócone.** Dane o obecnościach są teraz rzetelne i dostępne w czasie rzeczywistym. To była jedna z lepszych decyzji operacyjnych.', name:'Mateusz Pikul', role:'kierownik produkcji', company:'Polan Polsko-Francuska sp. z o.o. joint venture', logo:'assets/cases/polan.svg', logoH:20, logoDark:false},
-  {quote:'Od kiedy wdrożyliśmy elektroniczny panel pracownika nasz **zespół kadrowy oszczędza kilka godzin pracy w skali miesiąca**. Czas ten możemy przeznaczyć na realizację innych projektów. Pracownicy w końcu mają jasność co do grafików i swojego czasu pracy. Komunikują nam, że **wszystko stało się prostsze i bardziej transparentne.**', name:'Paulina Marciniak', role:'dyrektor zarządzający', company:'Bemarc sp. z o.o.', logo:'assets/cases/bemarc-white.svg', logoH:20, logoDark:true}
+  {quote:'Od początku zależało nam na tym, aby system wspierał pracę działu kadr, a nie zmieniał naszego podejścia do pracowników. Dzięki automatyzacji zyskaliśmy przejrzysty proces rozliczania czasu pracy i nadgodzin, co ułatwia codzienną pracę wszystkim zaangażowanym.', name:'Sławomir Czekaj', role:'Dyrektor Techniczno-Handlowy', company:'ZUK Oświęcim', logo:'/biosys-podglad/assets/cases/zuk.svg', logoH:26, logoDark:false},
+  {quote:'Dzięki wdrożeniu nowego systemu **zyskaliśmy nie tylko czas, ale też pewność, że dane z których wyliczamy płace są w 100% poprawne**. Nie musimy już przepisywać ich ręcznie, ani sprawdzać czy wszystko się zgadza. Wiemy, że dane raz zatwierdzone w systemie RCP trafią kompletne do systemu Enova. Automatyzacja obecnych procesów i integracja z Enova zmieniły na plus naszą codzienność w zespole.', name:'Monika Sulikowska', role:'sp. ds. personalnych', company:'Mitsui High-tec (Europe) sp. z o.o.', logo:'/biosys-podglad/assets/cases/mitsui.svg', logoH:26, logoDark:false},
+  {quote:'Wprowadzenie systemu przyniosło nam **konkretne, wymierne korzyści**. Dzięki integracji z systemem Comarch Optima procesy kadrowe, które wcześniej były czasochłonne i obarczone ryzykiem błędów – **zostały zautomatyzowane i znacząco skrócone.** Dane o obecnościach są teraz rzetelne i dostępne w czasie rzeczywistym. To była jedna z lepszych decyzji operacyjnych.', name:'Mateusz Pikul', role:'kierownik produkcji', company:'Polan Polsko-Francuska sp. z o.o. joint venture', logo:'/biosys-podglad/assets/cases/polan.svg', logoH:20, logoDark:false},
+  {quote:'Od kiedy wdrożyliśmy elektroniczny panel pracownika nasz **zespół kadrowy oszczędza kilka godzin pracy w skali miesiąca**. Czas ten możemy przeznaczyć na realizację innych projektów. Pracownicy w końcu mają jasność co do grafików i swojego czasu pracy. Komunikują nam, że **wszystko stało się prostsze i bardziej transparentne.**', name:'Paulina Marciniak', role:'dyrektor zarządzający', company:'Bemarc sp. z o.o.', logo:'/biosys-podglad/assets/cases/bemarc-white.svg', logoH:20, logoDark:true}
 ];
 
 const FAQ_ITEMS = [
@@ -1717,152 +1717,152 @@ const REF_CLIENTS = [
 const CLIENT_LOGOS = [
  {
   "name": "IKEA",
-  "path": "assets/clients/ikea.svg",
+  "path": "/biosys-podglad/assets/clients/ikea.svg",
   "alt": "Logo klienta BioSys — IKEA"
  },
  {
   "name": "Żywiec",
-  "path": "assets/clients/zywiec.svg",
+  "path": "/biosys-podglad/assets/clients/zywiec.svg",
   "alt": "Logo klienta BioSys — Żywiec"
  },
  {
   "name": "Kross",
-  "path": "assets/clients/kross.svg",
+  "path": "/biosys-podglad/assets/clients/kross.svg",
   "alt": "Logo klienta BioSys — Kross"
  },
  {
   "name": "FAKRO",
-  "path": "assets/clients/fakro.webp",
+  "path": "/biosys-podglad/assets/clients/fakro.webp",
   "alt": "Logo klienta BioSys — FAKRO"
  },
  {
   "name": "Mlekpol",
-  "path": "assets/clients/mlekpol.webp",
+  "path": "/biosys-podglad/assets/clients/mlekpol.webp",
   "alt": "Logo klienta BioSys — Mlekpol"
  },
  {
   "name": "Jamar",
-  "path": "assets/clients/jamar.webp",
+  "path": "/biosys-podglad/assets/clients/jamar.webp",
   "alt": "Logo klienta BioSys — Jamar"
  },
  {
   "name": "Iskra",
-  "path": "assets/clients/iskra.webp",
+  "path": "/biosys-podglad/assets/clients/iskra.webp",
   "alt": "Logo klienta BioSys — Iskra"
  },
  {
   "name": "Polfa",
-  "path": "assets/clients/polfa.svg",
+  "path": "/biosys-podglad/assets/clients/polfa.svg",
   "alt": "Logo klienta BioSys — Polfa"
  },
  {
   "name": "Bialogon",
-  "path": "assets/clients/bialogon.svg",
+  "path": "/biosys-podglad/assets/clients/bialogon.svg",
   "alt": "Logo klienta BioSys — Bialogon"
  },
  {
   "name": "Eveline",
-  "path": "assets/clients/eveline.webp",
+  "path": "/biosys-podglad/assets/clients/eveline.webp",
   "alt": "Logo klienta BioSys — Eveline"
  },
  {
   "name": "Pruszyński",
-  "path": "assets/clients/pruszynski-color.webp",
+  "path": "/biosys-podglad/assets/clients/pruszynski-color.webp",
   "alt": "Logo klienta BioSys — Pruszyński"
  },
  {
   "name": "FoodCare",
-  "path": "assets/clients/foodcare.webp",
+  "path": "/biosys-podglad/assets/clients/foodcare.webp",
   "alt": "Logo klienta BioSys — FoodCare"
  },
  {
   "name": "Inglot",
-  "path": "assets/clients/inglot.webp",
+  "path": "/biosys-podglad/assets/clients/inglot.webp",
   "alt": "Logo klienta BioSys — Inglot"
  },
  {
   "name": "Adient",
-  "path": "assets/clients/adient.svg",
+  "path": "/biosys-podglad/assets/clients/adient.svg",
   "alt": "Logo klienta BioSys — Adient"
  },
  {
   "name": "Bell",
-  "path": "assets/clients/bell.svg",
+  "path": "/biosys-podglad/assets/clients/bell.svg",
   "alt": "Logo klienta BioSys — Bell"
  },
  {
   "name": "H. Cegielski-Poznań",
-  "path": "assets/clients/hcp.webp",
+  "path": "/biosys-podglad/assets/clients/hcp.webp",
   "alt": "Logo klienta BioSys — H. Cegielski-Poznań"
  },
  {
   "name": "Biblioteka Jagiellońska",
-  "path": "assets/clients/biblioteka-jagiellonska.svg",
+  "path": "/biosys-podglad/assets/clients/biblioteka-jagiellonska.svg",
   "alt": "Logo klienta BioSys — Biblioteka Jagiellońska"
  },
  {
   "name": "Biodened",
-  "path": "assets/clients/biodened.svg",
+  "path": "/biosys-podglad/assets/clients/biodened.svg",
   "alt": "Logo klienta BioSys — Biodened"
  },
  {
   "name": "Dako",
-  "path": "assets/clients/dako.svg",
+  "path": "/biosys-podglad/assets/clients/dako.svg",
   "alt": "Logo klienta BioSys — Dako"
  },
  {
   "name": "Europapier",
-  "path": "assets/clients/europapier.svg",
+  "path": "/biosys-podglad/assets/clients/europapier.svg",
   "alt": "Logo klienta BioSys — Europapier"
  },
  {
   "name": "Grand Lubicz",
-  "path": "assets/clients/grand-lubicz.webp",
+  "path": "/biosys-podglad/assets/clients/grand-lubicz.webp",
   "alt": "Logo klienta BioSys — Grand Lubicz"
  },
  {
   "name": "Greenpoint",
-  "path": "assets/clients/greenpoint.svg",
+  "path": "/biosys-podglad/assets/clients/greenpoint.svg",
   "alt": "Logo klienta BioSys — Greenpoint"
  },
  {
   "name": "Herz",
-  "path": "assets/clients/herz.webp",
+  "path": "/biosys-podglad/assets/clients/herz.webp",
   "alt": "Logo klienta BioSys — Herz"
  },
  {
   "name": "LX Pantos",
-  "path": "assets/clients/lx-pantos.svg",
+  "path": "/biosys-podglad/assets/clients/lx-pantos.svg",
   "alt": "Logo klienta BioSys — LX Pantos"
  },
  {
   "name": "Mokate",
-  "path": "assets/clients/mokate.svg",
+  "path": "/biosys-podglad/assets/clients/mokate.svg",
   "alt": "Logo klienta BioSys — Mokate"
  },
  {
   "name": "Numed",
-  "path": "assets/clients/numed.svg",
+  "path": "/biosys-podglad/assets/clients/numed.svg",
   "alt": "Logo klienta BioSys — Numed"
  },
  {
   "name": "Państwowa Inspekcja Sanitarna",
-  "path": "assets/clients/pis.webp",
+  "path": "/biosys-podglad/assets/clients/pis.webp",
   "alt": "Logo klienta BioSys — Państwowa Inspekcja Sanitarna"
  },
  {
   "name": "Rohling",
-  "path": "assets/clients/rohling.svg",
+  "path": "/biosys-podglad/assets/clients/rohling.svg",
   "alt": "Logo klienta BioSys — Rohling"
  },
  {
   "name": "Stella",
-  "path": "assets/clients/stella.svg",
+  "path": "/biosys-podglad/assets/clients/stella.svg",
   "alt": "Logo klienta BioSys — Stella"
  },
  {
   "name": "Xella",
-  "path": "assets/clients/xella.svg",
+  "path": "/biosys-podglad/assets/clients/xella.svg",
   "alt": "Logo klienta BioSys — Xella"
  }
 ];
@@ -1870,127 +1870,127 @@ const CLIENT_LOGOS = [
 const INTEGRATION_LOGOS = [
  {
   "name": "ZSRK",
-  "path": "assets/integrations/ZSRK.svg",
+  "path": "/biosys-podglad/assets/integrations/ZSRK.svg",
   "alt": "Integracja systemu RCP BioSys z ZSRK"
  },
  {
   "name": "raks",
-  "path": "assets/integrations/raks.svg",
+  "path": "/biosys-podglad/assets/integrations/raks.svg",
   "alt": "Integracja systemu RCP BioSys z raks"
  },
  {
   "name": "komax",
-  "path": "assets/integrations/komax.svg",
+  "path": "/biosys-podglad/assets/integrations/komax.svg",
   "alt": "Integracja systemu RCP BioSys z komax"
  },
  {
   "name": "groszek",
-  "path": "assets/integrations/groszek.svg",
+  "path": "/biosys-podglad/assets/integrations/groszek.svg",
   "alt": "Integracja systemu RCP BioSys z groszek"
  },
  {
   "name": "korelacja",
-  "path": "assets/integrations/korelacja.svg",
+  "path": "/biosys-podglad/assets/integrations/korelacja.svg",
   "alt": "Integracja systemu RCP BioSys z korelacja"
  },
  {
   "name": "Quorum",
-  "path": "assets/integrations/Quorum.svg",
+  "path": "/biosys-podglad/assets/integrations/Quorum.svg",
   "alt": "Integracja systemu RCP BioSys z Quorum"
  },
  {
   "name": "Infor",
-  "path": "assets/integrations/Infor.webp",
+  "path": "/biosys-podglad/assets/integrations/Infor.webp",
   "alt": "Integracja systemu RCP BioSys z Infor"
  },
  {
   "name": "sygnity",
-  "path": "assets/integrations/sygnity.svg",
+  "path": "/biosys-podglad/assets/integrations/sygnity.svg",
   "alt": "Integracja systemu RCP BioSys z sygnity"
  },
  {
   "name": "IFS",
-  "path": "assets/integrations/IFS.svg",
+  "path": "/biosys-podglad/assets/integrations/IFS.svg",
   "alt": "Integracja systemu RCP BioSys z IFS"
  },
  {
   "name": "Simple",
-  "path": "assets/integrations/Simple.webp",
+  "path": "/biosys-podglad/assets/integrations/Simple.webp",
   "alt": "Integracja systemu RCP BioSys z Simple"
  },
  {
   "name": "Vulcan",
-  "path": "assets/integrations/Vulcan.svg",
+  "path": "/biosys-podglad/assets/integrations/Vulcan.svg",
   "alt": "Integracja systemu RCP BioSys z Vulcan"
  },
  {
   "name": "rekord",
-  "path": "assets/integrations/rekord.svg",
+  "path": "/biosys-podglad/assets/integrations/rekord.svg",
   "alt": "Integracja systemu RCP BioSys z rekord"
  },
  {
   "name": "Streamsoft",
-  "path": "assets/integrations/Streamsoft.svg",
+  "path": "/biosys-podglad/assets/integrations/Streamsoft.svg",
   "alt": "Integracja systemu RCP BioSys z Streamsoft"
  },
  {
   "name": "Teta",
-  "path": "assets/integrations/Teta.svg",
+  "path": "/biosys-podglad/assets/integrations/Teta.svg",
   "alt": "Integracja systemu RCP BioSys z Teta"
  },
  {
   "name": "macrologic",
-  "path": "assets/integrations/macrologic.webp",
+  "path": "/biosys-podglad/assets/integrations/macrologic.webp",
   "alt": "Integracja systemu RCP BioSys z macrologic"
  },
  {
   "name": "Softlab",
-  "path": "assets/integrations/Softlab.svg",
+  "path": "/biosys-podglad/assets/integrations/Softlab.svg",
   "alt": "Integracja systemu RCP BioSys z Softlab"
  },
  {
   "name": "Wapro",
-  "path": "assets/integrations/Wapro.webp",
+  "path": "/biosys-podglad/assets/integrations/Wapro.webp",
   "alt": "Integracja systemu RCP BioSys z Wapro"
  },
  {
   "name": "BPSC",
-  "path": "assets/integrations/BPSC.svg",
+  "path": "/biosys-podglad/assets/integrations/BPSC.svg",
   "alt": "Integracja systemu RCP BioSys z BPSC"
  },
  {
   "name": "Symfonia",
-  "path": "assets/integrations/Symfonia.webp",
+  "path": "/biosys-podglad/assets/integrations/Symfonia.webp",
   "alt": "Integracja systemu RCP BioSys z Symfonia"
  },
  {
   "name": "ComarchXL",
-  "path": "assets/integrations/ComarchXL.svg",
+  "path": "/biosys-podglad/assets/integrations/ComarchXL.svg",
   "alt": "Integracja systemu RCP BioSys z ComarchXL"
  },
  {
   "name": "InfoMedica",
-  "path": "assets/integrations/InfoMedica.svg",
+  "path": "/biosys-podglad/assets/integrations/InfoMedica.svg",
   "alt": "Integracja systemu RCP BioSys z InfoMedica"
  },
  {
   "name": "mMedica",
-  "path": "assets/integrations/mMedica.webp",
+  "path": "/biosys-podglad/assets/integrations/mMedica.webp",
   "alt": "Integracja systemu RCP BioSys z mMedica"
  },
  {
   "name": "Comarch",
-  "path": "assets/integrations/Comarch.svg",
+  "path": "/biosys-podglad/assets/integrations/Comarch.svg",
   "alt": "Integracja systemu RCP BioSys z Comarch"
  },
  {
   "name": "enova365",
-  "path": "assets/integrations/enova365.svg",
+  "path": "/biosys-podglad/assets/integrations/enova365.svg",
   "alt": "Integracja systemu RCP BioSys z enova365"
  },
  {
   "name": "SAP",
-  "path": "assets/integrations/SAP.webp",
+  "path": "/biosys-podglad/assets/integrations/SAP.webp",
   "alt": "Integracja systemu RCP BioSys z SAP"
  }
 ];
@@ -1998,147 +1998,147 @@ const INTEGRATION_LOGOS = [
 export const MEDIA = [
  {
   "id": "brus1",
-  "path": "assets/brus1.webp"
+  "path": "/biosys-podglad/assets/brus1.webp"
  },
  {
   "id": "ts1000",
-  "path": "assets/ts1000.webp"
+  "path": "/biosys-podglad/assets/ts1000.webp"
  },
  {
   "id": "bw1",
-  "path": "assets/bw-1.webp"
+  "path": "/biosys-podglad/assets/bw-1.webp"
  },
  {
   "id": "rejestrator1",
-  "path": "assets/rejestrator-1.webp"
+  "path": "/biosys-podglad/assets/rejestrator-1.webp"
  },
  {
   "id": "rfidkarta",
-  "path": "assets/rfid-karta.webp"
+  "path": "/biosys-podglad/assets/rfid-karta.webp"
  },
  {
   "id": "bramawysoka2",
-  "path": "assets/brama-wysoka-2.webp"
+  "path": "/biosys-podglad/assets/brama-wysoka-2.webp"
  },
  {
   "id": "bramawysoka5",
-  "path": "assets/brama-wysoka-5.webp"
+  "path": "/biosys-podglad/assets/brama-wysoka-5.webp"
  },
  {
   "id": "bramawysoka4",
-  "path": "assets/brama-wysoka-4.webp"
+  "path": "/biosys-podglad/assets/brama-wysoka-4.webp"
  },
  {
   "id": "antenauhf3",
-  "path": "assets/antena-uhf-3.webp"
+  "path": "/biosys-podglad/assets/antena-uhf-3.webp"
  },
  {
   "id": "antenauhf2",
-  "path": "assets/antena-uhf-2.webp"
+  "path": "/biosys-podglad/assets/antena-uhf-2.webp"
  },
  {
   "id": "rcp400",
-  "path": "assets/rcp-400.webp"
+  "path": "/biosys-podglad/assets/rcp-400.webp"
  },
  {
   "id": "rcp300",
-  "path": "assets/rcp-300.webp"
+  "path": "/biosys-podglad/assets/rcp-300.webp"
  },
  {
   "id": "rcp200",
-  "path": "assets/rcp-200.webp"
+  "path": "/biosys-podglad/assets/rcp-200.webp"
  },
  {
   "id": "rcp100",
-  "path": "assets/rcp-100.webp"
+  "path": "/biosys-podglad/assets/rcp-100.webp"
  },
  {
   "id": "rfkarta",
-  "path": "assets/rfid-karta.webp"
+  "path": "/biosys-podglad/assets/rfid-karta.webp"
  },
  {
   "id": "rfbrelok",
-  "path": "assets/rfid-brelok.webp"
+  "path": "/biosys-podglad/assets/rfid-brelok.webp"
  },
  {
   "id": "rfopaska",
-  "path": "assets/rfid-opaska.webp"
+  "path": "/biosys-podglad/assets/rfid-opaska.webp"
  },
  {
   "id": "rfnaklejka",
-  "path": "assets/rfid-naklejka.webp"
+  "path": "/biosys-podglad/assets/rfid-naklejka.webp"
  },
  {
   "id": "ts1200",
-  "path": "assets/ts1200.webp"
+  "path": "/biosys-podglad/assets/ts1200.webp"
  },
  {
   "id": "bw2",
-  "path": "assets/bw-2.webp"
+  "path": "/biosys-podglad/assets/bw-2.webp"
  },
  {
   "id": "zasbuf12",
-  "path": "assets/zas-buforowy-12v.webp"
+  "path": "/biosys-podglad/assets/zas-buforowy-12v.webp"
  },
  {
   "id": "zasbuf18",
-  "path": "assets/zas-buforowy-18ah.webp"
+  "path": "/biosys-podglad/assets/zas-buforowy-18ah.webp"
  },
  {
   "id": "zasimpk",
-  "path": "assets/zas-impulsowy-kostka.webp"
+  "path": "/biosys-podglad/assets/zas-impulsowy-kostka.webp"
  },
  {
   "id": "zasimpp",
-  "path": "assets/zas-impulsowy-przewod.webp"
+  "path": "/biosys-podglad/assets/zas-impulsowy-przewod.webp"
  },
  {
   "id": "zasups",
-  "path": "assets/zas-miniups.webp"
+  "path": "/biosys-podglad/assets/zas-miniups.webp"
  },
  {
   "id": "zwem300",
-  "path": "assets/zwora-em300.webp"
+  "path": "/biosys-podglad/assets/zwora-em300.webp"
  },
  {
   "id": "stabl",
-  "path": "assets/stabilizator-l.webp"
+  "path": "/biosys-podglad/assets/stabilizator-l.webp"
  },
  {
   "id": "stabu",
-  "path": "assets/stabilizator-u.webp"
+  "path": "/biosys-podglad/assets/stabilizator-u.webp"
  },
  {
   "id": "stabz",
-  "path": "assets/stabilizator-z.webp"
+  "path": "/biosys-podglad/assets/stabilizator-z.webp"
  },
  {
   "id": "przapwr",
-  "path": "assets/przycisk-apw1r.webp"
+  "path": "/biosys-podglad/assets/przycisk-apw1r.webp"
  },
  {
   "id": "przapws",
-  "path": "assets/przycisk-apw1s.webp"
+  "path": "/biosys-podglad/assets/przycisk-apw1s.webp"
  },
  {
   "id": "docowh",
-  "path": "assets/docs/owh-biosys.pdf"
+  "path": "/biosys-podglad/assets/docs/owh-biosys.pdf"
  },
  {
   "id": "docbio",
-  "path": "assets/docs/oswiadczenie-biometria-fotorejestracja-2023-05-15.pdf"
+  "path": "/biosys-podglad/assets/docs/oswiadczenie-biometria-fotorejestracja-2023-05-15.pdf"
  },
  {
   "id": "blog1",
-  "path": "assets/blog-1.webp"
+  "path": "/biosys-podglad/assets/blog-1.webp"
  },
  {
   "id": "blog2",
-  "path": "assets/blog-2.webp"
+  "path": "/biosys-podglad/assets/blog-2.webp"
  },
  {
   "id": "blog3",
-  "path": "assets/blog-3.webp"
+  "path": "/biosys-podglad/assets/blog-3.webp"
  }
 ];
 
