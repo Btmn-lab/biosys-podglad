@@ -577,7 +577,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
               </sc-if>
               <sc-if value="{{ hasDashList }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 12px;border-radius:10px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25)">
-                  <span style="font:800 15px 'Montserrat';color:#38BDF8">20 lat</span>
+                  <span style="font:800 15px 'Montserrat';color:#38BDF8">18 lat</span>
                   <span style="font:500 12.5px/1.4 'Open Sans';color:#cbd5e1">doświadczenia w mierzeniu czasu pracy i kontroli dostępu</span>
                 </div>
               </sc-if>
@@ -2412,9 +2412,9 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
             <span style="{{ intHeadBStyle }}">Kadry-Płace i ERP</span>
           </div>
           <div style="{{ intGridStyle }};align-items:center">
-            <span style="{{ intSrcStyle }}">Wejście 06:58, wyjście 15:04</span>
+            <span style="{{ intSrcStyle }}">Wejście 07:00, wyjście 15:00</span>
             <span aria-hidden="true" style="{{ intArrowStyle }}">→</span>
-            <span style="{{ intDstStyle }}">8,1 h przepracowane</span>
+            <span style="{{ intDstStyle }}">8 h przepracowane</span>
           </div>
           <div style="{{ intGridStyle }};align-items:center;border-top:1px solid #f1f5f9">
             <span style="{{ intSrcStyle }}">Nieobecność 12–14 maja</span>
@@ -2523,20 +2523,54 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
     <sc-if value="{{ isOnas }}" hint-placeholder-val="{{ false }}">
       <section style="padding:{{ sectionPadV }}px {{ pad }}px;background:#fff">
-        <p style="margin:0 0 8px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#2563EB">CO ROBIMY</p>
-        <h2 style="margin:0 0 32px;font:600 {{ h2Size }}px/1.2 'Montserrat';color:#0F172A;max-width:640px">Cztery systemy, jedna firma</h2>
-        <div style="{{ featuresGridStyle }}">
-          <sc-for list="{{ current.aboutCards }}" as="ac" hint-placeholder-count="4">
-            <div style="background:#F8FAFC;border-radius:14px;padding:24px;border:1px solid #e2e8f0">
-              <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#2563EB,#0FA9B4);margin-bottom:16px"></div>
-              <p style="margin:0 0 8px;font:700 15.5px 'Open Sans';color:#0F172A">{{ ac.t }}</p>
-              <p style="margin:0;font:400 14px/1.6 'Open Sans';color:#64748B">{{ ac.d }}</p>
+        <div style="{{ histRowStyle }}">
+          <div style="{{ histAsideStyle }}">
+            <p style="margin:0 0 8px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#2563EB">{{ current.aboutHistKicker }}</p>
+            <h2 style="margin:0 0 14px;font:600 {{ h2Size }}px/1.25 'Montserrat';color:#0F172A;text-wrap:pretty">{{ current.aboutHistTitle }}</h2>
+            <p style="margin:0;font:500 15px/1.7 'Open Sans';color:#0F172A;text-wrap:pretty">{{ current.aboutHistLead }}</p>
+          </div>
+          <div style="{{ histTextStyle }}">
+            <sc-for list="{{ current.aboutHistParas }}" as="hp" hint-placeholder-count="3">
+              <p style="margin:0;font:400 15px/1.8 'Open Sans';color:#64748B;text-wrap:pretty">{{ hp }}</p>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding:{{ sectionPadV }}px {{ pad }}px;background:#F8FAFC;border-top:1px solid #eef2f7">
+        <p style="margin:0 0 8px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#2563EB">{{ current.aboutTimeKicker }}</p>
+        <h2 style="margin:0 0 32px;font:600 {{ h2Size }}px/1.25 'Montserrat';color:#0F172A;max-width:640px;text-wrap:pretty">{{ current.aboutTimeTitle }}</h2>
+        <div style="{{ tlWrapStyle }}">
+          <sc-for list="{{ aboutTl }}" as="tl" hint-placeholder-count="10">
+            <div style="{{ tl.rowStyle }}">
+              <p style="{{ tl.yearStyle }}">{{ tl.y }}</p>
+              <div style="flex:none;width:11px;display:flex;flex-direction:column;align-items:center">
+                <span style="{{ tl.dotStyle }}"></span>
+                <span style="{{ tl.lineStyle }}"></span>
+              </div>
+              <div style="{{ tl.bodyStyle }}">
+                <p style="{{ tlTitleStyle }}">{{ tl.t }}</p>
+                <p style="{{ tlDescStyle }}">{{ tl.d }}</p>
+              </div>
             </div>
           </sc-for>
         </div>
       </section>
-      <section style="padding:{{ sectionPadV }}px {{ pad }}px;background:linear-gradient(90deg,#eff6ff,#ecfdf5)">
-        <p style="margin:0;font:600 {{ h2Size }}px/1.4 'Open Sans';color:#0F172A;max-width:760px">„{{ current.aboutQuote }}"</p>
+
+      <section style="padding:{{ sectionPadV }}px {{ pad }}px;background:#fff;border-top:1px solid #eef2f7">
+        <p style="margin:0 0 8px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#2563EB">{{ current.aboutBoardKicker }}</p>
+        <h2 style="margin:0 0 12px;font:600 {{ h2Size }}px/1.25 'Montserrat';color:#0F172A;max-width:640px;text-wrap:pretty">{{ current.aboutBoardTitle }}</h2>
+        <p style="margin:0 0 30px;font:400 15px/1.7 'Open Sans';color:#64748B;max-width:620px;text-wrap:pretty">{{ current.aboutBoardLead }}</p>
+        <div style="{{ boardGridStyle }}">
+          <sc-for list="{{ current.aboutBoard }}" as="bm" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;min-width:0">
+              <img src="{{ bm.img }}" alt="{{ bm.n }}" width="896" height="1194" loading="lazy" decoding="async" style="{{ boardImgStyle }}"/>
+              <p style="margin:16px 0 2px;font:600 17px/1.35 'Montserrat';color:#0F172A">{{ bm.n }}</p>
+              <p style="margin:0 0 8px;font:600 12.5px 'Open Sans';letter-spacing:.02em;color:#14B8A6">{{ bm.r }}</p>
+              <p style="margin:0;font:400 14px/1.7 'Open Sans';color:#64748B;text-wrap:pretty">{{ bm.d }}</p>
+            </div>
+          </sc-for>
+        </div>
       </section>
     </sc-if>
 
@@ -7018,6 +7052,40 @@ class Component extends DCLogic {
         ? 'display:flex;flex-direction:column;gap:10px;margin-top:24px;font-size:13.5px'
         : `display:flex;flex-wrap:wrap;gap:12px 20px;margin-top:32px;font-size:${(current.checklist || CHECKLIST).length > 4 ? 12 : 13.5}px`,
       featuresGridStyle: grid2,
+
+      // --- Zakładka „O nas": historia, oś czasu, zarząd ---
+      histRowStyle: isMobile
+        ? 'display:flex;flex-direction:column;gap:20px'
+        : 'display:flex;gap:56px;align-items:flex-start',
+      histAsideStyle: isMobile ? 'width:100%' : 'flex:0 0 330px;max-width:330px',
+      histTextStyle: isMobile
+        ? 'display:flex;flex-direction:column;gap:14px'
+        : 'flex:1;min-width:0;display:flex;flex-direction:column;gap:16px;max-width:640px',
+      tlWrapStyle: 'display:flex;flex-direction:column;max-width:' + (isMobile ? '100%' : '820px'),
+      tlTitleStyle: `margin:0 0 5px;font:600 ${isMobile ? 15.5 : 17}px/1.35 'Montserrat';color:#0F172A;text-wrap:pretty`,
+      tlDescStyle: `margin:0;font:400 ${isMobile ? 13.5 : 14.5}px/1.7 'Open Sans';color:#64748B;text-wrap:pretty`,
+      // Kropki przechodzą od Royal Blue do turkusu — kolor liczony osobno dla każdej
+      // pozycji, bo gradient rozciągnięty na całą oś rozjeżdża się, gdy wpisy mają
+      // różną wysokość. Linia ostatniej pozycji jest przezroczysta, żeby oś nie
+      // wystawała pod ostatnią kropkę.
+      aboutTl: (current.aboutTimeline || []).map((it, i, lista) => {
+        const A = [0x25, 0x63, 0xEB], B = [0x14, 0xB8, 0xA6];
+        const t = lista.length > 1 ? i / (lista.length - 1) : 0;
+        const kol = '#' + [0, 1, 2].map(k =>
+          ('0' + Math.round(A[k] + (B[k] - A[k]) * t).toString(16)).slice(-2)).join('');
+        return {
+          y: it.y, t: it.t, d: it.d,
+          rowStyle: `display:flex;gap:${isMobile ? 12 : 20}px;align-items:stretch`,
+          yearStyle: `flex:none;width:${isMobile ? 48 : 84}px;text-align:${isMobile ? 'left' : 'right'};margin:0;padding-top:${isMobile ? 1 : 2}px;font:700 ${isMobile ? 13 : 16}px 'Montserrat';color:${kol}`,
+          dotStyle: `flex:none;width:11px;height:11px;border-radius:50%;background:${kol};margin-top:${isMobile ? 5 : 7}px;box-shadow:0 0 0 4px rgba(37,99,235,.09)`,
+          lineStyle: `flex:1;width:2px;margin-top:4px;background:${i === lista.length - 1 ? 'transparent' : '#E2E8F0'}`,
+          bodyStyle: `flex:1;min-width:0;padding:0 0 ${isMobile ? 22 : 30}px`
+        };
+      }),
+      boardGridStyle: isMobile
+        ? 'display:grid;grid-template-columns:1fr;gap:26px'
+        : 'display:grid;grid-template-columns:repeat(3,1fr);gap:30px;max-width:980px',
+      boardImgStyle: 'width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:50% 20%;border-radius:14px;display:block;background:#F1F5F9',
       // Zakres rozwiązania (tylko Task Timer). Na telefonie sześć oramkowanych kafelków
       // z ikoną w osobnym wierszu zajmowało 894 px; ikona wchodzi w wiersz tytułu,
       // a ramkę zastępuje włoskowa linia — tekst zyskuje przy tym 36 px szerokości.

@@ -161,22 +161,40 @@ const PAGES = [
   title1:'Jesteśmy specjalistami od mierzenia czasu pracy.', title2:'Projektujemy systemy, które działają latami.',
   intro:'Projektujemy i wdrażamy systemy Rejestracji Czasu Pracy i Kontroli Dostępu dla firm produkcyjnych, logistycznych, biurowych i placówek medycznych. Nasze rozwiązania rozwijają się wraz z biznesem klienta, a współpraca serwisowa trwa zwykle długo po zamknięciu wdrożenia.',
   ctaShort:'Skontaktuj się z nami', secondaryCta:'Zobacz nasze wdrożenia',
-  heroVariant:'dashboard', hasForm:false, hasCtaBand:true,
-  dashList:[
-    {k:'2006',v:'Start BioSys — pierwsze wdrożenia systemów rejestracji czasu pracy.'},
-    {k:'Produkcja',v:'Własny sprzęt i autorskie oprogramowanie, bez pośredników.'},
-    {k:'4 oddziały',v:'Wdrożenia i serwis na terenie całego kraju.'},
-    {k:'Opieka',v:'Wsparcie techniczne i rozwój systemu po uruchomieniu.'}
-  ],
-  dashTitle:'BioSys w liczbach', stats:[{label:'Zakończonych wdrożeń',value:'1 600+'},{label:'Rejestracji dziennie',value:'650k'},{label:'Urządzeń w pracy',value:'18k'}], barVals:[50,62,58,70,55,66,60,74],
+  heroVariant:'none', hasForm:false, hasCtaBand:true,
   ctaLabel:'Chcesz dowiedzieć się więcej o BioSys? Skontaktuj się z nami — odpowiemy na wszystkie pytania.',
-  aboutCards:[
-    {t:'RCP',d:'Rejestracja Czasu Pracy — ewidencja obecności, grafiki, nadgodziny i wnioski w jednym systemie.'},
-    {t:'KD',d:'Kontrola Dostępu — zarządzanie wejściami do budynków i stref newralgicznych, zintegrowane z RCP.'},
-    {t:'Platforma WEB',d:'Panel pracownika i przełożonego w przeglądarce — wnioski, raporty i podgląd grafików bez instalacji.'},
-    {t:'Etatomierz',d:'Nasze oprogramowanie do zarządzania czasem pracy — jeden interfejs dla operatorów, kadr i zarządu.'}
+  // Historia, oś czasu i zarząd — teksty czekają na uzupełnienie przez klienta.
+  // Placeholdery zapisane w nawiasach kwadratowych, żeby było widać, czego brakuje.
+  aboutHistKicker:'HISTORIA',
+  aboutHistTitle:'[Nagłówek sekcji z historią — jedno zdanie]',
+  aboutHistLead:'[Lead — dwa, trzy zdania o tym, skąd wzięła się firma.]',
+  aboutHistParas:[
+    '[Akapit 1 — początek: skąd pomysł, kto go miał, jaki problem miał rozwiązywać.]',
+    '[Akapit 2 — rozwój: pierwsze wdrożenia, własna produkcja, kolejne generacje urządzeń.]',
+    '[Akapit 3 — dziś: skala działania, zespół, w którą stronę firma idzie dalej.]'
   ],
-  aboutQuote:'Usługi, które oferujemy są na najwyższym poziomie i z pełną świadomością dążymy do satysfakcji Klientów.'
+  aboutTimeKicker:'OŚ CZASU',
+  aboutTimeTitle:'[Nagłówek sekcji z osią czasu]',
+  aboutTimeline:[
+    {y:'2007', t:'Idea', d:'[Jak narodził się pomysł na BioSys — jedno, dwa zdania.]'},
+    {y:'2008', t:'Powstanie firmy', d:'[Założenie BioSys i pierwsi klienci.]'},
+    {y:'[rok]', t:'[Pierwszy rejestrator]', d:'[Pierwsze własne urządzenie i pierwsze wdrożenia.]'},
+    {y:'[rok]', t:'[Druga generacja urządzeń]', d:'[Co się zmieniło względem pierwszej generacji.]'},
+    {y:'[rok]', t:'[Własne oprogramowanie]', d:'[Start autorskiego systemu do rozliczania czasu pracy.]'},
+    {y:'[rok]', t:'[Kontrola dostępu]', d:'[Rozszerzenie oferty o systemy KD.]'},
+    {y:'[rok]', t:'[Trzecia generacja urządzeń]', d:'[Kolejna generacja rejestratorów.]'},
+    {y:'[rok]', t:'[Platforma WEB]', d:'[Panel pracownika i przełożonego w przeglądarce.]'},
+    {y:'[rok]', t:'[Etatomierz]', d:'[Premiera oprogramowania Etatomierz.]'},
+    {y:'Dziś', t:'[Gdzie jesteśmy dzisiaj]', d:'[Skala: wdrożenia, urządzenia w pracy, zasięg obsługi.]'}
+  ],
+  aboutBoardKicker:'ZARZĄD',
+  aboutBoardTitle:'[Nagłówek sekcji z zarządem]',
+  aboutBoardLead:'[Lead — jedno, dwa zdania o zarządzie.]',
+  aboutBoard:[
+    {img:'assets/karol-jura.webp', n:'Karol Jura', r:'[Stanowisko]', d:'[Jedno zdanie o tym, za co odpowiada.]'},
+    {img:'assets/pawel-zurek.webp', n:'Paweł Żurek', r:'[Stanowisko]', d:'[Jedno zdanie o tym, za co odpowiada.]'},
+    {img:'assets/andrzej-pilch.webp', n:'Andrzej Pilch', r:'[Stanowisko]', d:'[Jedno zdanie o tym, za co odpowiada.]'}
+  ]
 },
 {
   key:'onas-case', tag:'Case study', isOnasChild:true, kicker:'O NAS', kicker2:'Wdrożenia BioSys w praktyce',
