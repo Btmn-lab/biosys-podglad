@@ -425,6 +425,9 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
     <sc-if value="{{ notGeo }}" hint-placeholder-val="{{ true }}">
     <sc-if value="{{ notProdukcja }}" hint-placeholder-val="{{ true }}">
+    <!-- Hero pokazujemy warunkowo: „O nas" zaczyna się od własnej treści,
+         bez nagłówka, leadu, przycisków i listy z haczykami. -->
+    <sc-if value="{{ pokazHero }}" hint-placeholder-val="{{ true }}">
     <div style="position:relative;padding:{{ heroPadV }}px {{ pad }}px 16px;background:linear-gradient(120deg,#eff6ff 0%,#f8fafc 45%,#ecfdf5 100%)">
       <sc-if value="{{ isHome }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute;left:0;right:0;top:0;bottom:-240px;z-index:0;pointer-events:none;display:flex;opacity:.8;mask-image:linear-gradient(90deg,rgba(0,0,0,.24) 0%,rgba(0,0,0,.44) 20%,#000 46%,#000 100%),linear-gradient(180deg,rgba(0,0,0,.5) 0%,#000 16%,#000 72%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.24) 0%,rgba(0,0,0,.44) 20%,#000 46%,#000 100%),linear-gradient(180deg,rgba(0,0,0,.5) 0%,#000 16%,#000 72%,transparent 100%);mask-composite:intersect;-webkit-mask-composite:source-in">
@@ -897,6 +900,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
       </div>
       </sc-if>
     </div>
+    </sc-if>
     </sc-if>
 
 
@@ -2526,7 +2530,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
         <div style="{{ histRowStyle }}">
           <div style="{{ histAsideStyle }}">
             <p style="margin:0 0 8px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#2563EB">{{ current.aboutHistKicker }}</p>
-            <h2 style="margin:0 0 14px;font:600 {{ h2Size }}px/1.25 'Montserrat';color:#0F172A;text-wrap:pretty">{{ current.aboutHistTitle }}</h2>
+            <h1 style="margin:0 0 14px;font:600 {{ h2Size }}px/1.25 'Montserrat';color:#0F172A;text-wrap:pretty">{{ current.aboutHistTitle }}</h1>
             <p style="margin:0;font:500 15px/1.7 'Open Sans';color:#0F172A;text-wrap:pretty">{{ current.aboutHistLead }}</p>
           </div>
           <div style="{{ histTextStyle }}">
@@ -5724,11 +5728,12 @@ class Component extends DCLogic {
       notHome: !current.isHome,
       introMain: (current.intro || '').split('\n')[0],
       notHomeNotPanel: !current.isHome && !current.isPanel,
+      pokazHero: !current.isOnas,
       showHeroTitle: !current.isHome && !current.isPanel && !(current.isKontakt && this.state.contactPath !== 'client'),
       showHeroKicker: !current.isHome && !current.isPanel && !(current.isKontakt && this.state.contactPath !== 'client'),
       showHeroIntro: !(current.isKontakt && this.state.contactPath !== 'client'),
       showCalcSeg: ['produkcja','hr','magazyn','biura','zdrowie','oddzialy'].indexOf(current.key) >= 0,
-      showCtaBand: !current.isHome && !current.isKontakt && !current.isPanel && current.key !== 'onas-case' && current.key !== 'onas-praca' && current.key !== 'sol-rcp' && current.key !== 'sol-kd' && current.key !== 'sol-tasktimer',
+      showCtaBand: !current.isHome && !current.isKontakt && !current.isPanel && !current.isOnas && current.key !== 'onas-case' && current.key !== 'onas-praca' && current.key !== 'sol-rcp' && current.key !== 'sol-kd' && current.key !== 'sol-tasktimer',
       showTtMidCtaBand: current.key === 'sol-tasktimer',
       showKdMidCtaBand: current.key === 'sol-kd',
       showMidCtaBand: current.key === 'sol-rcp',
