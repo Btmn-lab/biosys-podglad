@@ -1,4 +1,4 @@
-<x-dc>
+<x-dc style="display:none">
   <div style="{{ viewToggleStyle }}">
     <button onClick="{{ setAuto }}" style="{{ autoBtnStyle }}">Auto</button>
     <button onClick="{{ setDesktop }}" style="{{ desktopBtnStyle }}">Desktop</button>
@@ -2808,7 +2808,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
         <h2 style="margin:0 0 32px;font:600 {{ h2Size }}px/1.2 'Montserrat';color:#0F172A;max-width:640px">Cztery oddziały, obsługa całej Polski</h2>
         <div style="{{ formRowStyle }}">
           <div style="flex:0 0 auto;display:flex;justify-content:center">
-            <iframe ref="{{ mapRef }}" src="{{ mapSrc }}" title="Mapa Polski z oddziałami BioSys" width="320" height="250" loading="lazy" style="width:320px;height:250px;border:none;background:transparent" scrolling="no"></iframe>
+            <iframe ref="{{ mapRef }}" title="Mapa Polski z oddziałami BioSys" width="320" height="250" loading="lazy" style="width:320px;height:250px;border:none;background:transparent" scrolling="no"></iframe>
           </div>
           <div style="flex:1;min-width:280px;display:grid;grid-template-columns:{{ branchGridCols }};gap:12px">
             <sc-for list="{{ branches }}" as="b" hint-placeholder-count="4">
@@ -4776,7 +4776,15 @@ class Component extends DCLogic {
     try { stored = JSON.parse(localStorage.getItem('biosys_consent_v1') || 'null'); } catch (e) {}
     if (stored) this.setState({ consentBadge: true, cStats: !!stored.stats, cMkt: !!stored.marketing });
     else this._consentTimer = setTimeout(() => this.setState({ consentOpen: true }), 700);
-    this._mapRef = el => { this._mapFrame = el; };
+    this._mapRef = el => {
+      this._mapFrame = el;
+      // Adres mapy wstawiamy z kodu, a nie atrybutem `src="{{ mapSrc }}"` w szablonie.
+      // Surowy kod komponentu trafia do drzewa strony, zanim runtime zdąży go
+      // skompilować, więc przeglądarka szła po dosłowny adres „{{ mapSrc }}" i dostawała
+      // 404 przy każdym wejściu — w logu serwera i w konsoli. Ref dostaje element już
+      // zamontowany, po kompilacji, więc tu żaden znacznik szablonu nie istnieje.
+      if (el && !el.getAttribute('src')) el.setAttribute('src', RES('polandmap', '/biosys-podglad/poland-map.html'));
+    };
     this._onMsg = e => {
       if (e.data && 'biosysMapHover' in e.data) {
         const city = e.data.biosysMapHover;
@@ -6396,7 +6404,6 @@ class Component extends DCLogic {
       ctaBandPad: isMobile ? '32px 24px' : '48px 44px',
       branchGridCols: isMobile ? '1fr' : '1fr 1fr',
       mapRef: this._mapRef,
-      mapSrc: RES('polandmap','/biosys-podglad/poland-map.html'),
       faq,
       dashRanges,
       hasDashList: !!current.dashList,

@@ -23,6 +23,18 @@
     # Nie korzystamy z tych urządzeń; jawna odmowa zamyka temat.
     Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
 
+    # Skąd przeglądarce wolno brać zasoby. Cała strona jedzie z naszego serwera —
+    # skrypty, style, czcionki i obrazki są lokalne, żadnego CDN-a ani zewnętrznej
+    # analityki (sprawdzone w zbudowanych stronach). Przy takim stanie polityka może
+    # być wąska, a wtedy naprawdę coś daje: nawet gdyby ktoś wstrzyknął w treść
+    # <script src="…"> albo formularz wysyłający dane gdzie indziej, przeglądarka
+    # tego nie wykona i nie wyśle.
+    #
+    # 'unsafe-inline' i 'unsafe-eval' zostają świadomie: komponent renderuje style
+    # i skrypty w treści strony, a runtime używa `new Function`. Tak samo jak
+    # w panelu (zaplecze/.htaccess) — bez tego strona przestaje się rysować.
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self' data: blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'"
+
     # HSTS: po pierwszej wizycie przeglądarka sama nie wróci na http.
     # Bez includeSubDomains i bez preload — świadomie, żeby dało się to wycofać.
     # Włącz dopiero, gdy certyfikat działa na wszystkich adresach serwisu.

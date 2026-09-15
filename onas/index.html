@@ -881,6 +881,15 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     if (started) return; started = true;
     fetch('/biosys-podglad/_app/component.html').then(function (r) { return r.text(); }).then(function (h) {
       document.body.insertAdjacentHTML('beforeend', h);
+      /* Runtime ma wbudowaną listę adresów CDN (unpkg.com) i pobierał stamtąd
+         React przy każdej wizycie. Dawało to obcemu serwerowi adres IP każdego
+         odwiedzającego razem z adresem oglądanej podstrony, a stronę uzależniało
+         od cudzej dostępności. Podstawiamy własne kopie tych samych plików —
+         runtime sprawdza `window.__resources` przed sięgnięciem po CDN. */
+      window.__resources = {
+        'https://unpkg.com/react@18.3.1/umd/react.production.min.js': '/biosys-podglad/react.production.min.js',
+        'https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js': '/biosys-podglad/react-dom.production.min.js'
+      };
       var s = document.createElement('script');
       s.src = '/biosys-podglad/support.js';
       document.body.appendChild(s);

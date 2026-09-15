@@ -69,11 +69,17 @@ try {
 } catch (e) {}
 
 function q() {
+  // Token NIE trafia do adresu: stamtąd wyciekłby do logu dostępu serwera,
+  // do historii przeglądarki i do nagłówka Referer. Jedzie nagłówkiem (niżej).
   const p = new URLSearchParams({
-    token: $('token').value.trim(), from: $('from').value, to: $('to').value,
+    from: $('from').value, to: $('to').value,
     mode: $('mode').value, dev: $('dev').value, page: $('page').value
   });
   return API + '?' + p.toString();
+}
+
+function naglowki() {
+  return { 'X-Heatmap-Token': $('token').value.trim() };
 }
 
 async function load() {
@@ -81,7 +87,7 @@ async function load() {
   $('stats').innerHTML = '<p class="muted">Wczytywanie…</p>';
   let d;
   try {
-    const r = await fetch(q());
+    const r = await fetch(q(), { headers: naglowki() });
     d = await r.json();
   } catch (e) { $('stats').innerHTML = '<p class="muted">Brak połączenia z backendem.</p>'; return; }
   if (!d.ok) { $('stats').innerHTML = '<p class="muted">' + (d.error || 'Błąd') + '</p>'; return; }
