@@ -1,0 +1,51 @@
+# Reguły dla publicznej części serwisu. Do tej pory istniał wyłącznie .htaccess
+# w /zaplecze i /backend, więc same podstrony szły bez wymuszenia HTTPS i bez
+# żadnych nagłówków ochronnych.
+
+# ---- HTTPS ----
+# Formularze (wycena, rekrutacja z CV, czat) wysyłają dane osobowe. Po http
+# szłyby jawnym tekstem przez każdy węzeł po drodze.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    # Przeglądarka ma nie zgadywać typu pliku po zawartości.
+    Header always set X-Content-Type-Options "nosniff"
+    # Adres naszej podstrony nie wychodzi do obcych serwisów przy kliknięciu w link.
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    # Strona nie może być osadzona w cudzej ramce — inaczej da się podstawić
+    # przezroczystą warstwę nad formularzem i zbierać kliknięcia.
+    Header always set X-Frame-Options "SAMEORIGIN"
+    # Nie korzystamy z tych urządzeń; jawna odmowa zamyka temat.
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+
+    # HSTS: po pierwszej wizycie przeglądarka sama nie wróci na http.
+    # Bez includeSubDomains i bez preload — świadomie, żeby dało się to wycofać.
+    # Włącz dopiero, gdy certyfikat działa na wszystkich adresach serwisu.
+    Header always set Strict-Transport-Security "max-age=15552000"
+</IfModule>
+
+# ---- Pliki, które nigdy nie powinny być serwowane ----
+# Zapora na wypadek pomyłki przy wysyłce: jeśli na serwer trafi katalog .git,
+# notatka projektowa albo skrypt budujący, nie da się ich otworzyć z przeglądarki.
+<IfModule mod_authz_core.c>
+    <FilesMatch "(^\.|\.(md|py|sh|sql|log|bak|ndjson|dc\.html|zip)$)">
+        Require all denied
+    </FilesMatch>
+    <DirectoryMatch "/\.(git|svn|hg)">
+        Require all denied
+    </DirectoryMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+    <FilesMatch "(^\.|\.(md|py|sh|sql|log|bak|ndjson|zip)$)">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>
+
+# Listingu katalogów nie potrzebujemy nigdzie w serwisie.
+Options -Indexes
