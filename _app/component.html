@@ -56,6 +56,12 @@ a:hover{color:#1d4ed8}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 @keyframes barUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
+/* Wysokość arkusza menu. W ARKUSZU, nie w atrybucie style: React parsuje atrybut
+   do obiektu, więc zduplikowany klucz zwija się do jednej wartości i zapas ginie.
+   Tutaj parser CSS zachowuje obie deklaracje i odrzuca tylko tę, której nie rozumie.
+   `dvh` to wysokość faktycznie widoczna (bez paska adresu); silniki sprzed 2022
+   nie znają tej jednostki i zostają przy `vh` — zamiast nie mieć limitu wcale. */
+#mobile-menu{max-height:88vh;max-height:88dvh}
 @media (prefers-reduced-motion:reduce){#mobile-menu{animation:none}}
 [data-rail]::-webkit-scrollbar{display:none}
 @keyframes floatY{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
@@ -255,7 +261,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     <sc-if value="{{ mobileMenuOpen }}" hint-placeholder-val="{{ false }}">
       <div style="{{ mobSheetWrapStyle }}">
         <div onClick="{{ closeMenu }}" style="position:absolute;inset:0;background:rgba(15,23,42,.55)"></div>
-        <div id="mobile-menu" role="dialog" aria-label="Menu główne" style="position:relative;display:flex;flex-direction:column;max-height:88dvh;background:#fff;border-radius:22px 22px 0 0;box-shadow:0 -18px 50px rgba(15,23,42,.34);animation:sheetUp .24s cubic-bezier(.22,1,.36,1)">
+        <div id="mobile-menu" role="dialog" aria-label="Menu główne" style="position:relative;display:flex;flex-direction:column;background:#fff;border-radius:22px 22px 0 0;box-shadow:0 -18px 50px rgba(15,23,42,.34);animation:sheetUp .24s cubic-bezier(.22,1,.36,1)">
           <div style="flex:none;display:flex;flex-direction:column;gap:12px;padding:10px 18px 0">
             <span aria-hidden="true" style="display:block;width:44px;height:4px;border-radius:3px;background:#cbd5e1;margin:0 auto"></span>
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
@@ -430,12 +436,12 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     <sc-if value="{{ pokazHero }}" hint-placeholder-val="{{ true }}">
     <div style="position:relative;padding:{{ heroPadV }}px {{ pad }}px 16px;background:linear-gradient(120deg,#eff6ff 0%,#f8fafc 45%,#ecfdf5 100%)">
       <sc-if value="{{ isHome }}" hint-placeholder-val="{{ false }}">
-        <div style="position:absolute;left:0;right:0;top:0;bottom:-240px;z-index:0;pointer-events:none;display:flex;opacity:.8;mask-image:linear-gradient(90deg,rgba(0,0,0,.24) 0%,rgba(0,0,0,.44) 20%,#000 46%,#000 100%),linear-gradient(180deg,rgba(0,0,0,.5) 0%,#000 16%,#000 72%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.24) 0%,rgba(0,0,0,.44) 20%,#000 46%,#000 100%),linear-gradient(180deg,rgba(0,0,0,.5) 0%,#000 16%,#000 72%,transparent 100%);mask-composite:intersect;-webkit-mask-composite:source-in">
+        <div style="position:absolute;left:0;right:0;top:0;bottom:-240px;z-index:0;pointer-events:none;display:flex;opacity:.6;mask-image:linear-gradient(90deg,rgba(0,0,0,.24) 0%,rgba(0,0,0,.44) 20%,#000 46%,#000 100%),linear-gradient(180deg,rgba(0,0,0,.5) 0%,#000 16%,#000 72%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.24) 0%,rgba(0,0,0,.44) 20%,#000 46%,#000 100%),linear-gradient(180deg,rgba(0,0,0,.5) 0%,#000 16%,#000 72%,transparent 100%);mask-composite:intersect;-webkit-mask-composite:source-in">
           <x-import component-from-global-scope="particle-swarm" hint-size="100%,420px" cx-frac="0.6" cy-frac="0.6" zoom="0.82" style="display:block;flex:1;width:100%;height:100%"></x-import>
         </div>
       </sc-if>
       <sc-if value="{{ heroConverge }}" hint-placeholder-val="{{ false }}">
-        <div style="position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:.9">
+        <div style="position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:.675">
           <x-import component-from-global-scope="converge-bg" theme="light" zoom="1.15" count="6000" opacity="1.1" hint-size="100%,100%" style="display:block;position:absolute;inset:0;width:100%;height:100%"></x-import>
         </div>
       </sc-if>
@@ -466,18 +472,18 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           </sc-if>
           <sc-if value="{{ isHome }}" hint-placeholder-val="{{ false }}">
             <div style="{{ heroTriadStyle }}">
-              <div style="display:flex;flex-direction:column;gap:9px;min-width:0">
+              <a href="#" onClick="{{ goToSolRcp }}" style="{{ heroTriadItemStyle }}" style-hover="transform:translateY(-2px)">
                 <span style="display:block;width:100%;height:4px;border-radius:2px;background:linear-gradient(90deg,#2563EB,#38BDF8)"></span>
                 <span style="{{ heroTriadLabelStyle }}">Rejestracja czasu pracy.</span>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:9px;min-width:0">
+              </a>
+              <a href="#" onClick="{{ goToSolKd }}" style="{{ heroTriadItemStyle }}" style-hover="transform:translateY(-2px)">
                 <span style="display:block;width:100%;height:4px;border-radius:2px;background:linear-gradient(90deg,#38BDF8,#0FA9B4)"></span>
                 <span style="{{ heroTriadLabelStyle }}">Kontrola Dostępu.</span>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:9px;min-width:0">
+              </a>
+              <a href="#" onClick="{{ goToSolTt }}" style="{{ heroTriadItemStyle }}" style-hover="transform:translateY(-2px)">
                 <span style="display:block;width:100%;height:4px;border-radius:2px;background:linear-gradient(90deg,#F59E0B,#FCD34D)"></span>
                 <span style="{{ heroTriadLabelStyle }}">Zlecenia produkcyjne.</span>
-              </div>
+              </a>
             </div>
             <h1 style="margin:0 0 20px;font:600 {{ h1Size }}px/1.06 'Montserrat';color:#0F172A;letter-spacing:-0.02em;text-wrap:pretty;max-width:620px"><span style="font-family:inherit;font-weight:inherit;font-size:1.22em;line-height:1;background:linear-gradient(90deg,#2563EB,#38BDF8);-webkit-background-clip:text;background-clip:text;color:transparent">3</span> rozwiązania, <span style="font-family:inherit;font-weight:inherit;font-size:1.22em;line-height:1;background:linear-gradient(90deg,#0FA9B4,#2563EB);-webkit-background-clip:text;background-clip:text;color:transparent">1</span> spójny ekosystem <span style="font-family:inherit;font-weight:inherit;background:linear-gradient(90deg,#2563EB,#0FA9B4);-webkit-background-clip:text;background-clip:text;color:transparent">do lepszych decyzji biznesowych.</span></h1>
           </sc-if>
@@ -2335,7 +2341,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
             <span style="display:block;width:8px;height:17px;border-radius:4px;background:linear-gradient(180deg,#F59E0B,#B45309);transform-origin:50% 100%;animation:barEq 7s ease-in-out 1.2s infinite"></span>
           </span><br/><span style="font-family:inherit;font-weight:inherit;background:linear-gradient(90deg,#2563EB,#0FA9B4);-webkit-background-clip:text;background-clip:text;color:transparent">różnych modeli organizacji</span></h2>
         </div>
-        <div style="{{ featuresGridStyle }}">
+        <div style="{{ segmentsGridStyle }}">
           <sc-for list="{{ segments }}" as="seg" hint-placeholder-count="6">
             <button onClick="{{ seg.select }}" style="position:relative;overflow:hidden;text-align:left;cursor:pointer;background:#F8FAFC;border:1px solid #e2e8f0;border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:8px;transition:box-shadow .15s,transform .15s" style-hover="box-shadow:0 12px 28px rgba(37,99,235,.14);transform:translateY(-2px);border-color:#bfdbfe">
               <sc-if value="{{ seg.hasPhoto }}" hint-placeholder-val="{{ false }}">
@@ -3166,7 +3172,10 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
         <div style="position:relative;overflow:hidden;max-width:900px;background:#F8FAFC;border:1px solid #ccfbf1;border-radius:16px;padding:32px">
           <span style="position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#106A73,#0FA9B4)"></span>
           <p style="margin:0 0 10px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#106A73">WAŻNA INFORMACJA TECHNICZNA</p>
-          <h3 style="margin:0 0 16px;font:600 19.7px/1.3 'Montserrat';color:#0F172A;text-wrap:pretty">Szyfrowane połączenie z Panelem Klienta</h3>
+          <!-- h2, nie h3: to jedyna sekcja tej podstrony, więc jej nagłówek stoi
+               piętro pod h1. Przy h3 przeglądarka i czytnik ekranowy widziały dziurę
+               w strukturze (h1 → h3), a audyt SEO zgłaszał podstronę bez żadnego h2. -->
+          <h2 style="margin:0 0 16px;font:600 19.7px/1.3 'Montserrat';color:#0F172A;text-wrap:pretty">Szyfrowane połączenie z Panelem Klienta</h2>
           <p style="margin:0 0 20px;font:400 15.5px/1.75 'Open Sans';color:#334155;text-wrap:pretty">Z dniem 13. lipca 2018 modyfikujemy adres IP dla szyfrowanego połączenia certyfikatem SSL do Panelu Klienta, zgodnie z wymogami <a href="#" onClick="{{ goToPolityka }}" style="color:#106A73;font-weight:600;cursor:pointer">RODO</a>. Jeśli wykorzystujesz mechanizmy filtrowania ruchu sieciowego dla połączeń przez przeglądarkę internetową w swojej firmie, to może być konieczne:</p>
           <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:22px">
             <div style="display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px">
@@ -3340,24 +3349,36 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
             </div>
           </div>
           <div style="background:#fff;border-radius:16px;padding:28px;border:1px solid #e2e8f0;flex:1;min-width:280px">
+            <sc-if value="{{ glowny.notSent }}" hint-placeholder-val="{{ true }}">
             <div style="{{ formGridStyle }}">
-              <input placeholder="Imię i nazwisko" style="{{ inputStyle }}"/>
-              <input placeholder="Firma" style="{{ inputStyle }}"/>
-              <input placeholder="Telefon" style="{{ inputStyle }}"/>
-              <input placeholder="E-mail służbowy" style="{{ inputStyle }}"/>
-              <input placeholder="Orientacyjna liczba pracowników" style="{{ inputStyle }}"/>
-              <input placeholder="Obszar zainteresowania (RCP, KD, ZADANIA)" style="{{ inputStyle }}"/>
+              <input placeholder="Imię i nazwisko*" autoComplete="name" value="{{ glowny.name.v }}" onChange="{{ glowny.name.set }}" style="{{ inputStyle }}"/>
+              <input type="email" placeholder="E-mail*" autoComplete="email" value="{{ glowny.mail.v }}" onChange="{{ glowny.mail.set }}" style="{{ inputStyle }}"/>
+              <input type="tel" placeholder="Telefon" autoComplete="tel" value="{{ glowny.phone.v }}" onChange="{{ glowny.phone.set }}" style="{{ inputStyle }}"/>
+              <input placeholder="Firma" autoComplete="organization" value="{{ glowny.company.v }}" onChange="{{ glowny.company.set }}" style="{{ inputStyle }}"/>
             </div>
-            <textarea placeholder="Najważniejsze wyzwanie — np. listy papierowe, ręczne korekty, rozliczanie nadgodzin, brak wymiany danych..." style="width:100%;margin-top:14px;min-height:80px;padding:12px 14px;border:1px solid #cbd5e1;border-radius:9px;font:400 14px 'Open Sans';color:#0F172A;resize:vertical"></textarea>
-            <label style="display:flex;align-items:flex-start;gap:8px;margin-top:14px;font:400 12.5px/1.55 'Open Sans';color:#64748B"><input type="checkbox" style="margin-top:1px;flex:none;width:22px;height:22px;accent-color:#2563EB;cursor:pointer"/><span>Wyrażam zgodę na kontakt i przetwarzanie moich danych w celu przygotowania oferty. <a href="#" onClick="{{ toggleConsentInfo }}" style="color:#64748B;text-decoration:underline">{{ consentInfoLabel }}</a></span></label>
+            <p style="margin:10px 0 0;font:400 12.5px/1.55 'Open Sans';color:#94A3B8">Pola z gwiazdką są wymagane. Telefon i firma pomagają nam szybciej wrócić z odpowiedzią.</p>
+            <label style="display:flex;align-items:flex-start;gap:8px;margin-top:14px;font:400 12.5px/1.55 'Open Sans';color:#64748B;cursor:pointer"><input type="checkbox" checked="{{ glowny.consent }}" onChange="{{ glowny.toggleConsent }}" style="margin-top:1px;flex:none;width:22px;height:22px;accent-color:#2563EB;cursor:pointer"/><span>Wyrażam zgodę na kontakt i przetwarzanie moich danych w celu przygotowania oferty. <a href="#" onClick="{{ toggleConsentInfo }}" style="color:#64748B;text-decoration:underline">{{ consentInfoLabel }}</a></span></label>
             <sc-if value="{{ consentInfoOpen }}" hint-placeholder-val="{{ false }}">
               <p style="margin:8px 0 0;font:400 12px/1.7 'Open Sans';color:#64748B">Zgoda obejmuje: kontakt telefoniczny i e-mailowy w sprawie zapytania, przygotowanie i przesłanie oferty handlowej oraz otrzymywanie informacji o produktach i usługach BioSys środkami komunikacji elektronicznej (art. 6 ust. 1 lit. a i f RODO, art. 10 ust. 2 ustawy o świadczeniu usług drogą elektroniczną, art. 172 Prawa telekomunikacyjnego). Administratorem danych jest BioSys sp. z o.o., osiedle Na Stawach 6/24, 34-200 Sucha Beskidzka; kontakt z Inspektorem Ochrony Danych: iod@biosys.pl. Zgodę możesz wycofać w dowolnym momencie, bez wpływu na zgodność z prawem wcześniejszego przetwarzania. Szczegóły w <a href="#" onClick="{{ goToPolityka }}" style="color:#2563EB;text-decoration:underline">Polityce prywatności</a>.</p>
             </sc-if>
             <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
               <label for="main-website">Strona www</label>
-              <input id="main-website" name="website" type="text" tabindex="-1" autoComplete="off"/>
+              <input id="main-website" name="website" type="text" tabindex="-1" autoComplete="off" value="{{ glowny.hp }}" onChange="{{ glowny.onHp }}"/>
             </div>
-            <button style="width:100%;margin-top:16px;font:600 15px 'Open Sans';color:#fff;background:#2563EB;border:none;border-radius:9px;padding:14px;cursor:pointer">Wyślij</button>
+            <sc-if value="{{ glowny.hasError }}" hint-placeholder-val="{{ false }}">
+              <p role="alert" style="margin:14px 0 0;padding:12px 14px;background:#FEF3C7;border:1px solid #FCD34D;border-radius:11px;font:600 13px/1.6 'Open Sans';color:#78350F">{{ glowny.errorMsg }}</p>
+            </sc-if>
+            <button onClick="{{ glowny.submit }}" style="{{ glowny.submitStyle }}" style-hover="transform:translateY(-2px)">{{ glowny.btnLabel }}</button>
+            </sc-if>
+            <sc-if value="{{ glowny.sent }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:12px 0 6px">
+                <span style="width:52px;height:52px;border-radius:16px;background:linear-gradient(140deg,#2563EB,#0FA9B4);display:flex;align-items:center;justify-content:center">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 7"></path></svg>
+                </span>
+                <p style="margin:0;font:600 20.7px/1.3 'Montserrat';color:#0F172A">Zapytanie przyjęte</p>
+                <p style="margin:0;font:400 15px/1.7 'Open Sans';color:#475569;max-width:520px;text-wrap:pretty">Odezwiemy się w ciągu jednego dnia roboczego. Jeśli sprawa jest pilna, zadzwoń: {{ telLabel }}.</p>
+              </div>
+            </sc-if>
           </div>
         </div>
       </div>
@@ -4599,7 +4620,7 @@ class Component extends DCLogic {
   }
 
   _sendQuote(prefix, fields, hp, reset) {
-    const QUOTE_ENDPOINT = '/backend/wycena.php'; // endpoint PHP — patrz backend/README.md
+    const QUOTE_ENDPOINT = '/backend/wycena.php'; // endpoint PHP — patrz PODSUMOWANIE-PROJEKTU.md
     if (this.state[prefix + 'Sending']) return;
     // Bot: nie wysyłamy nic, ale pokazujemy zwykły ekran potwierdzenia.
     if (!this._spamOk(hp)) { this.setState({ [prefix + 'Sent']: true }); return; }
@@ -4996,6 +5017,9 @@ class Component extends DCLogic {
       pushNav(a, p), extra || {}
     ), () => { toTop(); if (cb) cb(); });
     const goToKey = key => { const i = PAGES.findIndex(p => p.key === key); if (i < 0) return; navApply(i, null, { skdOpen: false, skdSubOpen: false, skdSub2Open: false, rcpOpen: false, kbOpen: false, offerOpen: false, onasOpen: false }); };
+    // Trzy kafle w hero strony głównej prowadzą do stron produktowych.
+    // preventDefault, bo to <a href="#"> — bez tego przeglądarka dokleja # do adresu.
+    const goToProdukt = key => e => { if (e && e.preventDefault) e.preventDefault(); goToKey(key); };
     const skdOpen = !!this.state.skdOpen;
     const skdSubOpen = !!this.state.skdSubOpen;
     const mkItem = (p, isSub) => ({
@@ -5894,7 +5918,7 @@ class Component extends DCLogic {
       onCvFuture: e => this.setState({ cvFuture: e.target.checked }),
       onCvFile: e => this.setState({ cvFileName: (e.target.files && e.target.files[0]) ? e.target.files[0].name : '', cvFile: (e.target.files && e.target.files[0]) || null }),
       submitCv: () => {
-        const APPLY_ENDPOINT = '/backend/aplikuj.php'; // endpoint PHP — patrz backend/README.md
+        const APPLY_ENDPOINT = '/backend/aplikuj.php'; // endpoint PHP — patrz PODSUMOWANIE-PROJEKTU.md
         const s = this.state;
         if (s.cvSending) return;
         const role = (current.jobOffer && current.jobOffer.title) || 'Zgłoszenie rekrutacyjne';
@@ -6601,6 +6625,51 @@ class Component extends DCLogic {
       consentInfoOpen: !!this.state.consentInfoOpen,
       consentInfoLabel: this.state.consentInfoOpen ? 'Zwiń szczegóły' : 'Szczegóły',
       toggleConsentInfo: e => { if (e && e.preventDefault) e.preventDefault(); this.setState(s => ({ consentInfoOpen: !s.consentInfoOpen })); },
+      // Formularz na stronie głównej. Do 17 września była to sama makieta: pola bez
+      // `name`, bez stanu i bez obsługi kliknięcia, więc przycisk „Wyślij" nie robił
+      // nic — zgłoszenie nigdzie nie szło. Teraz korzysta z tego samego `_sendQuote`,
+      // co formularze wyceny KD i RCP (honeypot, czas wypełniania, blokada floodu).
+      // Wymagane: imię i nazwisko, e-mail, zgoda. Telefon i firma są opcjonalne.
+      glowny: (() => {
+        const st = this.state;
+        const txt = k => ({ v: st[k] || '', set: e => this.setState({ [k]: e.target.value }) });
+        const consent = !!st.glownyConsent;
+        const imie = (st.glownyName || '').trim();
+        const mail = (st.glownyMail || '').trim();
+        // Serwer i tak sprawdza adres przez filter_var — tu chodzi tylko o to, żeby
+        // przycisk nie wyglądał na aktywny, gdy formularz na pewno nie przejdzie.
+        const mailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail);
+        const ready = consent && !!imie && mailOk;
+        return {
+          name: txt('glownyName'), company: txt('glownyCompany'),
+          mail: txt('glownyMail'), phone: txt('glownyPhone'),
+          consent,
+          toggleConsent: () => this.setState(s => ({ glownyConsent: !s.glownyConsent })),
+          sent: !!st.glownySent,
+          notSent: !st.glownySent,
+          hp: st.glownyHp || '',
+          onHp: e => this.setState({ glownyHp: e.target.value }),
+          btnLabel: st.glownySending ? 'WYSYŁAMY…' : 'Wyślij',
+          hasError: !!st.glownyError,
+          errorMsg: st.glownyErrorMsg || 'Nie udało się wysłać zapytania. Napisz na biuro@biosys.pl.',
+          submit: e => {
+            if (e && e.preventDefault) e.preventDefault();
+            if (!ready || st.glownySending) return;
+            this._sendQuote('glowny', {
+              form: 'kontakt', page: 'Strona główna — formularz kontaktowy',
+              name: st.glownyName || '', company: st.glownyCompany || '',
+              email: st.glownyMail || '', phone: st.glownyPhone || '',
+              summary: '', note: '', consent: '1'
+            }, st.glownyHp, {
+              glownyName: '', glownyCompany: '', glownyMail: '', glownyPhone: '', glownyConsent: false
+            });
+          },
+          submitStyle: "width:100%;margin-top:16px;min-height:52px;font:600 15px 'Open Sans';color:#fff;"
+            + 'background:#2563EB;border:none;border-radius:9px;padding:14px;transition:opacity .15s,transform .15s;'
+            + 'cursor:' + (ready && !st.glownySending ? 'pointer' : 'not-allowed')
+            + ';opacity:' + (ready ? (st.glownySending ? '.7' : '1') : '.55')
+        };
+      })(),
       kdq: (() => {
         const st = this.state;
         const num = (k, opts) => {
@@ -6930,7 +6999,7 @@ class Component extends DCLogic {
         : 'display:flex;gap:26px;align-items:flex-start',
       kdqAsideStyle: isMobile ? 'flex:none;width:100%' : 'flex:0 0 300px;position:sticky;top:90px',
       // „50 000 godzin wsparcia…" pominięte na mobile (decyzja użytkownika) — zostają 4 pozycje, siatka 2×2
-      trustStats: isMobile ? TRUST_STATS.filter(s => s.value !== '50 000') : TRUST_STATS,
+      trustStats: isMobile ? TRUST_STATS.filter(s => s.value !== '50 000+') : TRUST_STATS,
       trustStatsGridStyle: (isMobile
         ? 'display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 14px'
         : 'display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:22px 28px;align-items:start') + ';margin-bottom:20px',
@@ -6987,6 +7056,15 @@ class Component extends DCLogic {
       heroTriadStyle: isMobile
         ? 'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 20px'
         : 'display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:18px;max-width:560px;margin:0 0 22px',
+      goToSolRcp: goToProdukt('sol-rcp'),
+      goToSolKd: goToProdukt('sol-kd'),
+      goToSolTt: goToProdukt('sol-tasktimer'),
+      // Kafel jest odnośnikiem, więc potrzebuje własnego pola dotyku: padding daje
+      // na mobile ponad 44 px wysokości razem z belką i etykietą.
+      heroTriadItemStyle: 'display:flex;flex-direction:column;gap:9px;min-width:0;'
+        + 'text-decoration:none;cursor:pointer;border-radius:8px;'
+        + (isMobile ? 'padding:8px 0 10px;' : 'padding:6px 0 8px;')
+        + 'transition:transform .16s ease',
       heroTriadLabelStyle: "font:700 " + (isMobile ? '12.5px' : '14px') + "/1.3 'Open Sans';color:#0F172A;letter-spacing:-0.005em;text-wrap:pretty",
       // rzut kondygnacji: sztywne min-height nie zmieści się w karcie 380 px na mobile
       heroPlanSvgStyle: 'display:block;width:100%;max-width:290px;height:100%;min-height:' + (isMobile ? '0' : '206px'),
@@ -7064,6 +7142,12 @@ class Component extends DCLogic {
         ? 'display:flex;flex-direction:column;gap:10px;margin-top:24px;font-size:13.5px'
         : `display:flex;flex-wrap:wrap;gap:12px 20px;margin-top:32px;font-size:${(current.checklist || CHECKLIST).length > 4 ? 12 : 13.5}px`,
       featuresGridStyle: grid2,
+      // Sekcja z modelami organizacji: sześć segmentów ma stać w dwóch wierszach
+      // po trzy (decyzja użytkownika). Nie używamy featuresGridStyle, bo ta sama
+      // zmienna obsługuje sześć innych siatek na stronie.
+      segmentsGridStyle: isMobile
+        ? 'display:grid;grid-template-columns:1fr;gap:14px'
+        : 'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px',
 
       // --- Zakładka „O nas": historia, oś czasu, zarząd ---
       histRowStyle: isMobile

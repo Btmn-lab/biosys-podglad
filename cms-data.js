@@ -180,8 +180,8 @@ const PAGES = [
   jobsLead:'Poniżej rekrutacja, którą prowadzimy obecnie. Zgłoszenia przyjmujemy przez formularz na dole strony — trafiają na praca@biosys.pl.',
   careerFacts:[
     {v:'1 600+', l:'zakończonych wdrożeń'},
-    {v:'650 000', l:'pracowników każdego dnia rejestruje czas pracy w naszych systemach'},
-    {v:'18 000', l:'urządzeń codziennie pracuje na sukces naszych Klientów'},
+    {v:'650 000+', l:'pracowników każdego dnia rejestruje czas pracy w naszych systemach'},
+    {v:'18 000+', l:'urządzeń codziennie pracuje na sukces naszych Klientów'},
     {v:'Kraków', l:'biuro przy ul. Józefa Friedleina 4-6'}
   ],
   careerWhat:[
@@ -487,10 +487,10 @@ const PAGES = [
   solStatsNote:'Nasze produkty kierujemy do firm zatrudniających od 20 pracowników.',
   solStats:[
     {v:'1 600+',l:'zakończonych wdrożeń'},
-    {v:'50 000',l:'godzin wsparcia i opieki rocznie świadczymy naszym Klientom'},
-    {v:'5 000',l:'kierowników codziennie zarządza zespołami z wykorzystaniem naszych systemów'},
-    {v:'18 000',l:'urządzeń codziennie pracuje na sukces naszych Klientów'},
-    {v:'650 000',l:'pracowników każdego dnia rejestruje czas pracy w naszych systemach'}
+    {v:'50 000+',l:'godzin wsparcia i opieki rocznie świadczymy naszym Klientom'},
+    {v:'5 000+',l:'kierowników codziennie zarządza zespołami z wykorzystaniem naszych systemów'},
+    {v:'18 000+',l:'urządzeń codziennie pracuje na sukces naszych Klientów'},
+    {v:'650 000+',l:'pracowników każdego dnia rejestruje czas pracy w naszych systemach'}
   ],
   solPerson:{
     name:'Krzysztof Górski', role:'Konsultant systemów RCP, KD, ZADANIA',
@@ -1626,10 +1626,10 @@ const PROCESS_STEPS = [
 
 const TRUST_STATS = [
   {value:'1 600+',label:'zakończonych wdrożeń'},
-  {value:'50 000',label:'godzin wsparcia i opieki rocznie świadczymy naszym Klientom'},
-  {value:'5 000',label:'kierowników codziennie zarządza zespołami z wykorzystaniem naszych systemów'},
-  {value:'18 000',label:'urządzeń codziennie pracuje na sukces naszych Klientów'},
-  {value:'650 000',label:'pracowników każdego dnia rejestruje czas pracy w naszych systemach'}
+  {value:'50 000+',label:'godzin wsparcia i opieki rocznie świadczymy naszym Klientom'},
+  {value:'5 000+',label:'kierowników codziennie zarządza zespołami z wykorzystaniem naszych systemów'},
+  {value:'18 000+',label:'urządzeń codziennie pracuje na sukces naszych Klientów'},
+  {value:'650 000+',label:'pracowników każdego dnia rejestruje czas pracy w naszych systemach'}
 ];
 
 const TESTIMONIALS = [
@@ -1756,9 +1756,9 @@ const CLIENT_LOGOS = [
   "alt": "Logo klienta BioSys — Polfa"
  },
  {
-  "name": "Bialogon",
+  "name": "Cukiernia Białogon",
   "path": "/biosys-podglad/assets/clients/bialogon.svg",
-  "alt": "Logo klienta BioSys — Bialogon"
+  "alt": "Logo klienta BioSys — Cukiernia Białogon"
  },
  {
   "name": "Eveline",
@@ -1801,9 +1801,9 @@ const CLIENT_LOGOS = [
   "alt": "Logo klienta BioSys — Biblioteka Jagiellońska"
  },
  {
-  "name": "Biodened",
+  "name": "Biogened",
   "path": "/biosys-podglad/assets/clients/biodened.svg",
-  "alt": "Logo klienta BioSys — Biodened"
+  "alt": "Logo klienta BioSys — Biogened"
  },
  {
   "name": "Dako",
@@ -1851,9 +1851,9 @@ const CLIENT_LOGOS = [
   "alt": "Logo klienta BioSys — Państwowa Inspekcja Sanitarna"
  },
  {
-  "name": "Rohling",
+  "name": "Röhlig SUUS Logistics",
   "path": "/biosys-podglad/assets/clients/rohling.svg",
-  "alt": "Logo klienta BioSys — Rohling"
+  "alt": "Logo klienta BioSys — Röhlig SUUS Logistics"
  },
  {
   "name": "Stella",
@@ -1871,127 +1871,127 @@ const INTEGRATION_LOGOS = [
  {
   "name": "ZSRK",
   "path": "/biosys-podglad/assets/integrations/ZSRK.svg",
-  "alt": "Integracja systemu RCP BioSys z ZSRK"
+  "alt": "Logotyp ZSRK — system zintegrowany z RCP BioSys"
  },
  {
   "name": "raks",
-  "path": "/biosys-podglad/assets/integrations/raks.svg",
-  "alt": "Integracja systemu RCP BioSys z raks"
+  "path": "/biosys-podglad/assets/integrations/raks.webp",
+  "alt": "Logotyp Raks — system zintegrowany z RCP BioSys"
  },
  {
   "name": "komax",
   "path": "/biosys-podglad/assets/integrations/komax.svg",
-  "alt": "Integracja systemu RCP BioSys z komax"
+  "alt": "Logotyp Komax — system zintegrowany z RCP BioSys"
  },
  {
   "name": "groszek",
-  "path": "/biosys-podglad/assets/integrations/groszek.svg",
-  "alt": "Integracja systemu RCP BioSys z groszek"
+  "path": "/biosys-podglad/assets/integrations/groszek.webp",
+  "alt": "Logotyp Groszek — system zintegrowany z RCP BioSys"
  },
  {
   "name": "korelacja",
-  "path": "/biosys-podglad/assets/integrations/korelacja.svg",
-  "alt": "Integracja systemu RCP BioSys z korelacja"
+  "path": "/biosys-podglad/assets/integrations/korelacja.webp",
+  "alt": "Logotyp Korelacja — system zintegrowany z RCP BioSys"
  },
  {
   "name": "Quorum",
   "path": "/biosys-podglad/assets/integrations/Quorum.svg",
-  "alt": "Integracja systemu RCP BioSys z Quorum"
+  "alt": "Logotyp Quorum — system zintegrowany z RCP BioSys"
  },
  {
   "name": "Infor",
   "path": "/biosys-podglad/assets/integrations/Infor.webp",
-  "alt": "Integracja systemu RCP BioSys z Infor"
+  "alt": "Logotyp Infor — system zintegrowany z RCP BioSys"
  },
  {
   "name": "sygnity",
-  "path": "/biosys-podglad/assets/integrations/sygnity.svg",
-  "alt": "Integracja systemu RCP BioSys z sygnity"
+  "path": "/biosys-podglad/assets/integrations/sygnity.webp",
+  "alt": "Logotyp Sygnity — system zintegrowany z RCP BioSys"
  },
  {
   "name": "IFS",
-  "path": "/biosys-podglad/assets/integrations/IFS.svg",
-  "alt": "Integracja systemu RCP BioSys z IFS"
+  "path": "/biosys-podglad/assets/integrations/IFS.webp",
+  "alt": "Logotyp IFS — system zintegrowany z RCP BioSys"
  },
  {
   "name": "Simple",
   "path": "/biosys-podglad/assets/integrations/Simple.webp",
-  "alt": "Integracja systemu RCP BioSys z Simple"
+  "alt": "Logotyp Simple — system zintegrowany z RCP BioSys"
  },
  {
   "name": "Vulcan",
-  "path": "/biosys-podglad/assets/integrations/Vulcan.svg",
-  "alt": "Integracja systemu RCP BioSys z Vulcan"
+  "path": "/biosys-podglad/assets/integrations/Vulcan.webp",
+  "alt": "Logotyp Vulcan — system zintegrowany z RCP BioSys"
  },
  {
   "name": "rekord",
-  "path": "/biosys-podglad/assets/integrations/rekord.svg",
-  "alt": "Integracja systemu RCP BioSys z rekord"
+  "path": "/biosys-podglad/assets/integrations/rekord.webp",
+  "alt": "Logotyp Rekord — system zintegrowany z RCP BioSys"
  },
  {
   "name": "Streamsoft",
   "path": "/biosys-podglad/assets/integrations/Streamsoft.svg",
-  "alt": "Integracja systemu RCP BioSys z Streamsoft"
+  "alt": "Logotyp Streamsoft — system zintegrowany z RCP BioSys"
  },
  {
   "name": "Teta",
-  "path": "/biosys-podglad/assets/integrations/Teta.svg",
-  "alt": "Integracja systemu RCP BioSys z Teta"
+  "path": "/biosys-podglad/assets/integrations/Teta.webp",
+  "alt": "Logotyp Teta — system zintegrowany z RCP BioSys"
  },
  {
   "name": "macrologic",
   "path": "/biosys-podglad/assets/integrations/macrologic.webp",
-  "alt": "Integracja systemu RCP BioSys z macrologic"
+  "alt": "Logotyp Macrologic — system zintegrowany z RCP BioSys"
  },
  {
   "name": "Softlab",
-  "path": "/biosys-podglad/assets/integrations/Softlab.svg",
-  "alt": "Integracja systemu RCP BioSys z Softlab"
+  "path": "/biosys-podglad/assets/integrations/Softlab.webp",
+  "alt": "Logotyp Softlab — system zintegrowany z RCP BioSys"
  },
  {
   "name": "Wapro",
   "path": "/biosys-podglad/assets/integrations/Wapro.webp",
-  "alt": "Integracja systemu RCP BioSys z Wapro"
+  "alt": "Logotyp Wapro — system zintegrowany z RCP BioSys"
  },
  {
   "name": "BPSC",
-  "path": "/biosys-podglad/assets/integrations/BPSC.svg",
-  "alt": "Integracja systemu RCP BioSys z BPSC"
+  "path": "/biosys-podglad/assets/integrations/BPSC.webp",
+  "alt": "Logotyp BPSC — system zintegrowany z RCP BioSys"
  },
  {
   "name": "Symfonia",
   "path": "/biosys-podglad/assets/integrations/Symfonia.webp",
-  "alt": "Integracja systemu RCP BioSys z Symfonia"
+  "alt": "Logotyp Symfonia — system zintegrowany z RCP BioSys"
  },
  {
   "name": "ComarchXL",
-  "path": "/biosys-podglad/assets/integrations/ComarchXL.svg",
-  "alt": "Integracja systemu RCP BioSys z ComarchXL"
+  "path": "/biosys-podglad/assets/integrations/ComarchXL.webp",
+  "alt": "Logotyp Comarch XL — system zintegrowany z RCP BioSys"
  },
  {
   "name": "InfoMedica",
-  "path": "/biosys-podglad/assets/integrations/InfoMedica.svg",
-  "alt": "Integracja systemu RCP BioSys z InfoMedica"
+  "path": "/biosys-podglad/assets/integrations/InfoMedica.webp",
+  "alt": "Logotyp InfoMedica — system zintegrowany z RCP BioSys"
  },
  {
   "name": "mMedica",
   "path": "/biosys-podglad/assets/integrations/mMedica.webp",
-  "alt": "Integracja systemu RCP BioSys z mMedica"
+  "alt": "Logotyp mMedica — system zintegrowany z RCP BioSys"
  },
  {
   "name": "Comarch",
   "path": "/biosys-podglad/assets/integrations/Comarch.svg",
-  "alt": "Integracja systemu RCP BioSys z Comarch"
+  "alt": "Logotyp Comarch — system zintegrowany z RCP BioSys"
  },
  {
   "name": "enova365",
   "path": "/biosys-podglad/assets/integrations/enova365.svg",
-  "alt": "Integracja systemu RCP BioSys z enova365"
+  "alt": "Logotyp enova365 — system zintegrowany z RCP BioSys"
  },
  {
   "name": "SAP",
   "path": "/biosys-podglad/assets/integrations/SAP.webp",
-  "alt": "Integracja systemu RCP BioSys z SAP"
+  "alt": "Logotyp SAP — system zintegrowany z RCP BioSys"
  }
 ];
 

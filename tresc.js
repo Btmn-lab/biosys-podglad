@@ -225,8 +225,8 @@ const PAGES = [
   jobsLead:'Poniżej rekrutacja, którą prowadzimy obecnie. Zgłoszenia przyjmujemy przez formularz na dole strony — trafiają na praca@biosys.pl.',
   careerFacts:[
     {v:'1 600+', l:'zakończonych wdrożeń'},
-    {v:'650 000', l:'pracowników każdego dnia rejestruje czas pracy w naszych systemach'},
-    {v:'18 000', l:'urządzeń codziennie pracuje na sukces naszych Klientów'},
+    {v:'650 000+', l:'pracowników każdego dnia rejestruje czas pracy w naszych systemach'},
+    {v:'18 000+', l:'urządzeń codziennie pracuje na sukces naszych Klientów'},
     {v:'Kraków', l:'biuro przy ul. Józefa Friedleina 4-6'}
   ],
   careerWhat:[
@@ -293,7 +293,7 @@ const PAGES = [
     {t:'Decyzja',d:'Informację zwrotną lub ofertę przekazujemy w maksymalnie 2 tygodnie od pierwszego kontaktu.'}
   ]
 },{
-  key:'kontakt', tag:'Kontakt', isKontakt:true, kicker:'KONTAKT', kicker2:'Działamy na terenie całego kraju',
+  key:'kontakt', seoTitle:'Kontakt — wdrożenia i serwis RCP oraz KD', tag:'Kontakt', isKontakt:true, kicker:'KONTAKT', kicker2:'Działamy na terenie całego kraju',
   title1:'Kontakt', title2:'z BioSys.',
   intro:'Obsługujemy zgłoszenia serwisowe obecnych klientów i rozmawiamy z firmami, które dopiero szukają systemu. Wybierz ścieżkę, która dotyczy Ciebie.',
   ctaShort:'Wyślij zapytanie', secondaryCta:'Zadzwoń do nas',
@@ -613,10 +613,10 @@ const PAGES = [
   solStatsNote:'Nasze produkty kierujemy do firm zatrudniających od 20 pracowników.',
   solStats:[
     {v:'1 600+',l:'zakończonych wdrożeń'},
-    {v:'50 000',l:'godzin wsparcia i opieki rocznie świadczymy naszym Klientom'},
-    {v:'5 000',l:'kierowników codziennie zarządza zespołami z wykorzystaniem naszych systemów'},
-    {v:'18 000',l:'urządzeń codziennie pracuje na sukces naszych Klientów'},
-    {v:'650 000',l:'pracowników każdego dnia rejestruje czas pracy w naszych systemach'}
+    {v:'50 000+',l:'godzin wsparcia i opieki rocznie świadczymy naszym Klientom'},
+    {v:'5 000+',l:'kierowników codziennie zarządza zespołami z wykorzystaniem naszych systemów'},
+    {v:'18 000+',l:'urządzeń codziennie pracuje na sukces naszych Klientów'},
+    {v:'650 000+',l:'pracowników każdego dnia rejestruje czas pracy w naszych systemach'}
   ],
   solPerson:{
     name:'Krzysztof Górski', role:'Konsultant systemów RCP, KD, ZADANIA',
@@ -1148,7 +1148,7 @@ const PAGES = [
   ]
 },
 {
-  key:'skd-kurtyny', tag:'Kurtyny podczerwieni', isSkdChild:true, skdGroup:'urzadzenia', kicker:'URZĄDZENIA KD',
+  key:'skd-kurtyny', seoTitle:'Kurtyny podczerwieni do kontroli dostępu', tag:'Kurtyny podczerwieni', isSkdChild:true, skdGroup:'urzadzenia', kicker:'URZĄDZENIA KD',
   kicker2:'Kurtyny podczerwieni',
   title1:'Kurtyny', title2:'podczerwieni.',
   intro:'Bariery optyczne wykrywające przejście osoby w świetle wiązek podczerwieni. Stosowane w bramkach i przejściach kontrolowanych do liczenia osób, wykrywania przejść pod wymuszeniem oraz zabezpieczenia przed przejściem dwóch osób na jednej autoryzacji.',
@@ -1452,7 +1452,7 @@ const PAGES = [
   ]
 },
 {
-  key:'polityka', tag:'Polityka prywatności', isDoc:true, kicker:'DOKUMENTY', kicker2:'Polityka prywatności i cookies',
+  key:'polityka', seoTitle:'Polityka prywatności i pliki cookies', tag:'Polityka prywatności', isDoc:true, kicker:'DOKUMENTY', kicker2:'Polityka prywatności i cookies',
   title1:'Polityka', title2:'prywatności.',
   intro:'Szanowni Państwo, z dniem 25 maja 2018 r. zmieniają się obowiązujące przepisy z zakresu ochrony danych osobowych. Zaczyna obowiązywać Ogólne Rozporządzenie z dnia 27 kwietnia 2016 r. o ochronie danych osobowych (dalej „RODO”). Przekazujemy Państwu informacje, w jaki sposób przetwarzamy Państwa dane osobowe.',
   checklist:[], ctaShort:'', secondaryCta:'',
@@ -1499,7 +1499,7 @@ const PAGES = [
     {name:'OWH od 2021-04-01', desc:'Ogólne Warunki Handlowe BioSys spółka z ograniczoną odpowiedzialnością z dnia 2021-04-01.', href:RES('docowh','/biosys-podglad/assets/docs/owh-biosys.pdf'), meta:'PDF'},
     {name:'2023-05-15 Oświadczenie BioSys w sprawie biometrii i fotorejestracji', desc:'Stanowisko w sprawie prawnych możliwości stosowania czytników biometrycznych oraz czytników z aparatami fotograficznymi w systemach czasu pracy i kontroli dostępu.', href:RES('docbio','/biosys-podglad/assets/docs/oswiadczenie-biometria-fotorejestracja-2023-05-15.pdf'), meta:'PDF'}
   ],
-  seoTitle:'Regulamin i dokumenty BioSys',
+  seoTitle:'Regulamin i Ogólne Warunki Handlowe',
   seoLead:'Poniżej znajdują się dokumenty regulujące współpracę z BioSys sp. z o.o. oraz oświadczenia spółki dotyczące przetwarzania danych.',
   seoBlocks:[
     {t:'Charakter informacji na stronie', d:'Wszelkie informacje zawarte na tej stronie internetowej mają charakter informacyjny i nie stanowią oferty handlowej w rozumieniu art. 66 §1 Kodeksu Cywilnego. Wiążące są warunki wskazane w ofercie przygotowanej przez przedstawiciela BioSys, opatrzonej numerem oferty, datą przygotowania i terminem ważności.'},
@@ -1764,10 +1764,10 @@ const PROCESS_STEPS = [
 ];
 const TRUST_STATS = [
   {value:'1 600+',label:'zakończonych wdrożeń'},
-  {value:'50 000',label:'godzin wsparcia i opieki rocznie świadczymy naszym Klientom'},
-  {value:'5 000',label:'kierowników codziennie zarządza zespołami z wykorzystaniem naszych systemów'},
-  {value:'18 000',label:'urządzeń codziennie pracuje na sukces naszych Klientów'},
-  {value:'650 000',label:'pracowników każdego dnia rejestruje czas pracy w naszych systemach'}
+  {value:'50 000+',label:'godzin wsparcia i opieki rocznie świadczymy naszym Klientom'},
+  {value:'5 000+',label:'kierowników codziennie zarządza zespołami z wykorzystaniem naszych systemów'},
+  {value:'18 000+',label:'urządzeń codziennie pracuje na sukces naszych Klientów'},
+  {value:'650 000+',label:'pracowników każdego dnia rejestruje czas pracy w naszych systemach'}
 ];
 const TRUST_LOGOS = [
   'IKEA','Żywiec Zdrój','Kross','Fakro','Pruszyński','Mlekpol','Adient',
@@ -1790,11 +1790,11 @@ const CLIENT_LOGOS = [
     konspol:'Konspol', polfa:'Polfa', foodcare:'FoodCare', inglot:'Inglot', polomarket:'Polomarket',
     'pruszynski-color':'Pruszyński',
     adient:'Adient', bell:'Bell', hcp:'H. Cegielski-Poznań', 'grand-lubicz':'Grand Lubicz', herz:'Herz',
-    'biblioteka-jagiellonska':'Biblioteka Jagiellońska',
-    biodened:'Biodened', dako:'Dako', europapier:'Europapier',
+    'biblioteka-jagiellonska':'Biblioteka Jagiellońska', bialogon:'Cukiernia Białogon',
+    biodened:'Biogened', dako:'Dako', europapier:'Europapier',
     aryzta:'ARYZTA', drabest:'Drabest', 'assa-abloy':'ASSA ABLOY',
     greenpoint:'Greenpoint', 'lx-pantos':'LX Pantos', mokate:'Mokate',
-    numed:'Numed', pis:'Państwowa Inspekcja Sanitarna', rohling:'Rohling', stella:'Stella', xella:'Xella'
+    numed:'Numed', pis:'Państwowa Inspekcja Sanitarna', rohling:'Röhlig SUUS Logistics', stella:'Stella', xella:'Xella'
   };
   const file = f.includes('.') ? f : f + '.svg';
   const key = f.replace(/\.[a-z0-9]+$/, '');
@@ -1808,9 +1808,19 @@ const INTEGRATION_LOGOS = [
 ].map(f => {
   const file = f.includes('.') ? f : f + '.svg';
   const key = f.replace(/\.[a-z0-9]+$/, '');
+  // Nazwa marki, a nie nazwa pliku. Bez tej mapy tekst alternatywny brzmiał
+  // „…z groszek”, „…z raks”, „…z ComarchXL” — czytnik ekranowy czytał to dosłownie.
+  // Marki pisane celowo małą literą (enova365, mMedica) zostają, jak są.
+  const NAZWY = {
+    raks: 'Raks', komax: 'Komax', groszek: 'Groszek', korelacja: 'Korelacja',
+    sygnity: 'Sygnity', rekord: 'Rekord', macrologic: 'Macrologic',
+    ComarchXL: 'Comarch XL'
+  };
+  const nazwa = NAZWY[key] || key;
   return {
     src: RES('il_' + key, `assets/integrations/${file}`),
-    alt: 'Integracja systemu RCP BioSys z ' + key,
+    // Opis obrazka, nie hasło reklamowe: to jest logotyp, a nie sama integracja.
+    alt: 'Logotyp ' + nazwa + ' — system zintegrowany z RCP BioSys',
     imgStyle: key === 'SAP'
       ? "max-width:100%;max-height:46px;width:auto;height:auto;object-fit:contain"
       : "max-width:100%;max-height:60px;width:auto;height:auto;object-fit:contain"

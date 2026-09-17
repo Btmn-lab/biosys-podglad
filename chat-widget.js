@@ -66,8 +66,11 @@
     '  stroke-linecap:round;stroke-linejoin:round}',
     '.uchwyt[hidden]{display:none}',
 
+    // To samo co w regule dla telefonu: `vh` jako zapas, `dvh` dla silników,
+    // które je znają. Na tablecie w pionie pasek adresu też się zwija.
     '.panel{position:fixed;right:24px;bottom:24px;z-index:9200;width:384px;max-width:calc(100vw - 32px);',
-    '  height:560px;max-height:calc(100vh - 48px);background:var(--chmura);border-radius:16px;',
+    '  height:560px;max-height:calc(100vh - 48px);max-height:calc(100dvh - 48px);',
+    '  background:var(--chmura);border-radius:16px;',
     '  box-shadow:0 24px 60px rgba(15,23,42,.28);display:flex;flex-direction:column;overflow:hidden}',
     '.panel[hidden]{display:none}',
 
@@ -150,9 +153,20 @@
     '.do-czlowieka:hover{color:var(--navy)}',
     '.do-czlowieka:focus-visible{outline:2px solid var(--royal);outline-offset:2px;border-radius:3px}',
 
+    // Na telefonie `100vh` to wysokość okna z ROZWINIĘTYM paskiem adresu, a nie
+    // to, co widać. Panel wychodził więc pod pasek Safari/Chrome razem z polem do
+    // pisania na swoim dole — a że jest `position:fixed`, przewijanie strony nic
+    // nie dawało: rozmowy po prostu nie dało się prowadzić z telefonu.
+    // `dvh` liczy wysokość faktycznie widoczną. Kolejność jest istotna: `vh` stoi
+    // pierwsze jako zapas dla silników bez `dvh` (Safari poniżej 15.4), a te,
+    // które `dvh` znają, nadpisują je drugą deklaracją.
+    // `safe-area-inset-bottom` odsuwa panel i uchwyt od paska gestu iPhone'a.
     '@media (max-width:520px){',
-    '  .panel{right:8px;left:8px;bottom:8px;width:auto;height:calc(100vh - 16px);max-height:none}',
-    '  .uchwyt{right:16px;bottom:16px}',
+    '  .panel{right:8px;left:8px;width:auto;max-height:none;',
+    '    bottom:calc(8px + env(safe-area-inset-bottom, 0px));',
+    '    height:calc(100vh - 16px);',
+    '    height:calc(100dvh - 16px - env(safe-area-inset-bottom, 0px))}',
+    '  .uchwyt{right:16px;bottom:calc(16px + env(safe-area-inset-bottom, 0px))}',
     '}',
     '@media (prefers-reduced-motion:reduce){',
     '  .uchwyt,.pisze span{transition:none;animation:none}',
@@ -282,6 +296,11 @@
   var tokenCzatu = null;
   var ostatniaWiadomosc = 0;
   var timerCzatu = null;
+  // Odliczanie „nikt nie odebrał". Trzymamy uchwyt, bo rozmowa potrafi się skończyć
+  // wcześniej — a niewykasowany licznik odpalał się wtedy w trakcie NASTĘPNEJ rozmowy
+  // i zamykał ją przed czasem, skoro warunek „tryb === 'czat' i zero wiadomości"
+  // pasował równie dobrze do tej nowej.
+  var timerOczekiwania = null;
 
   function oddajCzlowiekowi() {
     if (cien.querySelector('.formularz')) return;
@@ -320,7 +339,8 @@
         pole.placeholder = 'Napisz do konsultanta…';
         timerCzatu = setInterval(odbierzZCzatu, ODPYTYWANIE_MS);
         // Nikt nie przejął w wyznaczonym czasie — nie każemy czekać w nieskończoność.
-        setTimeout(function () {
+        timerOczekiwania = setTimeout(function () {
+          timerOczekiwania = null;
           if (tryb === 'czat' && ostatniaWiadomosc === 0) {
             dymek('bot', 'Nikt nie odebrał w tej chwili. Zostaw kontakt, a zespół się odezwie.');
             zakonczCzat();
@@ -356,6 +376,7 @@
 
   function zakonczCzat() {
     if (timerCzatu) { clearInterval(timerCzatu); timerCzatu = null; }
+    if (timerOczekiwania) { clearTimeout(timerOczekiwania); timerOczekiwania = null; }
     tryb = 'bot';
     tokenCzatu = null;
     ostatniaWiadomosc = 0;

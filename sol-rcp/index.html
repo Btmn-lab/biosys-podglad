@@ -309,6 +309,12 @@ a:hover{color:#1d4ed8}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 @keyframes barUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
+/* Wysokość arkusza menu. W ARKUSZU, nie w atrybucie style: React parsuje atrybut
+   do obiektu, więc zduplikowany klucz zwija się do jednej wartości i zapas ginie.
+   Tutaj parser CSS zachowuje obie deklaracje i odrzuca tylko tę, której nie rozumie.
+   `dvh` to wysokość faktycznie widoczna (bez paska adresu); silniki sprzed 2022
+   nie znają tej jednostki i zostają przy `vh` — zamiast nie mieć limitu wcale. */
+#mobile-menu{max-height:88vh;max-height:88dvh}
 @media (prefers-reduced-motion:reduce){#mobile-menu{animation:none}}
 [data-rail]::-webkit-scrollbar{display:none}
 @keyframes floatY{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
@@ -443,13 +449,13 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           
             <a data-dc-tpl="112" href="#" class="scp3" style="display: inline-flex; align-items: center; font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); text-decoration: none; border-radius: 9px; padding: 7px 6px; cursor: pointer; white-space: nowrap; transition: background 0.14s, color 0.14s;">Kalkulator oszczędności</a>
           
-          <a data-dc-tpl="113" href="#" class="scp3" style="display: inline-flex; align-items: center; font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); text-decoration: none; border-radius: 9px; padding: 7px 6px; cursor: pointer; white-space: nowrap; transition: background 0.14s, color 0.14s;">Blog</a>
+          <a  data-dc-tpl="113" href="/biosys-podglad/blog/" class="scp3" style="display: inline-flex; align-items: center; font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); text-decoration: none; border-radius: 9px; padding: 7px 6px; cursor: pointer; white-space: nowrap; transition: background 0.14s, color 0.14s;">Blog</a>
           <span data-dc-tpl="114" data-nav-menu="kb" style="position: relative; display: inline-block;">
             <button data-dc-tpl="115" aria-expanded="false" class="scp1" style="display: inline-flex; align-items: center; gap: 5px; font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: transparent; border: 1px solid transparent; border-radius: 9px; padding: 7px 6px; cursor: pointer; white-space: nowrap; transition: background 0.14s, color 0.14s, border-color 0.14s;"><span data-dc-tpl="116">Baza wiedzy</span><span data-dc-tpl="117" style="display: inline-block; font: 400 10px / 1 &quot;Open Sans&quot;; color: rgb(148, 163, 184); transition: transform 0.18s; transform: rotate(0deg);">▾</span></button>
             
           </span>
-          <a data-dc-tpl="124" href="#" class="scp3" style="display: inline-flex; align-items: center; font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); text-decoration: none; border-radius: 9px; padding: 7px 6px; cursor: pointer; white-space: nowrap; transition: background 0.14s, color 0.14s;">Kontakt</a>
-          <a data-dc-tpl="125" href="#" class="scp4" style="margin-left: 6px; display: inline-flex; align-items: center; gap: 7px; font: 600 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(16, 106, 115); border: 1px solid rgb(16, 106, 115); border-radius: 10px; padding: 9px 16px; cursor: pointer; white-space: nowrap; box-shadow: rgba(15, 118, 110, 0.24) 0px 6px 16px; transition: background 0.15s, transform 0.15s, box-shadow 0.15s;">
+          <a  data-dc-tpl="124" href="/biosys-podglad/kontakt/" class="scp3" style="display: inline-flex; align-items: center; font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); text-decoration: none; border-radius: 9px; padding: 7px 6px; cursor: pointer; white-space: nowrap; transition: background 0.14s, color 0.14s;">Kontakt</a>
+          <a  data-dc-tpl="125" href="/biosys-podglad/panel/" class="scp4" style="margin-left: 6px; display: inline-flex; align-items: center; gap: 7px; font: 600 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(16, 106, 115); border: 1px solid rgb(16, 106, 115); border-radius: 10px; padding: 9px 16px; cursor: pointer; white-space: nowrap; box-shadow: rgba(15, 118, 110, 0.24) 0px 6px 16px; transition: background 0.15s, transform 0.15s, box-shadow 0.15s;">
             <svg data-dc-tpl="126" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="127" d="M12 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8Zm-7 18a7 7 0 0 1 14 0"></path></svg>
             Panel klienta
           </a>
@@ -474,7 +480,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     <div data-dc-tpl="247" style="position: relative; padding: 34px 56px 16px; background: linear-gradient(120deg, rgb(239, 246, 255) 0%, rgb(248, 250, 252) 45%, rgb(236, 253, 245) 100%);">
       
       
-        <div data-dc-tpl="252" style="position: absolute; inset: 0px; z-index: 0; pointer-events: none; overflow: hidden; opacity: 0.9;">
+        <div data-dc-tpl="252" style="position: absolute; inset: 0px; z-index: 0; pointer-events: none; overflow: hidden; opacity: 0.675;">
           <div class="sc-host-x" data-dc-tpl="253" style="position: absolute; inset: 0px; width: 100%; height: 100%;"><converge-bg theme="light" zoom="1.15" count="6000" opacity="1.1" style="display: block; position: relative; height: 100%;"></converge-bg></div>
         </div>
       
@@ -504,7 +510,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           <div data-dc-tpl="301" style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;">
             
             
-              <button data-dc-tpl="305" class="scpb" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(37, 99, 235); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 14px 22px; cursor: pointer; box-shadow: rgba(37, 99, 235, 0.28) 0px 6px 16px; transition: box-shadow 0.18s, transform 0.18s;"><span class="sc-interp">Umów prezentację</span> →</button>
+              <button data-dc-tpl="305" class="scpc" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(37, 99, 235); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 14px 22px; cursor: pointer; box-shadow: rgba(37, 99, 235, 0.28) 0px 6px 16px; transition: box-shadow 0.18s, transform 0.18s;"><span class="sc-interp">Umów prezentację</span> →</button>
             
             
           </div>
@@ -629,7 +635,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
             
             <div data-dc-tpl="801" data-rail="" style="display: grid; grid-template-columns: repeat(5, minmax(0px, 1fr)); gap: 10px; align-items: stretch; max-width: 1000px; margin: 0px 0px 18px;">
               
-                <button data-dc-tpl="803" class="scpf" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgba(37, 99, 235, 0.45); border-radius: 14px; background: linear-gradient(112deg, rgb(37, 99, 235), rgb(15, 169, 180)); box-shadow: rgba(37, 99, 235, 0.28) 0px 14px 30px; transform: scale(1.06); z-index: 3; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
+                <button data-dc-tpl="803" class="scpg" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgba(37, 99, 235, 0.45); border-radius: 14px; background: linear-gradient(112deg, rgb(37, 99, 235), rgb(15, 169, 180)); box-shadow: rgba(37, 99, 235, 0.28) 0px 14px 30px; transform: scale(1.06); z-index: 3; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
                   <span data-dc-tpl="804" style="flex: 0 0 auto; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 12px; line-height: 1; font-family: &quot;Open Sans&quot;; letter-spacing: 0.02em; color: rgb(252, 211, 77);"><span class="sc-interp">01</span></span>
                   
                     <span data-dc-tpl="806" aria-hidden="true" style="pointer-events: none; position: absolute; right: -9px; top: 50%; transform: translateY(-50%); display: flex; color: rgb(148, 163, 184);">
@@ -639,7 +645,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
                   <span data-dc-tpl="809" style="flex: 1 1 0%; font: 600 14px / 1.35 &quot;Open Sans&quot;; text-wrap: pretty; color: rgb(255, 255, 255);"><span class="sc-interp">Papierowe listy obecności nie dają pewności, że zebrane dane są realne</span></span>
                 </button>
               
-                <button data-dc-tpl="803" class="scpf" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
+                <button data-dc-tpl="803" class="scpg" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
                   <span data-dc-tpl="804" style="flex: 0 0 auto; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 12px; line-height: 1; font-family: &quot;Open Sans&quot;; letter-spacing: 0.02em; color: rgb(245, 158, 11);"><span class="sc-interp">02</span></span>
                   
                     <span data-dc-tpl="806" aria-hidden="true" style="pointer-events: none; position: absolute; right: -9px; top: 50%; transform: translateY(-50%); display: flex; color: rgb(148, 163, 184);">
@@ -649,7 +655,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
                   <span data-dc-tpl="809" style="flex: 1 1 0%; font: 600 14px / 1.35 &quot;Open Sans&quot;; text-wrap: pretty; color: rgb(15, 23, 42);"><span class="sc-interp">W Twoim obecnym systemie pracownicy wymieniają się kartami</span></span>
                 </button>
               
-                <button data-dc-tpl="803" class="scpf" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
+                <button data-dc-tpl="803" class="scpg" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
                   <span data-dc-tpl="804" style="flex: 0 0 auto; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 12px; line-height: 1; font-family: &quot;Open Sans&quot;; letter-spacing: 0.02em; color: rgb(245, 158, 11);"><span class="sc-interp">03</span></span>
                   
                     <span data-dc-tpl="806" aria-hidden="true" style="pointer-events: none; position: absolute; right: -9px; top: 50%; transform: translateY(-50%); display: flex; color: rgb(148, 163, 184);">
@@ -659,7 +665,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
                   <span data-dc-tpl="809" style="flex: 1 1 0%; font: 600 14px / 1.35 &quot;Open Sans&quot;; text-wrap: pretty; color: rgb(15, 23, 42);"><span class="sc-interp">Spóźnienia i wcześniejsze wyjścia dezorganizują pracę zespołu</span></span>
                 </button>
               
-                <button data-dc-tpl="803" class="scpf" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
+                <button data-dc-tpl="803" class="scpg" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
                   <span data-dc-tpl="804" style="flex: 0 0 auto; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 12px; line-height: 1; font-family: &quot;Open Sans&quot;; letter-spacing: 0.02em; color: rgb(245, 158, 11);"><span class="sc-interp">04</span></span>
                   
                     <span data-dc-tpl="806" aria-hidden="true" style="pointer-events: none; position: absolute; right: -9px; top: 50%; transform: translateY(-50%); display: flex; color: rgb(148, 163, 184);">
@@ -669,13 +675,13 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
                   <span data-dc-tpl="809" style="flex: 1 1 0%; font: 600 14px / 1.35 &quot;Open Sans&quot;; text-wrap: pretty; color: rgb(15, 23, 42);"><span class="sc-interp">Brak kontroli nad wyjściami prywatnymi poza firmę</span></span>
                 </button>
               
-                <button data-dc-tpl="803" class="scpf" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
+                <button data-dc-tpl="803" class="scpg" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
                   <span data-dc-tpl="804" style="flex: 0 0 auto; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 12px; line-height: 1; font-family: &quot;Open Sans&quot;; letter-spacing: 0.02em; color: rgb(245, 158, 11);"><span class="sc-interp">05</span></span>
                   
                   <span data-dc-tpl="809" style="flex: 1 1 0%; font: 600 14px / 1.35 &quot;Open Sans&quot;; text-wrap: pretty; color: rgb(15, 23, 42);"><span class="sc-interp">Przerwy są zbyt częste i zbyt długie.</span></span>
                 </button>
               
-                <button data-dc-tpl="803" class="scpf" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
+                <button data-dc-tpl="803" class="scpg" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
                   <span data-dc-tpl="804" style="flex: 0 0 auto; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 12px; line-height: 1; font-family: &quot;Open Sans&quot;; letter-spacing: 0.02em; color: rgb(245, 158, 11);"><span class="sc-interp">06</span></span>
                   
                     <span data-dc-tpl="806" aria-hidden="true" style="pointer-events: none; position: absolute; right: -9px; top: 50%; transform: translateY(-50%); display: flex; color: rgb(148, 163, 184);">
@@ -685,7 +691,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
                   <span data-dc-tpl="809" style="flex: 1 1 0%; font: 600 14px / 1.35 &quot;Open Sans&quot;; text-wrap: pretty; color: rgb(15, 23, 42);"><span class="sc-interp">Papierowe wnioski angażują dużo czasu a pytania „ile pozostało mi urlopu?” to codzienność</span></span>
                 </button>
               
-                <button data-dc-tpl="803" class="scpf" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
+                <button data-dc-tpl="803" class="scpg" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
                   <span data-dc-tpl="804" style="flex: 0 0 auto; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 12px; line-height: 1; font-family: &quot;Open Sans&quot;; letter-spacing: 0.02em; color: rgb(245, 158, 11);"><span class="sc-interp">07</span></span>
                   
                     <span data-dc-tpl="806" aria-hidden="true" style="pointer-events: none; position: absolute; right: -9px; top: 50%; transform: translateY(-50%); display: flex; color: rgb(148, 163, 184);">
@@ -695,7 +701,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
                   <span data-dc-tpl="809" style="flex: 1 1 0%; font: 600 14px / 1.35 &quot;Open Sans&quot;; text-wrap: pretty; color: rgb(15, 23, 42);"><span class="sc-interp">Ręczne przygotowanie raportów czasu pracy „na już”</span></span>
                 </button>
               
-                <button data-dc-tpl="803" class="scpf" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
+                <button data-dc-tpl="803" class="scpg" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
                   <span data-dc-tpl="804" style="flex: 0 0 auto; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 12px; line-height: 1; font-family: &quot;Open Sans&quot;; letter-spacing: 0.02em; color: rgb(245, 158, 11);"><span class="sc-interp">08</span></span>
                   
                     <span data-dc-tpl="806" aria-hidden="true" style="pointer-events: none; position: absolute; right: -9px; top: 50%; transform: translateY(-50%); display: flex; color: rgb(148, 163, 184);">
@@ -705,7 +711,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
                   <span data-dc-tpl="809" style="flex: 1 1 0%; font: 600 14px / 1.35 &quot;Open Sans&quot;; text-wrap: pretty; color: rgb(15, 23, 42);"><span class="sc-interp">Dane o czasie pracy są przepisywane ręcznie do systemu kadrowo-płacowego</span></span>
                 </button>
               
-                <button data-dc-tpl="803" class="scpf" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
+                <button data-dc-tpl="803" class="scpg" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
                   <span data-dc-tpl="804" style="flex: 0 0 auto; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 12px; line-height: 1; font-family: &quot;Open Sans&quot;; letter-spacing: 0.02em; color: rgb(245, 158, 11);"><span class="sc-interp">09</span></span>
                   
                     <span data-dc-tpl="806" aria-hidden="true" style="pointer-events: none; position: absolute; right: -9px; top: 50%; transform: translateY(-50%); display: flex; color: rgb(148, 163, 184);">
@@ -715,7 +721,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
                   <span data-dc-tpl="809" style="flex: 1 1 0%; font: 600 14px / 1.35 &quot;Open Sans&quot;; text-wrap: pretty; color: rgb(15, 23, 42);"><span class="sc-interp">Rozliczenie czasu pracy pochłania początek każdego miesiąca.</span></span>
                 </button>
               
-                <button data-dc-tpl="803" class="scpf" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
+                <button data-dc-tpl="803" class="scpg" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; height: 100%; cursor: pointer; box-sizing: border-box; text-align: left; padding: 12px 14px; border: 1px solid rgb(223, 231, 242); border-radius: 14px; background: rgb(255, 255, 255); box-shadow: rgba(15, 23, 42, 0.05) 0px 1px 3px; transform: scale(1); z-index: 1; transition: transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.22s, background 0.18s, border-color 0.18s;">
                   <span data-dc-tpl="804" style="flex: 0 0 auto; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 800; font-stretch: normal; font-size: 12px; line-height: 1; font-family: &quot;Open Sans&quot;; letter-spacing: 0.02em; color: rgb(245, 158, 11);"><span class="sc-interp">10</span></span>
                   
                   <span data-dc-tpl="809" style="flex: 1 1 0%; font: 600 14px / 1.35 &quot;Open Sans&quot;; text-wrap: pretty; color: rgb(15, 23, 42);"><span class="sc-interp">Twój obecny system nie spełnia Twoich oczekiwań</span></span>
@@ -811,8 +817,8 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
             <p data-dc-tpl="879" style="margin: 0px; font: 400 15px / 1.5 &quot;Open Sans&quot;; color: rgba(255, 255, 255, 0.85);">Bezpłatna, 30-minutowa rozmowa. Przeanalizujemy Twoje obecne procesy i rozliczenia, wskażemy wąskie gardła i zaproponujemy gotowe rozwiązanie. Bez zobowiązań.</p>
           </div>
           <div data-dc-tpl="880" style="display: flex; gap: 12px; flex-shrink: 0; flex-wrap: wrap;">
-            <button data-dc-tpl="881" class="scpg" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(245, 158, 11); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 10px; padding: 15px 24px; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s;">Umów bezpłatną analizę</button>
-            <button data-dc-tpl="882" class="scph" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: transparent; border: 1px solid rgba(255, 255, 255, 0.55); border-radius: 10px; padding: 15px 24px; cursor: pointer; white-space: nowrap; transition: background 0.15s, transform 0.15s;">Policz oszczędności</button>
+            <button data-dc-tpl="881" class="scph" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(245, 158, 11); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 10px; padding: 15px 24px; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s;">Umów bezpłatną analizę</button>
+            <button data-dc-tpl="882" class="scpi" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: transparent; border: 1px solid rgba(255, 255, 255, 0.55); border-radius: 10px; padding: 15px 24px; cursor: pointer; white-space: nowrap; transition: background 0.15s, transform 0.15s;">Policz oszczędności</button>
           </div>
         </div>
       </div>
@@ -838,7 +844,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
         <div data-dc-tpl="1245" style="display: grid; grid-template-columns: repeat(6, minmax(0px, 1fr)); gap: 12px;">
           
-            <button data-dc-tpl="1247" class="scpm" style="position: relative; overflow: hidden; text-align: left; cursor: pointer; padding: 0px; display: flex; flex-direction: column; align-items: stretch; border-radius: 16px; border: 2px solid rgb(37, 99, 235); background: rgb(15, 23, 42); box-shadow: rgba(37, 99, 235, 0.28) 0px 18px 38px; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;">
+            <button data-dc-tpl="1247" class="scpn" style="position: relative; overflow: hidden; text-align: left; cursor: pointer; padding: 0px; display: flex; flex-direction: column; align-items: stretch; border-radius: 16px; border: 2px solid rgb(37, 99, 235); background: rgb(15, 23, 42); box-shadow: rgba(37, 99, 235, 0.28) 0px 18px 38px; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;">
               <span data-dc-tpl="1248" style="position: absolute; inset: 0px; overflow: hidden; border-radius: 15px;">
                 <img data-dc-tpl="1249" src="/biosys-podglad/assets/seg-produkcja.webp" alt="Produkcja" width="640" height="420" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                 <span data-dc-tpl="1250" style="position: absolute; inset: 0px; background: linear-gradient(rgba(37, 99, 235, 0.28) 0%, rgba(15, 23, 42, 0.86) 100%);"></span>
@@ -850,7 +856,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
               </span>
             </button>
           
-            <button data-dc-tpl="1247" class="scpm" style="position: relative; overflow: hidden; text-align: left; cursor: pointer; padding: 0px; display: flex; flex-direction: column; align-items: stretch; border-radius: 16px; border: 1px solid rgb(226, 232, 240); background: rgb(15, 23, 42); box-shadow: rgba(15, 23, 42, 0.08) 0px 2px 8px; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;">
+            <button data-dc-tpl="1247" class="scpn" style="position: relative; overflow: hidden; text-align: left; cursor: pointer; padding: 0px; display: flex; flex-direction: column; align-items: stretch; border-radius: 16px; border: 1px solid rgb(226, 232, 240); background: rgb(15, 23, 42); box-shadow: rgba(15, 23, 42, 0.08) 0px 2px 8px; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;">
               <span data-dc-tpl="1248" style="position: absolute; inset: 0px; overflow: hidden; border-radius: 15px;">
                 <img data-dc-tpl="1249" src="/biosys-podglad/assets/seg-hr.webp" alt="HR i Zarząd" width="640" height="420" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                 <span data-dc-tpl="1250" style="position: absolute; inset: 0px; background: linear-gradient(rgba(15, 23, 42, 0.35) 0%, rgba(15, 23, 42, 0.8) 100%);"></span>
@@ -862,7 +868,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
               </span>
             </button>
           
-            <button data-dc-tpl="1247" class="scpm" style="position: relative; overflow: hidden; text-align: left; cursor: pointer; padding: 0px; display: flex; flex-direction: column; align-items: stretch; border-radius: 16px; border: 1px solid rgb(226, 232, 240); background: rgb(15, 23, 42); box-shadow: rgba(15, 23, 42, 0.08) 0px 2px 8px; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;">
+            <button data-dc-tpl="1247" class="scpn" style="position: relative; overflow: hidden; text-align: left; cursor: pointer; padding: 0px; display: flex; flex-direction: column; align-items: stretch; border-radius: 16px; border: 1px solid rgb(226, 232, 240); background: rgb(15, 23, 42); box-shadow: rgba(15, 23, 42, 0.08) 0px 2px 8px; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;">
               <span data-dc-tpl="1248" style="position: absolute; inset: 0px; overflow: hidden; border-radius: 15px;">
                 <img data-dc-tpl="1249" src="/biosys-podglad/assets/seg-magazyn.webp" alt="Magazyn i Logistyka" width="640" height="420" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                 <span data-dc-tpl="1250" style="position: absolute; inset: 0px; background: linear-gradient(rgba(15, 23, 42, 0.35) 0%, rgba(15, 23, 42, 0.8) 100%);"></span>
@@ -874,7 +880,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
               </span>
             </button>
           
-            <button data-dc-tpl="1247" class="scpm" style="position: relative; overflow: hidden; text-align: left; cursor: pointer; padding: 0px; display: flex; flex-direction: column; align-items: stretch; border-radius: 16px; border: 1px solid rgb(226, 232, 240); background: rgb(15, 23, 42); box-shadow: rgba(15, 23, 42, 0.08) 0px 2px 8px; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;">
+            <button data-dc-tpl="1247" class="scpn" style="position: relative; overflow: hidden; text-align: left; cursor: pointer; padding: 0px; display: flex; flex-direction: column; align-items: stretch; border-radius: 16px; border: 1px solid rgb(226, 232, 240); background: rgb(15, 23, 42); box-shadow: rgba(15, 23, 42, 0.08) 0px 2px 8px; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;">
               <span data-dc-tpl="1248" style="position: absolute; inset: 0px; overflow: hidden; border-radius: 15px;">
                 <img data-dc-tpl="1249" src="/biosys-podglad/assets/seg-biura.webp" alt="Jednostki publiczne, biura i praca hybrydowa" width="640" height="420" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                 <span data-dc-tpl="1250" style="position: absolute; inset: 0px; background: linear-gradient(rgba(15, 23, 42, 0.35) 0%, rgba(15, 23, 42, 0.8) 100%);"></span>
@@ -886,7 +892,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
               </span>
             </button>
           
-            <button data-dc-tpl="1247" class="scpm" style="position: relative; overflow: hidden; text-align: left; cursor: pointer; padding: 0px; display: flex; flex-direction: column; align-items: stretch; border-radius: 16px; border: 1px solid rgb(226, 232, 240); background: rgb(15, 23, 42); box-shadow: rgba(15, 23, 42, 0.08) 0px 2px 8px; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;">
+            <button data-dc-tpl="1247" class="scpn" style="position: relative; overflow: hidden; text-align: left; cursor: pointer; padding: 0px; display: flex; flex-direction: column; align-items: stretch; border-radius: 16px; border: 1px solid rgb(226, 232, 240); background: rgb(15, 23, 42); box-shadow: rgba(15, 23, 42, 0.08) 0px 2px 8px; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;">
               <span data-dc-tpl="1248" style="position: absolute; inset: 0px; overflow: hidden; border-radius: 15px;">
                 <img data-dc-tpl="1249" src="/biosys-podglad/assets/seg-zdrowie.webp" alt="Ochrona Zdrowia" width="640" height="420" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                 <span data-dc-tpl="1250" style="position: absolute; inset: 0px; background: linear-gradient(rgba(15, 23, 42, 0.35) 0%, rgba(15, 23, 42, 0.8) 100%);"></span>
@@ -898,7 +904,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
               </span>
             </button>
           
-            <button data-dc-tpl="1247" class="scpm" style="position: relative; overflow: hidden; text-align: left; cursor: pointer; padding: 0px; display: flex; flex-direction: column; align-items: stretch; border-radius: 16px; border: 1px solid rgb(226, 232, 240); background: rgb(15, 23, 42); box-shadow: rgba(15, 23, 42, 0.08) 0px 2px 8px; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;">
+            <button data-dc-tpl="1247" class="scpn" style="position: relative; overflow: hidden; text-align: left; cursor: pointer; padding: 0px; display: flex; flex-direction: column; align-items: stretch; border-radius: 16px; border: 1px solid rgb(226, 232, 240); background: rgb(15, 23, 42); box-shadow: rgba(15, 23, 42, 0.08) 0px 2px 8px; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;">
               <span data-dc-tpl="1248" style="position: absolute; inset: 0px; overflow: hidden; border-radius: 15px;">
                 <img data-dc-tpl="1249" src="/biosys-podglad/assets/seg-oddzialy.webp" alt="Wiele oddziałów" width="640" height="420" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                 <span data-dc-tpl="1250" style="position: absolute; inset: 0px; background: linear-gradient(rgba(15, 23, 42, 0.35) 0%, rgba(15, 23, 42, 0.8) 100%);"></span>
@@ -925,7 +931,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
               <p data-dc-tpl="1264" style="margin: 0px; font: 600 22.6px / 1.2 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Produkcja</span></p>
               <p data-dc-tpl="1265" style="margin: 0px; font: 400 14.5px / 1.7 &quot;Open Sans&quot;; color: rgb(100, 116, 139); text-wrap: pretty;"><span class="sc-interp">Zarządzanie wydajnością na hali produkcyjnej opiera się na dyscyplinie i wysokiej dostępności zespołu. Problemy ze spóźnieniami, przeciągającymi się przerwami, czy "koleżeńskim" odbijaniem kart destabilizują planowanie. System RCP BioSys oddaje w ręce Kierowników Produkcji narzędzie do realnej kontroli – zarządzaj procesem, a nie papierami.</span></p>
               <div data-dc-tpl="1266" style="height: 1px; background: rgb(233, 238, 245); margin: 2px 0px;"></div>
-              <button data-dc-tpl="1267" class="scpn" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 9px; font: 700 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(120deg, rgb(37, 99, 235), rgb(15, 169, 180)); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 11px; padding: 14px 22px; cursor: pointer; box-shadow: rgba(37, 99, 235, 0.26) 0px 10px 24px; transition: transform 0.15s, box-shadow 0.15s;">Zobacz stronę <span class="sc-interp">Produkcja</span> →</button>
+              <button data-dc-tpl="1267" class="scpo" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 9px; font: 700 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(120deg, rgb(37, 99, 235), rgb(15, 169, 180)); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 11px; padding: 14px 22px; cursor: pointer; box-shadow: rgba(37, 99, 235, 0.26) 0px 10px 24px; transition: transform 0.15s, box-shadow 0.15s;">Zobacz stronę <span class="sc-interp">Produkcja</span> →</button>
             </div>
             <div data-dc-tpl="1268" style="flex: 1 1 420px; min-width: 0px; display: flex; flex-direction: column; gap: 12px;">
               
@@ -971,206 +977,206 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           <div data-dc-tpl="1300" class="logo-track" style="animation: 92s linear 0s infinite normal none running logoMarquee;">
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/ZSRK.svg" alt="Integracja systemu RCP BioSys z ZSRK" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/ZSRK.svg" alt="Logotyp ZSRK — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/raks.webp" alt="Integracja systemu RCP BioSys z raks" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/raks.webp" alt="Logotyp Raks — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/komax.svg" alt="Integracja systemu RCP BioSys z komax" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/komax.svg" alt="Logotyp Komax — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/groszek.webp" alt="Integracja systemu RCP BioSys z groszek" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/groszek.webp" alt="Logotyp Groszek — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/korelacja.webp" alt="Integracja systemu RCP BioSys z korelacja" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/korelacja.webp" alt="Logotyp Korelacja — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Quorum.svg" alt="Integracja systemu RCP BioSys z Quorum" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Quorum.svg" alt="Logotyp Quorum — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Infor.webp" alt="Integracja systemu RCP BioSys z Infor" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Infor.webp" alt="Logotyp Infor — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/sygnity.webp" alt="Integracja systemu RCP BioSys z sygnity" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/sygnity.webp" alt="Logotyp Sygnity — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/IFS.webp" alt="Integracja systemu RCP BioSys z IFS" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/IFS.webp" alt="Logotyp IFS — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Simple.webp" alt="Integracja systemu RCP BioSys z Simple" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Simple.webp" alt="Logotyp Simple — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Vulcan.webp" alt="Integracja systemu RCP BioSys z Vulcan" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Vulcan.webp" alt="Logotyp Vulcan — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/rekord.webp" alt="Integracja systemu RCP BioSys z rekord" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/rekord.webp" alt="Logotyp Rekord — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Streamsoft.svg" alt="Integracja systemu RCP BioSys z Streamsoft" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Streamsoft.svg" alt="Logotyp Streamsoft — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/ZSRK.svg" alt="Integracja systemu RCP BioSys z ZSRK" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/ZSRK.svg" alt="Logotyp ZSRK — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/raks.webp" alt="Integracja systemu RCP BioSys z raks" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/raks.webp" alt="Logotyp Raks — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/komax.svg" alt="Integracja systemu RCP BioSys z komax" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/komax.svg" alt="Logotyp Komax — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/groszek.webp" alt="Integracja systemu RCP BioSys z groszek" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/groszek.webp" alt="Logotyp Groszek — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/korelacja.webp" alt="Integracja systemu RCP BioSys z korelacja" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/korelacja.webp" alt="Logotyp Korelacja — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Quorum.svg" alt="Integracja systemu RCP BioSys z Quorum" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Quorum.svg" alt="Logotyp Quorum — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Infor.webp" alt="Integracja systemu RCP BioSys z Infor" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Infor.webp" alt="Logotyp Infor — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/sygnity.webp" alt="Integracja systemu RCP BioSys z sygnity" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/sygnity.webp" alt="Logotyp Sygnity — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/IFS.webp" alt="Integracja systemu RCP BioSys z IFS" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/IFS.webp" alt="Logotyp IFS — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Simple.webp" alt="Integracja systemu RCP BioSys z Simple" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Simple.webp" alt="Logotyp Simple — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Vulcan.webp" alt="Integracja systemu RCP BioSys z Vulcan" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Vulcan.webp" alt="Logotyp Vulcan — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/rekord.webp" alt="Integracja systemu RCP BioSys z rekord" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/rekord.webp" alt="Logotyp Rekord — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1303" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Streamsoft.svg" alt="Integracja systemu RCP BioSys z Streamsoft" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1304" src="/biosys-podglad/assets/integrations/Streamsoft.svg" alt="Logotyp Streamsoft — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
           </div>
           <div data-dc-tpl="1305" class="logo-track" style="animation: 100s linear 0s infinite normal none running logoMarqueeRev; margin-top: 8px;">
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Teta.webp" alt="Integracja systemu RCP BioSys z Teta" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Teta.webp" alt="Logotyp Teta — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/macrologic.webp" alt="Integracja systemu RCP BioSys z macrologic" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/macrologic.webp" alt="Logotyp Macrologic — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Softlab.webp" alt="Integracja systemu RCP BioSys z Softlab" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Softlab.webp" alt="Logotyp Softlab — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Wapro.webp" alt="Integracja systemu RCP BioSys z Wapro" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Wapro.webp" alt="Logotyp Wapro — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/BPSC.webp" alt="Integracja systemu RCP BioSys z BPSC" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/BPSC.webp" alt="Logotyp BPSC — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Symfonia.webp" alt="Integracja systemu RCP BioSys z Symfonia" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Symfonia.webp" alt="Logotyp Symfonia — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/ComarchXL.webp" alt="Integracja systemu RCP BioSys z ComarchXL" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/ComarchXL.webp" alt="Logotyp Comarch XL — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/InfoMedica.webp" alt="Integracja systemu RCP BioSys z InfoMedica" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/InfoMedica.webp" alt="Logotyp InfoMedica — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/mMedica.webp" alt="Integracja systemu RCP BioSys z mMedica" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/mMedica.webp" alt="Logotyp mMedica — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Comarch.svg" alt="Integracja systemu RCP BioSys z Comarch" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Comarch.svg" alt="Logotyp Comarch — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/enova365.svg" alt="Integracja systemu RCP BioSys z enova365" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/enova365.svg" alt="Logotyp enova365 — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/SAP.webp" alt="Integracja systemu RCP BioSys z SAP" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 46px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/SAP.webp" alt="Logotyp SAP — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 46px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Teta.webp" alt="Integracja systemu RCP BioSys z Teta" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Teta.webp" alt="Logotyp Teta — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/macrologic.webp" alt="Integracja systemu RCP BioSys z macrologic" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/macrologic.webp" alt="Logotyp Macrologic — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Softlab.webp" alt="Integracja systemu RCP BioSys z Softlab" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Softlab.webp" alt="Logotyp Softlab — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Wapro.webp" alt="Integracja systemu RCP BioSys z Wapro" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Wapro.webp" alt="Logotyp Wapro — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/BPSC.webp" alt="Integracja systemu RCP BioSys z BPSC" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/BPSC.webp" alt="Logotyp BPSC — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Symfonia.webp" alt="Integracja systemu RCP BioSys z Symfonia" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Symfonia.webp" alt="Logotyp Symfonia — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/ComarchXL.webp" alt="Integracja systemu RCP BioSys z ComarchXL" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/ComarchXL.webp" alt="Logotyp Comarch XL — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/InfoMedica.webp" alt="Integracja systemu RCP BioSys z InfoMedica" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/InfoMedica.webp" alt="Logotyp InfoMedica — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/mMedica.webp" alt="Integracja systemu RCP BioSys z mMedica" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/mMedica.webp" alt="Logotyp mMedica — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Comarch.svg" alt="Integracja systemu RCP BioSys z Comarch" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/Comarch.svg" alt="Logotyp Comarch — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/enova365.svg" alt="Integracja systemu RCP BioSys z enova365" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/enova365.svg" alt="Logotyp enova365 — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 60px; width: auto; height: auto; object-fit: contain;">
               </span>
             
               <span data-dc-tpl="1308" style="flex: 0 0 auto; width: 200px; height: 88px; display: flex; align-items: center; justify-content: center; padding: 9px; background: rgb(255, 255, 255); border: 1.5px solid rgb(30, 58, 138); border-radius: 10px; margin: 0px 7px; overflow: hidden;">
-                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/SAP.webp" alt="Integracja systemu RCP BioSys z SAP" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 46px; width: auto; height: auto; object-fit: contain;">
+                <img data-dc-tpl="1309" src="/biosys-podglad/assets/integrations/SAP.webp" alt="Logotyp SAP — system zintegrowany z RCP BioSys" width="200" height="60" loading="lazy" decoding="async" style="max-width: 100%; max-height: 46px; width: auto; height: auto; object-fit: contain;">
               </span>
             
           </div>
@@ -1192,28 +1198,28 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           
           <div data-dc-tpl="1338" style="display: flex; flex-flow: wrap; gap: 40px; justify-content: space-between;">
             
-              <div data-dc-tpl="1340" class="scpp" style="position: relative; overflow: hidden; flex: 1 1 0%; min-width: 200px; background: linear-gradient(158deg, rgb(30, 41, 59) 0%, rgb(24, 35, 58) 55%, rgb(20, 29, 49) 100%); border: 1px solid rgba(148, 163, 184, 0.16); border-radius: 16px; padding: 24px 24px 26px; min-height: 262px; display: flex; flex-direction: column; transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;">
+              <div data-dc-tpl="1340" class="scpq" style="position: relative; overflow: hidden; flex: 1 1 0%; min-width: 200px; background: linear-gradient(158deg, rgb(30, 41, 59) 0%, rgb(24, 35, 58) 55%, rgb(20, 29, 49) 100%); border: 1px solid rgba(148, 163, 184, 0.16); border-radius: 16px; padding: 24px 24px 26px; min-height: 262px; display: flex; flex-direction: column; transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;">
                 <div data-dc-tpl="1341" style="display: flex; margin-bottom: 16px;"><svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true"><defs><linearGradient id="seb0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0FA9B4"></stop><stop offset="1" stop-color="#38BDF8"></stop></lineargradient></defs><rect x="0" y="0" width="44" height="44" rx="13" fill="url(#seb0)"></rect><g transform="translate(10 10)" fill="none" stroke="#0F172A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"><rect x="1" y="2.5" width="22" height="16" rx="2.5"></rect><path d="M1 7.5h22"></path><path d="M8.5 7.5v11"></path><path d="M12 11h7"></path><path d="M12 15h4.5"></path></g></svg></div>
                 <p data-dc-tpl="1342" style="margin: 0px 0px 8px; font: 700 15.5px &quot;Open Sans&quot;; color: rgb(255, 255, 255);"><span class="sc-interp">Oprogramowanie do zarządzania</span></p>
                 <p data-dc-tpl="1343" style="margin: 0px 0px 18px; font: 400 13.5px / 1.6 &quot;Open Sans&quot;; color: rgb(203, 213, 225);"><span class="sc-interp">Nowoczesne i intuicyjne narzędzie do zarządzania czasem pracy wraz z pełnym raportowaniem.</span></p>
                 <div data-dc-tpl="1344" style="position: relative; margin: auto -8px -8px 0px; height: 104px; pointer-events: none; flex: 0 0 auto; mask-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.45) 26%, rgba(0, 0, 0, 0.85) 52%, rgb(0, 0, 0) 74%);"><svg viewBox="46 38 134 122" preserveAspectRatio="xMaxYMax meet" fill="none" aria-hidden="true" style="position: absolute; right: 6px; bottom: 2px; width: 150px; height: 98px;"><defs><radialGradient id="seg0"><stop offset="0" stop-color="#0FA9B4" stop-opacity=".55"></stop><stop offset="1" stop-color="#0FA9B4" stop-opacity="0"></stop></radialgradient></defs><circle cx="130" cy="120" r="80" fill="url(#seg0)"></circle><g fill="#5EEAD4" opacity="0.5"><rect x="70" y="112" width="14" height="34" rx="5"></rect><rect x="94" y="88" width="14" height="58" rx="5"></rect><rect x="118" y="64" width="14" height="82" rx="5"></rect><rect x="142" y="98" width="14" height="48" rx="5"></rect></g><path d="M64 96 L101 72 L125 84 L162 52" stroke="#99F6E4" stroke-width="2.4" opacity="0.65"></path></svg></div>
               </div>
             
-              <div data-dc-tpl="1340" class="scpp" style="position: relative; overflow: hidden; flex: 1 1 0%; min-width: 200px; background: linear-gradient(158deg, rgb(30, 41, 59) 0%, rgb(24, 35, 58) 55%, rgb(20, 29, 49) 100%); border: 1px solid rgba(148, 163, 184, 0.16); border-radius: 16px; padding: 24px 24px 26px; min-height: 262px; display: flex; flex-direction: column; transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;">
+              <div data-dc-tpl="1340" class="scpq" style="position: relative; overflow: hidden; flex: 1 1 0%; min-width: 200px; background: linear-gradient(158deg, rgb(30, 41, 59) 0%, rgb(24, 35, 58) 55%, rgb(20, 29, 49) 100%); border: 1px solid rgba(148, 163, 184, 0.16); border-radius: 16px; padding: 24px 24px 26px; min-height: 262px; display: flex; flex-direction: column; transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;">
                 <div data-dc-tpl="1341" style="display: flex; margin-bottom: 16px;"><svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true"><defs><linearGradient id="seb1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38BDF8"></stop><stop offset="1" stop-color="#2563EB"></stop></lineargradient></defs><rect x="0" y="0" width="44" height="44" rx="13" fill="url(#seb1)"></rect><g transform="translate(10 10)" fill="none" stroke="#0F172A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"><rect x="4.5" y="1.5" width="15" height="21" rx="3"></rect><path d="M9 7.5c2-2 4-2 6 0"></path><path d="M10.5 11c1-1 2-1 3 0"></path><circle cx="12" cy="17" r="2.5"></circle></g></svg></div>
                 <p data-dc-tpl="1342" style="margin: 0px 0px 8px; font: 700 15.5px &quot;Open Sans&quot;; color: rgb(255, 255, 255);"><span class="sc-interp">Niezawodne czytniki</span></p>
                 <p data-dc-tpl="1343" style="margin: 0px 0px 18px; font: 400 13.5px / 1.6 &quot;Open Sans&quot;; color: rgb(203, 213, 225);"><span class="sc-interp">Urządzenia dopasowane do warunków biurowych, przemysłowych i zewnętrznych.</span></p>
                 <div data-dc-tpl="1344" style="position: relative; margin: auto -8px -8px 0px; height: 104px; pointer-events: none; flex: 0 0 auto; mask-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.45) 26%, rgba(0, 0, 0, 0.85) 52%, rgb(0, 0, 0) 74%);"><svg viewBox="32 30 176 176" preserveAspectRatio="xMaxYMax meet" fill="none" aria-hidden="true" style="position: absolute; right: 6px; bottom: 2px; width: 150px; height: 98px;"><defs><radialGradient id="seg1"><stop offset="0" stop-color="#38BDF8" stop-opacity=".5"></stop><stop offset="1" stop-color="#38BDF8" stop-opacity="0"></stop></radialgradient></defs><circle cx="120" cy="118" r="84" fill="url(#seg1)"></circle><g stroke="#7DD3FC" fill="none"><circle cx="120" cy="118" r="24" stroke-width="2.4" opacity="0.7"></circle><circle cx="120" cy="118" r="44" stroke-width="2" opacity="0.45"></circle><circle cx="120" cy="118" r="64" stroke-width="1.6" opacity="0.28"></circle><circle cx="120" cy="118" r="84" stroke-width="1.2" opacity="0.16"></circle></g><circle cx="120" cy="118" r="7" fill="#BAE6FD" opacity="0.8"></circle></svg></div>
               </div>
             
-              <div data-dc-tpl="1340" class="scpp" style="position: relative; overflow: hidden; flex: 1 1 0%; min-width: 200px; background: linear-gradient(158deg, rgb(30, 41, 59) 0%, rgb(24, 35, 58) 55%, rgb(20, 29, 49) 100%); border: 1px solid rgba(148, 163, 184, 0.16); border-radius: 16px; padding: 24px 24px 26px; min-height: 262px; display: flex; flex-direction: column; transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;">
+              <div data-dc-tpl="1340" class="scpq" style="position: relative; overflow: hidden; flex: 1 1 0%; min-width: 200px; background: linear-gradient(158deg, rgb(30, 41, 59) 0%, rgb(24, 35, 58) 55%, rgb(20, 29, 49) 100%); border: 1px solid rgba(148, 163, 184, 0.16); border-radius: 16px; padding: 24px 24px 26px; min-height: 262px; display: flex; flex-direction: column; transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;">
                 <div data-dc-tpl="1341" style="display: flex; margin-bottom: 16px;"><svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true"><defs><linearGradient id="seb2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"></stop><stop offset="1" stop-color="#60A5FA"></stop></lineargradient></defs><rect x="0" y="0" width="44" height="44" rx="13" fill="url(#seb2)"></rect><g transform="translate(10 10)" fill="none" stroke="#0F172A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"><path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h16"></path><circle cx="9" cy="6" r="2.4" fill="#0F172A"></circle><circle cx="16" cy="12" r="2.4" fill="#0F172A"></circle><circle cx="7" cy="18" r="2.4" fill="#0F172A"></circle></g></svg></div>
                 <p data-dc-tpl="1342" style="margin: 0px 0px 8px; font: 700 15.5px &quot;Open Sans&quot;; color: rgb(255, 255, 255);"><span class="sc-interp">Kompleksowe uruchomienie</span></p>
                 <p data-dc-tpl="1343" style="margin: 0px 0px 18px; font: 400 13.5px / 1.6 &quot;Open Sans&quot;; color: rgb(203, 213, 225);"><span class="sc-interp">Sprawna instalacja, konfiguracja narzędzia i przeszkolenie z obsługi.</span></p>
                 <div data-dc-tpl="1344" style="position: relative; margin: auto -8px -8px 0px; height: 104px; pointer-events: none; flex: 0 0 auto; mask-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.45) 26%, rgba(0, 0, 0, 0.85) 52%, rgb(0, 0, 0) 74%);"><svg viewBox="48 66 156 120" preserveAspectRatio="xMaxYMax meet" fill="none" aria-hidden="true" style="position: absolute; right: 6px; bottom: 2px; width: 150px; height: 98px;"><defs><radialGradient id="seg2"><stop offset="0" stop-color="#2563EB" stop-opacity=".65"></stop><stop offset="1" stop-color="#2563EB" stop-opacity="0"></stop></radialgradient><linearGradient id="seg2b" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#93C5FD" stop-opacity=".15"></stop><stop offset="1" stop-color="#93C5FD" stop-opacity=".75"></stop></lineargradient></defs><circle cx="126" cy="124" r="82" fill="url(#seg2)"></circle><g stroke="url(#seg2b)" stroke-width="5" stroke-linecap="round"><path d="M56 158 L104 110"></path><path d="M84 166 L142 108"></path><path d="M112 174 L180 106"></path><path d="M144 178 L196 126"></path></g><path d="M92 78 L150 78 L150 136" stroke="#BFDBFE" stroke-width="2" opacity="0.4" fill="none"></path></svg></div>
               </div>
             
-              <div data-dc-tpl="1340" class="scpp" style="position: relative; overflow: hidden; flex: 1 1 0%; min-width: 200px; background: linear-gradient(158deg, rgb(30, 41, 59) 0%, rgb(24, 35, 58) 55%, rgb(20, 29, 49) 100%); border: 1px solid rgba(148, 163, 184, 0.16); border-radius: 16px; padding: 24px 24px 26px; min-height: 262px; display: flex; flex-direction: column; transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;">
+              <div data-dc-tpl="1340" class="scpq" style="position: relative; overflow: hidden; flex: 1 1 0%; min-width: 200px; background: linear-gradient(158deg, rgb(30, 41, 59) 0%, rgb(24, 35, 58) 55%, rgb(20, 29, 49) 100%); border: 1px solid rgba(148, 163, 184, 0.16); border-radius: 16px; padding: 24px 24px 26px; min-height: 262px; display: flex; flex-direction: column; transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;">
                 <div data-dc-tpl="1341" style="display: flex; margin-bottom: 16px;"><svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true"><defs><linearGradient id="seb3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F59E0B"></stop><stop offset="1" stop-color="#38BDF8"></stop></lineargradient></defs><rect x="0" y="0" width="44" height="44" rx="13" fill="url(#seb3)"></rect><g transform="translate(10 10)" fill="none" stroke="#0F172A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4.2"></circle><path d="M5 5l4 4"></path><path d="M19 5l-4 4"></path><path d="M5 19l4-4"></path><path d="M19 19l-4-4"></path></g></svg></div>
                 <p data-dc-tpl="1342" style="margin: 0px 0px 8px; font: 700 15.5px &quot;Open Sans&quot;; color: rgb(255, 255, 255);"><span class="sc-interp">Stała opieka</span></p>
                 <p data-dc-tpl="1343" style="margin: 0px 0px 18px; font: 400 13.5px / 1.6 &quot;Open Sans&quot;; color: rgb(203, 213, 225);"><span class="sc-interp">Wsparcie dostępne na każdym etapie korzystania z systemu.</span></p>
@@ -1230,22 +1236,22 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
               </div>
             
               <div data-dc-tpl="1347" style="min-width: 170px; flex: 1 1 0%;">
-                <p data-dc-tpl="1348" style="margin: 0px; font: 600 28.2px Montserrat; background: linear-gradient(90deg, rgb(56, 189, 248), rgb(15, 169, 180)) text; color: transparent;"><span class="sc-interp">50 000</span></p>
+                <p data-dc-tpl="1348" style="margin: 0px; font: 600 28.2px Montserrat; background: linear-gradient(90deg, rgb(56, 189, 248), rgb(15, 169, 180)) text; color: transparent;"><span class="sc-interp">50 000+</span></p>
                 <p data-dc-tpl="1349" style="margin: 6px 0px 0px; font: 400 13px / 1.5 &quot;Open Sans&quot;; color: rgb(148, 163, 184);"><span class="sc-interp">godzin wsparcia i opieki rocznie świadczymy naszym Klientom</span></p>
               </div>
             
               <div data-dc-tpl="1347" style="min-width: 170px; flex: 1 1 0%;">
-                <p data-dc-tpl="1348" style="margin: 0px; font: 600 28.2px Montserrat; background: linear-gradient(90deg, rgb(56, 189, 248), rgb(15, 169, 180)) text; color: transparent;"><span class="sc-interp">5 000</span></p>
+                <p data-dc-tpl="1348" style="margin: 0px; font: 600 28.2px Montserrat; background: linear-gradient(90deg, rgb(56, 189, 248), rgb(15, 169, 180)) text; color: transparent;"><span class="sc-interp">5 000+</span></p>
                 <p data-dc-tpl="1349" style="margin: 6px 0px 0px; font: 400 13px / 1.5 &quot;Open Sans&quot;; color: rgb(148, 163, 184);"><span class="sc-interp">kierowników codziennie zarządza zespołami z wykorzystaniem naszych systemów</span></p>
               </div>
             
               <div data-dc-tpl="1347" style="min-width: 170px; flex: 1 1 0%;">
-                <p data-dc-tpl="1348" style="margin: 0px; font: 600 28.2px Montserrat; background: linear-gradient(90deg, rgb(56, 189, 248), rgb(15, 169, 180)) text; color: transparent;"><span class="sc-interp">18 000</span></p>
+                <p data-dc-tpl="1348" style="margin: 0px; font: 600 28.2px Montserrat; background: linear-gradient(90deg, rgb(56, 189, 248), rgb(15, 169, 180)) text; color: transparent;"><span class="sc-interp">18 000+</span></p>
                 <p data-dc-tpl="1349" style="margin: 6px 0px 0px; font: 400 13px / 1.5 &quot;Open Sans&quot;; color: rgb(148, 163, 184);"><span class="sc-interp">urządzeń codziennie pracuje na sukces naszych Klientów</span></p>
               </div>
             
               <div data-dc-tpl="1347" style="min-width: 170px; flex: 1 1 0%;">
-                <p data-dc-tpl="1348" style="margin: 0px; font: 600 28.2px Montserrat; background: linear-gradient(90deg, rgb(56, 189, 248), rgb(15, 169, 180)) text; color: transparent;"><span class="sc-interp">650 000</span></p>
+                <p data-dc-tpl="1348" style="margin: 0px; font: 600 28.2px Montserrat; background: linear-gradient(90deg, rgb(56, 189, 248), rgb(15, 169, 180)) text; color: transparent;"><span class="sc-interp">650 000+</span></p>
                 <p data-dc-tpl="1349" style="margin: 6px 0px 0px; font: 400 13px / 1.5 &quot;Open Sans&quot;; color: rgb(148, 163, 184);"><span class="sc-interp">pracowników każdego dnia rejestruje czas pracy w naszych systemach</span></p>
               </div>
             
@@ -1277,28 +1283,28 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           <div data-dc-tpl="1369" style="height: 32px;"></div>
           <div data-dc-tpl="1370" style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
             
-              <div data-dc-tpl="1372" class="scpq scpr" style="position: relative; overflow: hidden; background: rgb(255, 255, 255); border: 1px solid rgb(228, 235, 244); border-radius: 16px; padding: 16px 18px 18px; box-shadow: rgba(15, 23, 42, 0.05) 0px 2px 6px; transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;">
+              <div data-dc-tpl="1372" class="scpr scps" style="position: relative; overflow: hidden; background: rgb(255, 255, 255); border: 1px solid rgb(228, 235, 244); border-radius: 16px; padding: 16px 18px 18px; box-shadow: rgba(15, 23, 42, 0.05) 0px 2px 6px; transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;">
                 <span data-dc-tpl="1373" style="position: absolute; top: 8px; right: 16px; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 600; font-stretch: normal; font-size: 32px; line-height: 1; font-family: Montserrat; pointer-events: none; background: linear-gradient(rgb(232, 240, 254), rgb(244, 248, 253)) text; -webkit-text-fill-color: transparent; color: transparent;"><span class="sc-interp">01</span></span>
                 <div data-dc-tpl="1374" style="width: 44px; height: 3px; border-radius: 2px; background: linear-gradient(90deg, rgb(37, 99, 235), rgb(56, 189, 248));"></div>
                 <p data-dc-tpl="1375" style="position: relative; margin: 11px 0px 6px; padding-right: 46px; font: 700 16px / 1.3 &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">Mniejsze ryzyko</span></p>
                 <p data-dc-tpl="1376" style="position: relative; margin: 0px; font: 400 14px / 1.5 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Zanim wdrożymy system, weryfikujemy Twoje założenia. Dzięki temu nie „przepalisz” budżetu na rozwiązanie, które nie działa.</span></p>
               </div>
             
-              <div data-dc-tpl="1372" class="scpq scpr" style="position: relative; overflow: hidden; background: rgb(255, 255, 255); border: 1px solid rgb(228, 235, 244); border-radius: 16px; padding: 16px 18px 18px; box-shadow: rgba(15, 23, 42, 0.05) 0px 2px 6px; transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;">
+              <div data-dc-tpl="1372" class="scpr scps" style="position: relative; overflow: hidden; background: rgb(255, 255, 255); border: 1px solid rgb(228, 235, 244); border-radius: 16px; padding: 16px 18px 18px; box-shadow: rgba(15, 23, 42, 0.05) 0px 2px 6px; transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;">
                 <span data-dc-tpl="1373" style="position: absolute; top: 8px; right: 16px; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 600; font-stretch: normal; font-size: 32px; line-height: 1; font-family: Montserrat; pointer-events: none; background: linear-gradient(rgb(232, 240, 254), rgb(244, 248, 253)) text; -webkit-text-fill-color: transparent; color: transparent;"><span class="sc-interp">02</span></span>
                 <div data-dc-tpl="1374" style="width: 44px; height: 3px; border-radius: 2px; background: linear-gradient(90deg, rgb(15, 169, 180), rgb(56, 189, 248));"></div>
                 <p data-dc-tpl="1375" style="position: relative; margin: 11px 0px 6px; padding-right: 46px; font: 700 16px / 1.3 &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">Pewność efektu</span></p>
                 <p data-dc-tpl="1376" style="position: relative; margin: 0px; font: 400 14px / 1.5 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Nasz zespół realizował już ponad 1500 wdrożeń. Działamy kompleksowo: od sprzętu po szkolenie, bez przerzucania odpowiedzialności na innych.</span></p>
               </div>
             
-              <div data-dc-tpl="1372" class="scpq scpr" style="position: relative; overflow: hidden; background: rgb(255, 255, 255); border: 1px solid rgb(228, 235, 244); border-radius: 16px; padding: 16px 18px 18px; box-shadow: rgba(15, 23, 42, 0.05) 0px 2px 6px; transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;">
+              <div data-dc-tpl="1372" class="scpr scps" style="position: relative; overflow: hidden; background: rgb(255, 255, 255); border: 1px solid rgb(228, 235, 244); border-radius: 16px; padding: 16px 18px 18px; box-shadow: rgba(15, 23, 42, 0.05) 0px 2px 6px; transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;">
                 <span data-dc-tpl="1373" style="position: absolute; top: 8px; right: 16px; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 600; font-stretch: normal; font-size: 32px; line-height: 1; font-family: Montserrat; pointer-events: none; background: linear-gradient(rgb(232, 240, 254), rgb(244, 248, 253)) text; -webkit-text-fill-color: transparent; color: transparent;"><span class="sc-interp">03</span></span>
                 <div data-dc-tpl="1374" style="width: 44px; height: 3px; border-radius: 2px; background: linear-gradient(90deg, rgb(56, 189, 248), rgb(37, 99, 235));"></div>
                 <p data-dc-tpl="1375" style="position: relative; margin: 11px 0px 6px; padding-right: 46px; font: 700 16px / 1.3 &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">Spokój na lata</span></p>
                 <p data-dc-tpl="1376" style="position: relative; margin: 0px; font: 400 14px / 1.5 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Nasze wsparcie nie kończy się po starcie systemu. Masz dostęp do ekspertów i opcję wsparcia VIP – bez kolejek i z szybką reakcją.</span></p>
               </div>
             
-              <div data-dc-tpl="1372" class="scpq scpr" style="position: relative; overflow: hidden; background: rgb(255, 255, 255); border: 1px solid rgb(228, 235, 244); border-radius: 16px; padding: 16px 18px 18px; box-shadow: rgba(15, 23, 42, 0.05) 0px 2px 6px; transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;">
+              <div data-dc-tpl="1372" class="scpr scps" style="position: relative; overflow: hidden; background: rgb(255, 255, 255); border: 1px solid rgb(228, 235, 244); border-radius: 16px; padding: 16px 18px 18px; box-shadow: rgba(15, 23, 42, 0.05) 0px 2px 6px; transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;">
                 <span data-dc-tpl="1373" style="position: absolute; top: 8px; right: 16px; font-style: normal; font-variant: tabular-nums; font-size-adjust: none; font-language-override: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-weight: 600; font-stretch: normal; font-size: 32px; line-height: 1; font-family: Montserrat; pointer-events: none; background: linear-gradient(rgb(232, 240, 254), rgb(244, 248, 253)) text; -webkit-text-fill-color: transparent; color: transparent;"><span class="sc-interp">04</span></span>
                 <div data-dc-tpl="1374" style="width: 44px; height: 3px; border-radius: 2px; background: linear-gradient(90deg, rgb(245, 158, 11), rgb(56, 189, 248));"></div>
                 <p data-dc-tpl="1375" style="position: relative; margin: 11px 0px 6px; padding-right: 46px; font: 700 16px / 1.3 &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">Partnerstwo, nie transakcja</span></p>
@@ -1344,7 +1350,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
                 <div data-dc-tpl="1404" style="background: rgb(248, 250, 252); border: 1px solid rgb(226, 232, 240); border-radius: 13px; padding: 16px 18px;">
                   <p data-dc-tpl="1405" style="margin: 0px 0px 3px; font: 600 13.5px / 1.4 &quot;Open Sans&quot;; color: rgb(15, 23, 42); text-wrap: pretty;">Z którymi sytuacjami mierzysz się dzisiaj?</p>
                   <p data-dc-tpl="1406" style="margin: 0px 0px 12px; font: 400 11.5px / 1.4 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Możesz wybrać dowolną liczbę odpowiedzi</p>
-                  <button data-dc-tpl="1407" aria-expanded="false" class="scpj" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 50px; padding: 13px 15px; background: rgb(255, 255, 255); border: 1px solid rgb(203, 213, 225); border-radius: 11px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; box-shadow: none;">
+                  <button data-dc-tpl="1407" aria-expanded="false" class="scpk" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 50px; padding: 13px 15px; background: rgb(255, 255, 255); border: 1px solid rgb(203, 213, 225); border-radius: 11px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; box-shadow: none;">
                     <span data-dc-tpl="1408" style="font: 600 14px / 1.45 &quot;Open Sans&quot;; color: rgb(15, 23, 42); text-align: left; text-wrap: pretty;"><span class="sc-interp">Wybierz sytuacje z listy</span></span>
                     <span data-dc-tpl="1409" style="flex: 0 0 auto; font: 400 16px / 1 &quot;Open Sans&quot;; color: rgb(37, 99, 235); transform: rotate(0deg); transition: transform 0.18s;">▾</span>
                   </button>
@@ -1373,7 +1379,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
                 <input data-dc-tpl="1437" id="rcp-website" name="website" type="text" tabindex="-1" value="" autocomplete="off">
               </div>
               
-              <button data-dc-tpl="1440" class="scpk" style="width: 100%; min-height: 54px; font: 700 15.5px &quot;Open Sans&quot;; color: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 12px; padding: 16px 22px; transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s; cursor: not-allowed; opacity: 0.55; background: linear-gradient(120deg, rgb(37, 99, 235) 0%, rgb(15, 169, 180) 120%); box-shadow: rgba(37, 99, 235, 0.28) 0px 14px 30px;"><span class="sc-interp">WYŚLIJ</span></button>
+              <button data-dc-tpl="1440" class="scpl" style="width: 100%; min-height: 54px; font: 700 15.5px &quot;Open Sans&quot;; color: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 12px; padding: 16px 22px; transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s; cursor: not-allowed; opacity: 0.55; background: linear-gradient(120deg, rgb(37, 99, 235) 0%, rgb(15, 169, 180) 120%); box-shadow: rgba(37, 99, 235, 0.28) 0px 14px 30px;"><span class="sc-interp">WYŚLIJ</span></button>
             
             
           </div>
@@ -1468,10 +1474,10 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     
 
     
-      <div data-dc-tpl="2630" id="kontakt-cta" style="position: relative; overflow: hidden; padding: 42px 56px; background: rgb(15, 23, 42); display: flex; align-items: center; justify-content: space-between; gap: 22px;">
-        <p data-dc-tpl="2631" style="position: relative; z-index: 1; margin: 0px; font: 600 20px / 1.4 Montserrat; color: rgb(255, 255, 255); max-width: 600px;"><span class="sc-interp">Chcesz zobaczyć Etatomierz na danych ze swojej firmy? Umów prezentację.</span></p>
-        <div data-dc-tpl="2632" style="position: relative; z-index: 1; display: flex; gap: 12px; flex-shrink: 0;">
-          <button data-dc-tpl="2633" class="scpw" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 14px 22px; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s;">Umów analizę →</button>
+      <div data-dc-tpl="2638" id="kontakt-cta" style="position: relative; overflow: hidden; padding: 42px 56px; background: rgb(15, 23, 42); display: flex; align-items: center; justify-content: space-between; gap: 22px;">
+        <p data-dc-tpl="2639" style="position: relative; z-index: 1; margin: 0px; font: 600 20px / 1.4 Montserrat; color: rgb(255, 255, 255); max-width: 600px;"><span class="sc-interp">Chcesz zobaczyć Etatomierz na danych ze swojej firmy? Umów prezentację.</span></p>
+        <div data-dc-tpl="2640" style="position: relative; z-index: 1; display: flex; gap: 12px; flex-shrink: 0;">
+          <button data-dc-tpl="2641" class="scpx" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 14px 22px; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s;">Umów analizę →</button>
         </div>
       </div>
     
@@ -1482,75 +1488,75 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
     </main>
 
-    <footer data-dc-tpl="2693" style="background: rgb(15, 23, 42); padding: 44px 56px 26px; border-top: 1px solid rgb(30, 41, 59);">
-      <div data-dc-tpl="2694" style="display: flex; flex-flow: wrap; gap: 40px; justify-content: space-between;">
-        <div data-dc-tpl="2695" style="max-width: 260px;">
-          <img data-dc-tpl="2696" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="80" height="20" loading="lazy" decoding="async" style="height: 20px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; margin-bottom: 14px; object-fit: contain;">
-          <p data-dc-tpl="2697" style="margin: 0px; font: 400 13px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Systemy rejestracji czasu pracy, kontroli dostępu i automatyzacji procesów dla organizacji, które potrzebują wiarygodnych danych.</p>
+    <footer data-dc-tpl="2701" style="background: rgb(15, 23, 42); padding: 44px 56px 26px; border-top: 1px solid rgb(30, 41, 59);">
+      <div data-dc-tpl="2702" style="display: flex; flex-flow: wrap; gap: 40px; justify-content: space-between;">
+        <div data-dc-tpl="2703" style="max-width: 260px;">
+          <img data-dc-tpl="2704" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="80" height="20" loading="lazy" decoding="async" style="height: 20px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; margin-bottom: 14px; object-fit: contain;">
+          <p data-dc-tpl="2705" style="margin: 0px; font: 400 13px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Systemy rejestracji czasu pracy, kontroli dostępu i automatyzacji procesów dla organizacji, które potrzebują wiarygodnych danych.</p>
         </div>
-        <div data-dc-tpl="2698">
-          <p data-dc-tpl="2699" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">ROZWIĄZANIA</p>
-          <div data-dc-tpl="2700" style="display: flex; flex-direction: column; gap: 10px;"><a data-dc-tpl="2701" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">RCP</a><a data-dc-tpl="2702" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">KD</a><a data-dc-tpl="2703" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Automatyzacja</a><a data-dc-tpl="2704" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Etatomierz</a></div>
+        <div data-dc-tpl="2706">
+          <p data-dc-tpl="2707" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">ROZWIĄZANIA</p>
+          <div data-dc-tpl="2708" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2709" href="/biosys-podglad/sol-rcp/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">RCP</a><a  data-dc-tpl="2710" href="/biosys-podglad/sol-kd/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">KD</a><a data-dc-tpl="2711" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Automatyzacja</a><a data-dc-tpl="2712" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Etatomierz</a></div>
         </div>
-        <div data-dc-tpl="2705">
-          <p data-dc-tpl="2706" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">WIEDZA</p>
-          <div data-dc-tpl="2707" style="display: flex; flex-direction: column; gap: 10px;"><a data-dc-tpl="2708" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Blog</a><a data-dc-tpl="2709" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Kalkulator oszczędności</a></div>
+        <div data-dc-tpl="2713">
+          <p data-dc-tpl="2714" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">WIEDZA</p>
+          <div data-dc-tpl="2715" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2716" href="/biosys-podglad/blog/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Blog</a><a data-dc-tpl="2717" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Kalkulator oszczędności</a></div>
         </div>
-        <div data-dc-tpl="2710">
-          <p data-dc-tpl="2711" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">KONTAKT</p>
-          <div data-dc-tpl="2712" style="display: flex; flex-direction: column; gap: 10px;"><a data-dc-tpl="2713" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Panel klienta</a><a data-dc-tpl="2714" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Formularz kontaktowy</a><a data-dc-tpl="2715" href="tel:+48123789537" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">+48 12 378 95 37</a><a data-dc-tpl="2716" href="mailto:biuro@biosys.pl" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">biuro@biosys.pl</a></div>
+        <div data-dc-tpl="2718">
+          <p data-dc-tpl="2719" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">KONTAKT</p>
+          <div data-dc-tpl="2720" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2721" href="/biosys-podglad/panel/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Panel klienta</a><a  data-dc-tpl="2722" href="/biosys-podglad/kontakt/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Formularz kontaktowy</a><a data-dc-tpl="2723" href="tel:+48123789537" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">+48 12 378 95 37</a><a data-dc-tpl="2724" href="mailto:biuro@biosys.pl" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">biuro@biosys.pl</a></div>
         </div>
       </div>
-      <div data-dc-tpl="2717" style="border-top: 1px solid rgb(30, 41, 59); margin-top: 32px; padding-top: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px;">
-        <div data-dc-tpl="2718" style="display: flex; flex-wrap: wrap; gap: 4px 18px;">
-          <p data-dc-tpl="2719" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">© 2026 BioSys. Wszelkie prawa zastrzeżone.</p>
-          <p data-dc-tpl="2720" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Projekt i realizacja: Adrian Brzeziński GPS4ADV</p>
+      <div data-dc-tpl="2725" style="border-top: 1px solid rgb(30, 41, 59); margin-top: 32px; padding-top: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px;">
+        <div data-dc-tpl="2726" style="display: flex; flex-wrap: wrap; gap: 4px 18px;">
+          <p data-dc-tpl="2727" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">© 2026 BioSys. Wszelkie prawa zastrzeżone.</p>
+          <p data-dc-tpl="2728" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Projekt i realizacja: Adrian Brzeziński GPS4ADV</p>
         </div>
-        <div data-dc-tpl="2721" style="display: flex; flex-wrap: wrap; gap: 20px;">
-          <a data-dc-tpl="2722" href="#" class="scp1k" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Ustawienia cookies</a>
-          <a data-dc-tpl="2723" href="#" class="scp1k" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Polityka prywatności</a>
-          <a data-dc-tpl="2724" href="#" class="scp1k" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Regulamin i dokumenty</a>
+        <div data-dc-tpl="2729" style="display: flex; flex-wrap: wrap; gap: 20px;">
+          <a data-dc-tpl="2730" href="#" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Ustawienia cookies</a>
+          <a  data-dc-tpl="2731" href="/biosys-podglad/polityka/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Polityka prywatności</a>
+          <a  data-dc-tpl="2732" href="/biosys-podglad/regulamin/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Regulamin i dokumenty</a>
         </div>
       </div>
 
-      <div data-dc-tpl="2725" data-geo-seo="" data-mobile="0" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgb(22, 35, 58);">
-        <button data-dc-tpl="2726" data-geo-toggle="" class="scp1l" style="display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin: 0px; padding: 0px; background: none; border: 0px; font: 400 11px &quot;Open Sans&quot;; letter-spacing: 0.04em; color: rgb(71, 85, 105); cursor: pointer; text-align: left;">
-          <span data-dc-tpl="2727">Systemy RCP i KD w województwach</span>
-          <span data-dc-tpl="2728" style="font-size: 9px;"><span class="sc-interp">▼</span></span>
+      <div data-dc-tpl="2733" data-geo-seo="" data-mobile="0" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgb(22, 35, 58);">
+        <button data-dc-tpl="2734" data-geo-toggle="" class="scp1m" style="display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin: 0px; padding: 0px; background: none; border: 0px; font: 400 11px &quot;Open Sans&quot;; letter-spacing: 0.04em; color: rgb(71, 85, 105); cursor: pointer; text-align: left;">
+          <span data-dc-tpl="2735">Systemy RCP i KD w województwach</span>
+          <span data-dc-tpl="2736" style="font-size: 9px;"><span class="sc-interp">▼</span></span>
         </button>
-        <div data-dc-tpl="2729" data-geo-body="" data-open="0" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 22px; margin-top: 14px;">
+        <div data-dc-tpl="2737" data-geo-body="" data-open="0" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 22px; margin-top: 14px;">
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Dolnośląskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Dolnośląskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Kujawsko-pomorskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Kujawsko-pomorskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubelskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubelskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubuskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubuskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Łódzkie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Łódzkie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Małopolskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Małopolskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Mazowieckie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Mazowieckie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Opolskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Opolskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podkarpackie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podkarpackie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podlaskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podlaskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Pomorskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Pomorskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Śląskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Śląskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Świętokrzyskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Świętokrzyskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Warmińsko-mazurskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Warmińsko-mazurskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Wielkopolskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Wielkopolskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Zachodniopomorskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Zachodniopomorskie</span></a>
           
         </div>
       </div>
@@ -1558,16 +1564,16 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
 
     
-      <div data-dc-tpl="2733" role="dialog" aria-label="Zgoda na pliki cookie" data-zgoda="panel" style="position: fixed; left: 20px; bottom: 20px; z-index: 9000; width: 430px; max-width: calc(-40px + 100vw); max-height: calc(-40px + 100vh); overflow: auto; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; box-shadow: rgba(15, 23, 42, 0.24) 0px 26px 64px; padding: 24px;">
-        <p data-dc-tpl="2734" style="margin: 0px 0px 10px; font: 600 16.9px Montserrat; color: rgb(15, 23, 42);">Cenimy Twoją prywatność</p>
-        <p data-dc-tpl="2735" style="margin: 0px 0px 18px; font: 400 13.5px / 1.65 &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Używamy niezbędnych plików cookie do działania serwisu. Za Twoją zgodą uruchomimy statystykę i marketing. Możesz zaakceptować wszystkie, odmówić lub wybrać preferencje. Zgodę możesz później zmienić. Szczegóły w polityce prywatności i cookies.</p>
+      <div data-dc-tpl="2741" role="dialog" aria-label="Zgoda na pliki cookie" data-zgoda="panel" style="position: fixed; left: 20px; bottom: 20px; z-index: 9000; width: 430px; max-width: calc(-40px + 100vw); max-height: calc(-40px + 100vh); overflow: auto; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; box-shadow: rgba(15, 23, 42, 0.24) 0px 26px 64px; padding: 24px;">
+        <p data-dc-tpl="2742" style="margin: 0px 0px 10px; font: 600 16.9px Montserrat; color: rgb(15, 23, 42);">Cenimy Twoją prywatność</p>
+        <p data-dc-tpl="2743" style="margin: 0px 0px 18px; font: 400 13.5px / 1.65 &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Używamy niezbędnych plików cookie do działania serwisu. Za Twoją zgodą uruchomimy statystykę i marketing. Możesz zaakceptować wszystkie, odmówić lub wybrać preferencje. Zgodę możesz później zmienić. Szczegóły w polityce prywatności i cookies.</p>
 
         
 
-        <div data-dc-tpl="2755" style="display: flex; flex-wrap: wrap; gap: 10px;">
-          <button data-dc-tpl="2756" class="scp1m" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(15, 23, 42); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: transform 0.15s;">AKCEPTUJĘ</button>
-          <button data-dc-tpl="2757" class="scp1" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border: 1px solid rgb(15, 23, 42); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;">ODMÓW</button>
-          <button data-dc-tpl="2758" class="scp1d" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(51, 65, 85); background: rgb(255, 255, 255); border: 1px solid rgb(203, 213, 225); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;"><span class="sc-interp">PREFERENCJE</span></button>
+        <div data-dc-tpl="2763" style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <button data-dc-tpl="2764" class="scp1n" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(15, 23, 42); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: transform 0.15s;">AKCEPTUJĘ</button>
+          <button data-dc-tpl="2765" class="scp1" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border: 1px solid rgb(15, 23, 42); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;">ODMÓW</button>
+          <button data-dc-tpl="2766" class="scp1e" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(51, 65, 85); background: rgb(255, 255, 255); border: 1px solid rgb(203, 213, 225); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;"><span class="sc-interp">PREFERENCJE</span></button>
         </div>
       </div>
     

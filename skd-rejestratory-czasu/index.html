@@ -309,6 +309,12 @@ a:hover{color:#1d4ed8}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 @keyframes barUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
+/* Wysokość arkusza menu. W ARKUSZU, nie w atrybucie style: React parsuje atrybut
+   do obiektu, więc zduplikowany klucz zwija się do jednej wartości i zapas ginie.
+   Tutaj parser CSS zachowuje obie deklaracje i odrzuca tylko tę, której nie rozumie.
+   `dvh` to wysokość faktycznie widoczna (bez paska adresu); silniki sprzed 2022
+   nie znają tej jednostki i zostają przy `vh` — zamiast nie mieć limitu wcale. */
+#mobile-menu{max-height:88vh;max-height:88dvh}
 @media (prefers-reduced-motion:reduce){#mobile-menu{animation:none}}
 [data-rail]::-webkit-scrollbar{display:none}
 @keyframes floatY{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
@@ -443,13 +449,13 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           
             <a data-dc-tpl="112" href="#" class="scp3" style="display: inline-flex; align-items: center; font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); text-decoration: none; border-radius: 9px; padding: 7px 6px; cursor: pointer; white-space: nowrap; transition: background 0.14s, color 0.14s;">Kalkulator oszczędności</a>
           
-          <a data-dc-tpl="113" href="#" class="scp3" style="display: inline-flex; align-items: center; font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); text-decoration: none; border-radius: 9px; padding: 7px 6px; cursor: pointer; white-space: nowrap; transition: background 0.14s, color 0.14s;">Blog</a>
+          <a  data-dc-tpl="113" href="/biosys-podglad/blog/" class="scp3" style="display: inline-flex; align-items: center; font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); text-decoration: none; border-radius: 9px; padding: 7px 6px; cursor: pointer; white-space: nowrap; transition: background 0.14s, color 0.14s;">Blog</a>
           <span data-dc-tpl="114" data-nav-menu="kb" style="position: relative; display: inline-block;">
             <button data-dc-tpl="115" aria-expanded="false" class="scp1" style="display: inline-flex; align-items: center; gap: 5px; font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: transparent; border: 1px solid transparent; border-radius: 9px; padding: 7px 6px; cursor: pointer; white-space: nowrap; transition: background 0.14s, color 0.14s, border-color 0.14s;"><span data-dc-tpl="116">Baza wiedzy</span><span data-dc-tpl="117" style="display: inline-block; font: 400 10px / 1 &quot;Open Sans&quot;; color: rgb(148, 163, 184); transition: transform 0.18s; transform: rotate(0deg);">▾</span></button>
             
           </span>
-          <a data-dc-tpl="124" href="#" class="scp3" style="display: inline-flex; align-items: center; font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); text-decoration: none; border-radius: 9px; padding: 7px 6px; cursor: pointer; white-space: nowrap; transition: background 0.14s, color 0.14s;">Kontakt</a>
-          <a data-dc-tpl="125" href="#" class="scp4" style="margin-left: 6px; display: inline-flex; align-items: center; gap: 7px; font: 600 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(16, 106, 115); border: 1px solid rgb(16, 106, 115); border-radius: 10px; padding: 9px 16px; cursor: pointer; white-space: nowrap; box-shadow: rgba(15, 118, 110, 0.24) 0px 6px 16px; transition: background 0.15s, transform 0.15s, box-shadow 0.15s;">
+          <a  data-dc-tpl="124" href="/biosys-podglad/kontakt/" class="scp3" style="display: inline-flex; align-items: center; font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); text-decoration: none; border-radius: 9px; padding: 7px 6px; cursor: pointer; white-space: nowrap; transition: background 0.14s, color 0.14s;">Kontakt</a>
+          <a  data-dc-tpl="125" href="/biosys-podglad/panel/" class="scp4" style="margin-left: 6px; display: inline-flex; align-items: center; gap: 7px; font: 600 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(16, 106, 115); border: 1px solid rgb(16, 106, 115); border-radius: 10px; padding: 9px 16px; cursor: pointer; white-space: nowrap; box-shadow: rgba(15, 118, 110, 0.24) 0px 6px 16px; transition: background 0.15s, transform 0.15s, box-shadow 0.15s;">
             <svg data-dc-tpl="126" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="127" d="M12 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8Zm-7 18a7 7 0 0 1 14 0"></path></svg>
             Panel klienta
           </a>
@@ -500,7 +506,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           <div data-dc-tpl="301" style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;">
             
             
-              <button data-dc-tpl="305" class="scpb" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(37, 99, 235); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 14px 22px; cursor: pointer; box-shadow: rgba(37, 99, 235, 0.28) 0px 6px 16px; transition: box-shadow 0.18s, transform 0.18s;"><span class="sc-interp">Zapytaj o rejestratory</span> →</button>
+              <button data-dc-tpl="305" class="scpc" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(37, 99, 235); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 14px 22px; cursor: pointer; box-shadow: rgba(37, 99, 235, 0.28) 0px 6px 16px; transition: box-shadow 0.18s, transform 0.18s;"><span class="sc-interp">Zapytaj o rejestratory</span> →</button>
             
             
               <button data-dc-tpl="307" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border: 1px solid rgb(203, 213, 225); border-radius: 9px; padding: 14px 22px; cursor: pointer;"><span class="sc-interp">Zobacz kontrolery</span></button>
@@ -596,8 +602,8 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
               <p data-dc-tpl="1468" style="margin: 0px; font: 400 15px / 1.5 &quot;Open Sans&quot;; color: rgba(255, 255, 255, 0.85);">Bezpłatna, 30-minutowa rozmowa. Przeanalizujemy Twoje obecne procesy i rozliczenia, wskażemy wąskie gardła i zaproponujemy gotowe rozwiązanie. Bez zobowiązań.</p>
             </div>
             <div data-dc-tpl="1469" style="display: flex; gap: 12px; flex-shrink: 0; flex-wrap: wrap;">
-              <button data-dc-tpl="1470" class="scpg" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(245, 158, 11); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 10px; padding: 15px 24px; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s;">Umów bezpłatną analizę</button>
-              <button data-dc-tpl="1471" class="scph" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: transparent; border: 1px solid rgba(255, 255, 255, 0.55); border-radius: 10px; padding: 15px 24px; cursor: pointer; white-space: nowrap; transition: background 0.15s, transform 0.15s;">Policz oszczędności</button>
+              <button data-dc-tpl="1470" class="scph" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(245, 158, 11); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 10px; padding: 15px 24px; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s;">Umów bezpłatną analizę</button>
+              <button data-dc-tpl="1471" class="scpi" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: transparent; border: 1px solid rgba(255, 255, 255, 0.55); border-radius: 10px; padding: 15px 24px; cursor: pointer; white-space: nowrap; transition: background 0.15s, transform 0.15s;">Policz oszczędności</button>
             </div>
           </div>
         </section>
@@ -625,8 +631,8 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
             <p data-dc-tpl="1993" style="margin: 0px; font: 400 15px / 1.65 &quot;Open Sans&quot;; color: rgb(100, 116, 139); text-wrap: pretty;"><span class="sc-interp">Kilka wersji urządzeń, które montujemy przy wejściach. Konkretny model dobieramy pod firmę — dostępność zmienia się razem z ofertą naszych dostawców.</span></p>
           </div>
           <div data-dc-tpl="1994" style="display: flex; gap: 10px;">
-            <button data-dc-tpl="1995" aria-label="Poprzednie zdjęcie" class="scp10" style="width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgb(203, 213, 225); background: rgb(255, 255, 255); color: rgb(15, 23, 42); font: 600 16.9px Montserrat; cursor: pointer;">‹</button>
-            <button data-dc-tpl="1996" aria-label="Następne zdjęcie" class="scp10" style="width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgb(203, 213, 225); background: rgb(255, 255, 255); color: rgb(15, 23, 42); font: 600 16.9px Montserrat; cursor: pointer;">›</button>
+            <button data-dc-tpl="1995" aria-label="Poprzednie zdjęcie" class="scp11" style="width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgb(203, 213, 225); background: rgb(255, 255, 255); color: rgb(15, 23, 42); font: 600 16.9px Montserrat; cursor: pointer;">‹</button>
+            <button data-dc-tpl="1996" aria-label="Następne zdjęcie" class="scp11" style="width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgb(203, 213, 225); background: rgb(255, 255, 255); color: rgb(15, 23, 42); font: 600 16.9px Montserrat; cursor: pointer;">›</button>
           </div>
         </div>
         <div data-dc-tpl="1997" style="display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 6px;">
@@ -739,10 +745,10 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     
 
     
-      <div data-dc-tpl="2630" id="kontakt-cta" style="position: relative; overflow: hidden; padding: 42px 56px; background: rgb(15, 23, 42); display: flex; align-items: center; justify-content: space-between; gap: 22px;">
-        <p data-dc-tpl="2631" style="position: relative; z-index: 1; margin: 0px; font: 600 20px / 1.4 Montserrat; color: rgb(255, 255, 255); max-width: 600px;"><span class="sc-interp">Powiedz nam, ile osób pracuje w firmie i gdzie ma stanąć urządzenie — dobierzemy wersję i pokażemy ją na żywo.</span></p>
-        <div data-dc-tpl="2632" style="position: relative; z-index: 1; display: flex; gap: 12px; flex-shrink: 0;">
-          <button data-dc-tpl="2633" class="scpw" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 14px 22px; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s;">Umów analizę →</button>
+      <div data-dc-tpl="2638" id="kontakt-cta" style="position: relative; overflow: hidden; padding: 42px 56px; background: rgb(15, 23, 42); display: flex; align-items: center; justify-content: space-between; gap: 22px;">
+        <p data-dc-tpl="2639" style="position: relative; z-index: 1; margin: 0px; font: 600 20px / 1.4 Montserrat; color: rgb(255, 255, 255); max-width: 600px;"><span class="sc-interp">Powiedz nam, ile osób pracuje w firmie i gdzie ma stanąć urządzenie — dobierzemy wersję i pokażemy ją na żywo.</span></p>
+        <div data-dc-tpl="2640" style="position: relative; z-index: 1; display: flex; gap: 12px; flex-shrink: 0;">
+          <button data-dc-tpl="2641" class="scpx" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 14px 22px; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s;">Umów analizę →</button>
         </div>
       </div>
     
@@ -753,75 +759,75 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
     </main>
 
-    <footer data-dc-tpl="2693" style="background: rgb(15, 23, 42); padding: 44px 56px 26px; border-top: 1px solid rgb(30, 41, 59);">
-      <div data-dc-tpl="2694" style="display: flex; flex-flow: wrap; gap: 40px; justify-content: space-between;">
-        <div data-dc-tpl="2695" style="max-width: 260px;">
-          <img data-dc-tpl="2696" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="80" height="20" loading="lazy" decoding="async" style="height: 20px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; margin-bottom: 14px; object-fit: contain;">
-          <p data-dc-tpl="2697" style="margin: 0px; font: 400 13px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Systemy rejestracji czasu pracy, kontroli dostępu i automatyzacji procesów dla organizacji, które potrzebują wiarygodnych danych.</p>
+    <footer data-dc-tpl="2701" style="background: rgb(15, 23, 42); padding: 44px 56px 26px; border-top: 1px solid rgb(30, 41, 59);">
+      <div data-dc-tpl="2702" style="display: flex; flex-flow: wrap; gap: 40px; justify-content: space-between;">
+        <div data-dc-tpl="2703" style="max-width: 260px;">
+          <img data-dc-tpl="2704" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="80" height="20" loading="lazy" decoding="async" style="height: 20px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; margin-bottom: 14px; object-fit: contain;">
+          <p data-dc-tpl="2705" style="margin: 0px; font: 400 13px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Systemy rejestracji czasu pracy, kontroli dostępu i automatyzacji procesów dla organizacji, które potrzebują wiarygodnych danych.</p>
         </div>
-        <div data-dc-tpl="2698">
-          <p data-dc-tpl="2699" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">ROZWIĄZANIA</p>
-          <div data-dc-tpl="2700" style="display: flex; flex-direction: column; gap: 10px;"><a data-dc-tpl="2701" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">RCP</a><a data-dc-tpl="2702" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">KD</a><a data-dc-tpl="2703" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Automatyzacja</a><a data-dc-tpl="2704" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Etatomierz</a></div>
+        <div data-dc-tpl="2706">
+          <p data-dc-tpl="2707" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">ROZWIĄZANIA</p>
+          <div data-dc-tpl="2708" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2709" href="/biosys-podglad/sol-rcp/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">RCP</a><a  data-dc-tpl="2710" href="/biosys-podglad/sol-kd/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">KD</a><a data-dc-tpl="2711" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Automatyzacja</a><a data-dc-tpl="2712" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Etatomierz</a></div>
         </div>
-        <div data-dc-tpl="2705">
-          <p data-dc-tpl="2706" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">WIEDZA</p>
-          <div data-dc-tpl="2707" style="display: flex; flex-direction: column; gap: 10px;"><a data-dc-tpl="2708" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Blog</a><a data-dc-tpl="2709" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Kalkulator oszczędności</a></div>
+        <div data-dc-tpl="2713">
+          <p data-dc-tpl="2714" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">WIEDZA</p>
+          <div data-dc-tpl="2715" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2716" href="/biosys-podglad/blog/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Blog</a><a data-dc-tpl="2717" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Kalkulator oszczędności</a></div>
         </div>
-        <div data-dc-tpl="2710">
-          <p data-dc-tpl="2711" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">KONTAKT</p>
-          <div data-dc-tpl="2712" style="display: flex; flex-direction: column; gap: 10px;"><a data-dc-tpl="2713" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Panel klienta</a><a data-dc-tpl="2714" href="#" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Formularz kontaktowy</a><a data-dc-tpl="2715" href="tel:+48123789537" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">+48 12 378 95 37</a><a data-dc-tpl="2716" href="mailto:biuro@biosys.pl" class="scp1k" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">biuro@biosys.pl</a></div>
+        <div data-dc-tpl="2718">
+          <p data-dc-tpl="2719" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">KONTAKT</p>
+          <div data-dc-tpl="2720" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2721" href="/biosys-podglad/panel/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Panel klienta</a><a  data-dc-tpl="2722" href="/biosys-podglad/kontakt/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Formularz kontaktowy</a><a data-dc-tpl="2723" href="tel:+48123789537" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">+48 12 378 95 37</a><a data-dc-tpl="2724" href="mailto:biuro@biosys.pl" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">biuro@biosys.pl</a></div>
         </div>
       </div>
-      <div data-dc-tpl="2717" style="border-top: 1px solid rgb(30, 41, 59); margin-top: 32px; padding-top: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px;">
-        <div data-dc-tpl="2718" style="display: flex; flex-wrap: wrap; gap: 4px 18px;">
-          <p data-dc-tpl="2719" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">© 2026 BioSys. Wszelkie prawa zastrzeżone.</p>
-          <p data-dc-tpl="2720" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Projekt i realizacja: Adrian Brzeziński GPS4ADV</p>
+      <div data-dc-tpl="2725" style="border-top: 1px solid rgb(30, 41, 59); margin-top: 32px; padding-top: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px;">
+        <div data-dc-tpl="2726" style="display: flex; flex-wrap: wrap; gap: 4px 18px;">
+          <p data-dc-tpl="2727" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">© 2026 BioSys. Wszelkie prawa zastrzeżone.</p>
+          <p data-dc-tpl="2728" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Projekt i realizacja: Adrian Brzeziński GPS4ADV</p>
         </div>
-        <div data-dc-tpl="2721" style="display: flex; flex-wrap: wrap; gap: 20px;">
-          <a data-dc-tpl="2722" href="#" class="scp1k" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Ustawienia cookies</a>
-          <a data-dc-tpl="2723" href="#" class="scp1k" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Polityka prywatności</a>
-          <a data-dc-tpl="2724" href="#" class="scp1k" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Regulamin i dokumenty</a>
+        <div data-dc-tpl="2729" style="display: flex; flex-wrap: wrap; gap: 20px;">
+          <a data-dc-tpl="2730" href="#" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Ustawienia cookies</a>
+          <a  data-dc-tpl="2731" href="/biosys-podglad/polityka/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Polityka prywatności</a>
+          <a  data-dc-tpl="2732" href="/biosys-podglad/regulamin/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Regulamin i dokumenty</a>
         </div>
       </div>
 
-      <div data-dc-tpl="2725" data-geo-seo="" data-mobile="0" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgb(22, 35, 58);">
-        <button data-dc-tpl="2726" data-geo-toggle="" class="scp1l" style="display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin: 0px; padding: 0px; background: none; border: 0px; font: 400 11px &quot;Open Sans&quot;; letter-spacing: 0.04em; color: rgb(71, 85, 105); cursor: pointer; text-align: left;">
-          <span data-dc-tpl="2727">Systemy RCP i KD w województwach</span>
-          <span data-dc-tpl="2728" style="font-size: 9px;"><span class="sc-interp">▼</span></span>
+      <div data-dc-tpl="2733" data-geo-seo="" data-mobile="0" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgb(22, 35, 58);">
+        <button data-dc-tpl="2734" data-geo-toggle="" class="scp1m" style="display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin: 0px; padding: 0px; background: none; border: 0px; font: 400 11px &quot;Open Sans&quot;; letter-spacing: 0.04em; color: rgb(71, 85, 105); cursor: pointer; text-align: left;">
+          <span data-dc-tpl="2735">Systemy RCP i KD w województwach</span>
+          <span data-dc-tpl="2736" style="font-size: 9px;"><span class="sc-interp">▼</span></span>
         </button>
-        <div data-dc-tpl="2729" data-geo-body="" data-open="0" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 22px; margin-top: 14px;">
+        <div data-dc-tpl="2737" data-geo-body="" data-open="0" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 22px; margin-top: 14px;">
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Dolnośląskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Dolnośląskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Kujawsko-pomorskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Kujawsko-pomorskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubelskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubelskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubuskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubuskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Łódzkie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Łódzkie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Małopolskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Małopolskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Mazowieckie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Mazowieckie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Opolskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Opolskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podkarpackie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podkarpackie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podlaskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podlaskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Pomorskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Pomorskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Śląskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Śląskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Świętokrzyskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Świętokrzyskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Warmińsko-mazurskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Warmińsko-mazurskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Wielkopolskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Wielkopolskie</span></a>
           
-            <a data-dc-tpl="2731" href="#" class="scp1k" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Zachodniopomorskie</span></a>
+            <a data-dc-tpl="2739" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Zachodniopomorskie</span></a>
           
         </div>
       </div>
@@ -829,16 +835,16 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
 
     
-      <div data-dc-tpl="2733" role="dialog" aria-label="Zgoda na pliki cookie" data-zgoda="panel" style="position: fixed; left: 20px; bottom: 20px; z-index: 9000; width: 430px; max-width: calc(-40px + 100vw); max-height: calc(-40px + 100vh); overflow: auto; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; box-shadow: rgba(15, 23, 42, 0.24) 0px 26px 64px; padding: 24px;">
-        <p data-dc-tpl="2734" style="margin: 0px 0px 10px; font: 600 16.9px Montserrat; color: rgb(15, 23, 42);">Cenimy Twoją prywatność</p>
-        <p data-dc-tpl="2735" style="margin: 0px 0px 18px; font: 400 13.5px / 1.65 &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Używamy niezbędnych plików cookie do działania serwisu. Za Twoją zgodą uruchomimy statystykę i marketing. Możesz zaakceptować wszystkie, odmówić lub wybrać preferencje. Zgodę możesz później zmienić. Szczegóły w polityce prywatności i cookies.</p>
+      <div data-dc-tpl="2741" role="dialog" aria-label="Zgoda na pliki cookie" data-zgoda="panel" style="position: fixed; left: 20px; bottom: 20px; z-index: 9000; width: 430px; max-width: calc(-40px + 100vw); max-height: calc(-40px + 100vh); overflow: auto; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; box-shadow: rgba(15, 23, 42, 0.24) 0px 26px 64px; padding: 24px;">
+        <p data-dc-tpl="2742" style="margin: 0px 0px 10px; font: 600 16.9px Montserrat; color: rgb(15, 23, 42);">Cenimy Twoją prywatność</p>
+        <p data-dc-tpl="2743" style="margin: 0px 0px 18px; font: 400 13.5px / 1.65 &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Używamy niezbędnych plików cookie do działania serwisu. Za Twoją zgodą uruchomimy statystykę i marketing. Możesz zaakceptować wszystkie, odmówić lub wybrać preferencje. Zgodę możesz później zmienić. Szczegóły w polityce prywatności i cookies.</p>
 
         
 
-        <div data-dc-tpl="2755" style="display: flex; flex-wrap: wrap; gap: 10px;">
-          <button data-dc-tpl="2756" class="scp1m" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(15, 23, 42); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: transform 0.15s;">AKCEPTUJĘ</button>
-          <button data-dc-tpl="2757" class="scp1" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border: 1px solid rgb(15, 23, 42); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;">ODMÓW</button>
-          <button data-dc-tpl="2758" class="scp1d" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(51, 65, 85); background: rgb(255, 255, 255); border: 1px solid rgb(203, 213, 225); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;"><span class="sc-interp">PREFERENCJE</span></button>
+        <div data-dc-tpl="2763" style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <button data-dc-tpl="2764" class="scp1n" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(15, 23, 42); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: transform 0.15s;">AKCEPTUJĘ</button>
+          <button data-dc-tpl="2765" class="scp1" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border: 1px solid rgb(15, 23, 42); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;">ODMÓW</button>
+          <button data-dc-tpl="2766" class="scp1e" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(51, 65, 85); background: rgb(255, 255, 255); border: 1px solid rgb(203, 213, 225); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;"><span class="sc-interp">PREFERENCJE</span></button>
         </div>
       </div>
     
