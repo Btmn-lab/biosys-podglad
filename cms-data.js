@@ -153,6 +153,19 @@ const PAGES = [
   ],
   dashTitle:'BioSys w liczbach', stats:[{label:'Zakończonych wdrożeń',value:'1 600+'},{label:'Rejestracji dziennie',value:'650k'},{label:'Urządzeń w pracy',value:'18k'}], barVals:[50,62,58,70,55,66,60,74],
   ctaLabel:'Chcesz dowiedzieć się więcej o BioSys? Skontaktuj się z nami — odpowiemy na wszystkie pytania.',
+  // Sekcja z przewagami BioSysu. Teksty pochodzą wprost od klienta (17 września);
+  // zapisane dosłownie, poprawiona tylko pisownia liczby na zgodną z resztą serwisu.
+  aboutWhyKicker:'DLACZEGO BIOSYS',
+  aboutWhyTitle:'Dlaczego firmy wybierają BioSys?',
+  aboutWhyLead:'Sześć powodów, które najczęściej słyszymy od naszych Klientów.',
+  aboutWhy:[
+    {t:'Nie tylko oprogramowanie', d:'Projektujemy cały system – sprzęt, oprogramowanie, integracje i proces.'},
+    {t:'Własny zespół wdrożeniowy', d:'Nie przekazujemy klienta przypadkowemu instalatorowi.'},
+    {t:'RCP dopasowane do organizacji', d:'Nie zmuszamy firmy do zmiany sposobu pracy pod program.'},
+    {t:'Integracje z kadrami i ERP', d:'Dane przepływają automatycznie.'},
+    {t:'Stała opieka', d:'Po wdrożeniu nadal jesteśmy odpowiedzialni za system.'},
+    {t:'Ponad 1 600 wdrożeń', d:'Rozwiązania sprawdzone w organizacjach różnej wielkości.'}
+  ],
   aboutCards:[
     {t:'RCP',d:'Rejestracja Czasu Pracy — ewidencja obecności, grafiki, nadgodziny i wnioski w jednym systemie.'},
     {t:'KD',d:'Kontrola Dostępu — zarządzanie wejściami do budynków i stref newralgicznych, zintegrowane z RCP.'},

@@ -163,6 +163,19 @@ const PAGES = [
   ctaShort:'Skontaktuj się z nami', secondaryCta:'Zobacz nasze wdrożenia',
   heroVariant:'none', hasForm:false, hasCtaBand:true,
   ctaLabel:'Chcesz dowiedzieć się więcej o BioSys? Skontaktuj się z nami — odpowiemy na wszystkie pytania.',
+  // Sekcja z przewagami BioSysu. Teksty pochodzą wprost od klienta (17 września);
+  // zapisane dosłownie, poprawiona tylko pisownia liczby na zgodną z resztą serwisu.
+  aboutWhyKicker:'DLACZEGO BIOSYS',
+  aboutWhyTitle:'Dlaczego firmy wybierają BioSys?',
+  aboutWhyLead:'Sześć powodów, które najczęściej słyszymy od naszych Klientów.',
+  aboutWhy:[
+    {t:'Nie tylko oprogramowanie', d:'Projektujemy cały system – sprzęt, oprogramowanie, integracje i proces.'},
+    {t:'Własny zespół wdrożeniowy', d:'Nie przekazujemy klienta przypadkowemu instalatorowi.'},
+    {t:'RCP dopasowane do organizacji', d:'Nie zmuszamy firmy do zmiany sposobu pracy pod program.'},
+    {t:'Integracje z kadrami i ERP', d:'Dane przepływają automatycznie.'},
+    {t:'Stała opieka', d:'Po wdrożeniu nadal jesteśmy odpowiedzialni za system.'},
+    {t:'Ponad 1 600 wdrożeń', d:'Rozwiązania sprawdzone w organizacjach różnej wielkości.'}
+  ],
   // Historia, oś czasu i zarząd — teksty czekają na uzupełnienie przez klienta.
   // Placeholdery zapisane w nawiasach kwadratowych, żeby było widać, czego brakuje.
   aboutHistKicker:'HISTORIA',
