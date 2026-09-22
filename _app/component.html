@@ -2604,11 +2604,11 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
         <h2 style="margin:0 0 12px;font:600 {{ h2Size }}px/1.25 'Montserrat';color:#0F172A;max-width:640px;text-wrap:pretty">{{ current.aboutBoardTitle }}</h2>
         <p style="margin:0 0 30px;font:400 15px/1.7 'Open Sans';color:#64748B;max-width:620px;text-wrap:pretty">{{ current.aboutBoardLead }}</p>
         <div style="{{ boardGridStyle }}">
-          <sc-for list="{{ current.aboutBoard }}" as="bm" hint-placeholder-count="3">
+          <sc-for list="{{ aboutBoardCards }}" as="bm" hint-placeholder-count="3">
             <div style="display:flex;flex-direction:column;min-width:0">
               <img src="{{ bm.img }}" alt="{{ bm.n }}" width="1024" height="1024" loading="lazy" decoding="async" style="{{ boardImgStyle }}"/>
-              <p style="margin:16px 0 2px;font:600 17px/1.35 'Montserrat';color:#0F172A">{{ bm.n }}</p>
-              <p style="margin:0 0 8px;font:600 12.5px 'Open Sans';letter-spacing:.02em;color:#14B8A6">{{ bm.r }}</p>
+              <p style="margin:16px 0 3px;font:600 17px/1.35 'Montserrat';color:#0F172A">{{ bm.n }}</p>
+              <p style="{{ boardRoleRowStyle }}"><span style="{{ bm.zalStyle }}">{{ bm.zal }}</span>{{ bm.r }}</p>
               <p style="margin:0;font:400 14px/1.7 'Open Sans';color:#64748B;text-wrap:pretty">{{ bm.d }}</p>
             </div>
           </sc-for>
@@ -7246,6 +7246,18 @@ class Component extends DCLogic {
         + 'border:1px solid rgba(148,163,184,.16);border-radius:16px;'
         + 'padding:' + (isMobile ? '16px 16px 17px' : '18px 20px 19px') + ';'
         + 'transition:transform .18s,border-color .18s,box-shadow .18s',
+      // Wiersz funkcji w karcie zarządu. Wyróżnienie („Założyciel") niesie własny
+      // krój i barwę firmową, funkcja zostaje w kolorze tekstu pomocniczego —
+      // hierarchia powstaje w jednym wierszu, więc karty nie rozjeżdżają się
+      // w pionie, gdy ktoś wyróżnienia nie ma. Pusty `zal` znika bez śladu.
+      aboutBoardCards: ((current.aboutBoard || [])).map(bm => ({
+        ...bm,
+        zal: bm.zal ? bm.zal + ' \u00b7 ' : '',
+        zalStyle: bm.zal
+          ? "font-weight:700;color:#14B8A6;letter-spacing:.03em"
+          : 'display:none'
+      })),
+      boardRoleRowStyle: "margin:0 0 10px;font:600 12.5px/1.45 'Open Sans';letter-spacing:.02em;color:#64748B",
       boardGridStyle: isMobile
         ? 'display:grid;grid-template-columns:1fr;gap:26px'
         : 'display:grid;grid-template-columns:repeat(3,1fr);gap:30px;max-width:980px',

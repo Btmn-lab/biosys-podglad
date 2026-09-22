@@ -203,10 +203,14 @@ const PAGES = [
   aboutBoardKicker:'ZARZĄD',
   aboutBoardTitle:'[Nagłówek sekcji z zarządem]',
   aboutBoardLead:'[Lead — jedno, dwa zdania o zarządzie.]',
+  // Wyróżnienie założyciela stoi w osobnym polu, nie sklejone ukośnikiem z funkcją:
+  // funkcja jest wspólna dla całego zarządu, założycielstwo dotyczy dwóch osób.
+  // Dzięki rozdzieleniu obie części można złożyć innym krojem, a wiersz zostaje
+  // jednolinijkowy — trzy karty równają się do siebie co do piksela.
   aboutBoard:[
-    {img:'/biosys-podglad/assets/karol-jura.webp', n:'Karol Jura', r:'[Stanowisko]', d:'[Jedno zdanie o tym, za co odpowiada.]'},
-    {img:'/biosys-podglad/assets/pawel-zurek.webp', n:'Paweł Żurek', r:'[Stanowisko]', d:'[Jedno zdanie o tym, za co odpowiada.]'},
-    {img:'/biosys-podglad/assets/andrzej-pilch.webp', n:'Andrzej Pilch', r:'[Stanowisko]', d:'[Jedno zdanie o tym, za co odpowiada.]'}
+    {img:'/biosys-podglad/assets/karol-jura.webp', n:'Karol Jura', zal:'Założyciel', r:'Członek zarządu', d:'[Jedno zdanie o tym, za co odpowiada.]'},
+    {img:'/biosys-podglad/assets/pawel-zurek.webp', n:'Paweł Żurek', zal:'Założyciel', r:'Członek zarządu', d:'[Jedno zdanie o tym, za co odpowiada.]'},
+    {img:'/biosys-podglad/assets/andrzej-pilch.webp', n:'Andrzej Pilch', zal:'', r:'Członek zarządu', d:'[Jedno zdanie o tym, za co odpowiada.]'}
   ]
 },
 {
