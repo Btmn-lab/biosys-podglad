@@ -176,8 +176,9 @@ const PAGES = [
     {t:'Stała opieka', d:'Po wdrożeniu nadal jesteśmy odpowiedzialni za system.'},
     {t:'Ponad 1 600 wdrożeń', d:'Rozwiązania sprawdzone w organizacjach różnej wielkości.'}
   ],
-  // Historia, oś czasu i zarząd — teksty czekają na uzupełnienie przez klienta.
-  // Placeholdery zapisane w nawiasach kwadratowych, żeby było widać, czego brakuje.
+  // Historia — tekst pisze copywriter klienta. Do tego czasu placeholdery
+  // w nawiasach kwadratowych, żeby było widać, czego brakuje, i żeby bramka
+  // w .tools/wyslij_live.sh blokowała wysyłkę na produkcję.
   aboutHistKicker:'HISTORIA',
   aboutHistTitle:'[Nagłówek sekcji z historią — jedno zdanie]',
   aboutHistLead:'[Lead — dwa, trzy zdania o tym, skąd wzięła się firma.]',
@@ -187,7 +188,7 @@ const PAGES = [
     '[Akapit 3 — dziś: skala działania, zespół, w którą stronę firma idzie dalej.]'
   ],
   aboutTimeKicker:'OŚ CZASU',
-  aboutTimeTitle:'[Nagłówek sekcji z osią czasu]',
+  aboutTimeTitle:'Od trzech osób do ponad 1 600 wdrożeń',
   // Osiemnascie wpisow dzieli pietnascie rocznikow, wiec rok bywa wspolny dla
   // kilku zdarzen — grupowanie robi renderVals, tu zostaje plaska lista w kolejnosci
   // podanej przez klienta. `m:1` oznacza kamien milowy liczby wdrozen: te wpisy
@@ -214,8 +215,8 @@ const PAGES = [
     {y:'2026', t:'Pierwsi klienci korzystają z RCP w Chmurze (SaaS)', d:''}
   ],
   aboutBoardKicker:'ZARZĄD',
-  aboutBoardTitle:'[Nagłówek sekcji z zarządem]',
-  aboutBoardLead:'[Lead — jedno, dwa zdania o zarządzie.]',
+  aboutBoardTitle:'Kto odpowiada za BioSys',
+  aboutBoardLead:'Zarząd tworzą trzy osoby, a każda prowadzi obszar, w którym pracuje na co dzień — od oprogramowania, przez sprzedaż i wdrożenia, po projektowanie i produkcję urządzeń.',
   // Wyróżnienie założyciela stoi w osobnym polu, nie sklejone ukośnikiem z funkcją:
   // funkcja jest wspólna dla całego zarządu, założycielstwo dotyczy dwóch osób.
   // Dzięki rozdzieleniu obie części można złożyć innym krojem, a wiersz zostaje

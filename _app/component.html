@@ -2564,8 +2564,8 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     </sc-if>
 
     <sc-if value="{{ isOnas }}" hint-placeholder-val="{{ false }}">
-      <div style="display:flex;flex-direction:column">
-      <section style="order:{{ aboutWhyOrder }};position:relative;overflow:hidden;padding:{{ sectionPadV }}px {{ pad }}px;background:#0F172A">
+      <sc-if value="{{ notMobile }}" hint-placeholder-val="{{ true }}">
+      <section style="position:relative;overflow:hidden;padding:{{ sectionPadV }}px {{ pad }}px;background:#0F172A">
         <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(900px 380px at 8% -12%,rgba(37,99,235,.30) 0%,rgba(37,99,235,0) 62%),radial-gradient(760px 340px at 94% 6%,rgba(15,169,180,.24) 0%,rgba(15,169,180,0) 60%)"></div>
         <div style="position:relative">
           <p style="margin:0 0 8px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#38BDF8">{{ current.aboutWhyKicker }}</p>
@@ -2587,8 +2587,9 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           </div>
         </div>
       </section>
+      </sc-if>
 
-      <section style="order:1;padding:{{ sectionPadV }}px {{ pad }}px;background:#fff">
+      <section style="padding:{{ sectionPadV }}px {{ pad }}px;background:#fff">
         <div style="{{ histRowStyle }}">
           <div style="{{ histAsideStyle }}">
             <p style="margin:0 0 8px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#2563EB">{{ current.aboutHistKicker }}</p>
@@ -2603,7 +2604,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
         </div>
       </section>
 
-      <section style="order:1;padding:{{ sectionPadV }}px {{ pad }}px;background:#F8FAFC;border-top:1px solid #eef2f7">
+      <section style="padding:{{ sectionPadV }}px {{ pad }}px;background:#F8FAFC;border-top:1px solid #eef2f7">
         <p style="margin:0 0 8px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#2563EB">{{ current.aboutTimeKicker }}</p>
         <h2 style="margin:0 0 32px;font:600 {{ h2Size }}px/1.25 'Montserrat';color:#0F172A;max-width:640px;text-wrap:pretty">{{ current.aboutTimeTitle }}</h2>
         <div style="{{ tlWrapStyle }}">
@@ -2623,7 +2624,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
         </div>
       </section>
 
-      <section style="order:1;padding:{{ sectionPadV }}px {{ pad }}px;background:#fff;border-top:1px solid #eef2f7">
+      <section style="padding:{{ sectionPadV }}px {{ pad }}px;background:#fff;border-top:1px solid #eef2f7">
         <p style="margin:0 0 8px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#2563EB">{{ current.aboutBoardKicker }}</p>
         <h2 style="margin:0 0 12px;font:600 {{ h2Size }}px/1.25 'Montserrat';color:#0F172A;max-width:640px;text-wrap:pretty">{{ current.aboutBoardTitle }}</h2>
         <p style="margin:0 0 30px;font:400 15px/1.7 'Open Sans';color:#64748B;max-width:620px;text-wrap:pretty">{{ current.aboutBoardLead }}</p>
@@ -2640,7 +2641,6 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           </sc-for>
         </div>
       </section>
-      </div>
     </sc-if>
 
     <sc-if value="{{ isKontakt }}" hint-placeholder-val="{{ false }}">
@@ -7353,10 +7353,6 @@ class Component extends DCLogic {
       boardImgStyle: isMobile
         ? 'flex:none;width:92px;height:92px;object-fit:cover;object-position:50% 16%;border-radius:14px;display:block;background:#F1F5F9'
         : 'width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:50% 20%;border-radius:14px;display:block;background:#F1F5F9',
-      // Baner "Dlaczego BioSys" otwiera podstrone na desktopie, ale na telefonie
-      // wpadalo sie w niego od razu po naglowku, przed jakimkolwiek wprowadzeniem.
-      // Kolejnosc zmienia flexbox, nie duplikat znacznika — tresc zostaje jedna.
-      aboutWhyOrder: isMobile ? 2 : 0,
       // Zakres rozwiązania (tylko Task Timer). Na telefonie sześć oramkowanych kafelków
       // z ikoną w osobnym wierszu zajmowało 894 px; ikona wchodzi w wiersz tytułu,
       // a ramkę zastępuje włoskowa linia — tekst zyskuje przy tym 36 px szerokości.

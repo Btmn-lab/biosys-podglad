@@ -1031,7 +1031,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
   var started = false;
   function boot() {
     if (started) return; started = true;
-    fetch('/biosys-podglad/_app/component.html?v=1f9a144c29').then(function (r) { return r.text(); }).then(function (h) {
+    fetch('/biosys-podglad/_app/component.html?v=3d4186022e').then(function (r) { return r.text(); }).then(function (h) {
       document.body.insertAdjacentHTML('beforeend', h);
       /* Runtime ma wbudowaną listę adresów CDN (unpkg.com) i pobierał stamtąd
          React przy każdej wizycie. Dawało to obcemu serwerowi adres IP każdego
