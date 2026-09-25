@@ -1,0 +1,56 @@
+/* Certyfikat do druku: A4 poziomo, na ekranie jako podgląd arkusza. */
+@page { size: A4 landscape; margin: 0; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #E2E8F0; color: #0F172A; font: 400 14px/1.5 'Open Sans', Arial, sans-serif; }
+
+.narzedzia { display: flex; justify-content: space-between; align-items: center; gap: 12px; max-width: 297mm; margin: 16px auto; padding: 0 16px; }
+.narzedzia a { color: #1D4ED8; font-weight: 600; }
+.narzedzia button {
+  min-height: 42px; padding: 8px 18px; border: 0; border-radius: 10px; cursor: pointer;
+  background: #1D4ED8; color: #fff; font: 600 15px 'Open Sans', sans-serif;
+}
+
+.arkusz {
+  --akcent: #2563EB;
+  position: relative; width: 297mm; height: 210mm; margin: 0 auto 24px; padding: 10mm;
+  background: #fff; box-shadow: 0 10px 40px rgb(15 23 42 / .18); overflow: hidden;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.arkusz__rama {
+  display: flex; flex-direction: column; height: 100%; padding: 12mm 16mm 10mm;
+  border: 1.2mm solid var(--akcent); outline: .4mm solid var(--akcent); outline-offset: -3mm;
+}
+.arkusz__gora { display: flex; justify-content: space-between; align-items: center; }
+.arkusz__logo { height: 13mm; width: auto; }
+.arkusz__numer { font: 600 11pt 'Open Sans', sans-serif; color: #475569; letter-spacing: .04em; }
+.arkusz__srodek { flex: 1; display: grid; grid-template-columns: 1fr 58mm; gap: 12mm; align-items: center; }
+.arkusz__nadtytul { margin: 0 0 3mm; color: var(--akcent); font: 800 30pt/1 'Montserrat', sans-serif; letter-spacing: .22em; text-transform: uppercase; }
+.arkusz__wstep { margin: 3mm 0 1mm; color: #475569; font-size: 12pt; }
+.arkusz__imie { margin: 0; font: 800 30pt/1.15 'Montserrat', sans-serif; }
+.arkusz__program { margin: 0; font: 700 17pt/1.3 'Montserrat', sans-serif; color: #334155; }
+.arkusz__zakres { margin: 5mm 0 0; padding-left: 5mm; color: #475569; font-size: 10pt; columns: 2; column-gap: 8mm; }
+.arkusz__zakres li { break-inside: avoid; margin-bottom: 1mm; }
+.arkusz__odznaka { width: 58mm; height: 58mm; }
+.arkusz__dol { display: flex; gap: 12mm; padding-top: 5mm; border-top: .3mm solid #CBD5E1; }
+.arkusz__dol div { display: flex; flex-direction: column; }
+.arkusz__dol span { color: #64748B; font-size: 9pt; }
+.arkusz__dol strong { font-size: 11pt; font-weight: 600; }
+.arkusz__weryfikacja { margin-left: auto; text-align: right; }
+
+.pieczec {
+  position: absolute; top: 42%; left: 50%; z-index: 2; transform: translate(-50%, -50%) rotate(-14deg);
+  padding: 4mm 10mm; border: 1.2mm solid #DC2626; border-radius: 3mm; color: #DC2626;
+  font: 800 28pt 'Montserrat', sans-serif; letter-spacing: .08em; text-transform: uppercase; background: rgb(255 255 255 / .85);
+}
+
+@media print {
+  body { background: #fff; }
+  .narzedzia { display: none; }
+  .arkusz { margin: 0; box-shadow: none; }
+}
+@media screen and (max-width: 1140px) {
+  .arkusz { zoom: .75; }
+}
+@media screen and (max-width: 860px) {
+  .arkusz { zoom: .45; }
+}

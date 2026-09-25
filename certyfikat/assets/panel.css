@@ -1,0 +1,57 @@
+/* Panel trenera — dokłada się do certyfikat.css. */
+.menu { display: flex; align-items: center; gap: 18px; font-size: 14px; font-weight: 600; }
+.menu a { color: var(--lupek); text-decoration: none; }
+.menu a:hover { color: var(--niebieski); }
+.menu__glowny { color: var(--niebieski) !important; }
+.menu form { margin: 0; }
+
+.naglowek { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.naglowek h1 { font-size: 26px; margin: 0; }
+.drobne { font-size: 13px; color: var(--szary); font-weight: 400; }
+.mono { font-variant-numeric: tabular-nums; letter-spacing: .02em; font-weight: 600; }
+.nowrap { white-space: nowrap; }
+.pusto { padding: 32px; text-align: center; background: var(--karta); border: 1px dashed var(--linia); border-radius: var(--promien); }
+
+.filtry { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 16px; }
+.filtry input, .filtry select, .formularz input:not([type=checkbox]), .formularz select, .formularz textarea {
+  min-height: 40px; padding: 8px 12px; border: 1.5px solid #CBD5E1; border-radius: 8px; background: #fff; color: var(--granat);
+  font: 400 15px/1.4 'Open Sans', sans-serif;
+}
+.filtry input[type=search] { flex: 1 1 260px; }
+.filtry select { flex: 0 1 280px; min-width: 0; }
+
+.tabela-okno { overflow-x: auto; background: var(--karta); border: 1px solid var(--linia); border-radius: var(--promien); }
+.tabela { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tabela th, .tabela td { padding: 10px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--linia); }
+.tabela th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--szary); background: var(--tlo); }
+.tabela tr:last-child td { border-bottom: 0; }
+
+.znacznik { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+.znacznik--ok { background: var(--zielony-tlo); color: var(--zielony); }
+.znacznik--blad { background: var(--czerwony-tlo); color: var(--czerwony); }
+
+.formularz { display: grid; gap: 14px; }
+.formularz label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; color: var(--lupek); }
+.formularz textarea { font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace; font-size: 14px; }
+.formularz code { background: var(--tlo); padding: 1px 6px; border-radius: 4px; }
+.formularz fieldset {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px;
+  margin: 0; padding: 20px 24px 24px; background: var(--karta); border: 1px solid var(--linia); border-radius: var(--promien);
+}
+.formularz legend { padding: 0 6px; font: 700 15px 'Montserrat', sans-serif; color: var(--granat); }
+.formularz .pelna, .formularz .zaznacz { grid-column: 1 / -1; }
+.formularz .zaznacz { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
+.formularz .zaznacz input { margin-top: 4px; width: 18px; height: 18px; flex: none; }
+.zaznacz--wazne { padding: 12px 14px; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; color: var(--granat) !important; }
+.formularz > .przycisk { justify-self: start; }
+@media (max-width: 700px) { .formularz fieldset { grid-template-columns: minmax(0, 1fr); padding: 16px; } }
+.bledy { margin: 0; padding-left: 18px; }
+
+.kolumny { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 20px; }
+@media (max-width: 860px) { .kolumny { grid-template-columns: minmax(0, 1fr); } }
+.karta { margin-bottom: 20px; padding: 22px 24px; background: var(--karta); border: 1px solid var(--linia); border-radius: var(--promien); }
+.karta h2 { font-size: 17px; }
+.karta form + form { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--linia); }
+.linki { margin: 16px 0 0; font-size: 14px; }
+.przycisk--niebezpieczny { background: var(--czerwony); }
+.historia { margin: 0; padding-left: 18px; font-size: 14px; color: var(--lupek); }

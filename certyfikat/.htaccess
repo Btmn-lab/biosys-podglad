@@ -1,0 +1,19 @@
+# Moduł certyfikatów: wszystko, co nie jest plikiem statycznym, obsługuje index.php.
+
+Options -MultiViews -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Biblioteka, szablony, fonty do GD, baza SQLite i pamięć podręczna grafik
+    # nie są przeznaczone dla przeglądarki. Drugą zaporą są .htaccess w tych katalogach.
+    RewriteRule ^(_lib|_dane)(/|$) - [F,L]
+
+    # Panel trenera ma własny index.php.
+    RewriteRule ^admin/?$ admin/index.php [L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
+

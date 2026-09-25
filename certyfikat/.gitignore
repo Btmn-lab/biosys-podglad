@@ -1,0 +1,4 @@
+# Konfiguracja z hasłami i dane produkcyjne nie trafiają do repozytorium.
+_lib/config.php
+_dane/*
+!_dane/.htaccess

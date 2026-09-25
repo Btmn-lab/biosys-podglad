@@ -5,6 +5,7 @@ Allow: /
 # narzędzia i backend poza indeksem
 Disallow: /heatmap-viewer.html
 Disallow: /backend/
+Disallow: /certyfikat/admin/
 Disallow: /assets/pub-lite/
 Disallow: /*?utm_
 

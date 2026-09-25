@@ -1,0 +1,157 @@
+/* Strona certyfikatu i weryfikacji — kolory i kroje jak w serwisie biosys.pl. */
+:root {
+  --granat: #0F172A;
+  --lupek: #334155;
+  --szary: #64748B;
+  --linia: #E2E8F0;
+  --tlo: #F8FAFC;
+  --karta: #FFFFFF;
+  --niebieski: #1D4ED8;
+  --zielony: #15803D;
+  --zielony-tlo: #F0FDF4;
+  --czerwony: #B91C1C;
+  --czerwony-tlo: #FEF2F2;
+  --linkedin: #0A66C2;
+  --promien: 14px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--tlo);
+  color: var(--granat);
+  font: 400 16px/1.6 'Open Sans', -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+h1, h2, h3 { font-family: 'Montserrat', 'Open Sans', sans-serif; line-height: 1.2; margin: 0 0 .5em; }
+a { color: var(--niebieski); }
+.ukryte { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* ---- pasek i stopka ---- */
+.pasek { background: var(--karta); border-bottom: 1px solid var(--linia); }
+.pasek__srodek, .stopka__srodek, .strona { max-width: 1100px; margin: 0 auto; padding-inline: 16px; }
+.pasek__srodek { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; }
+.pasek__logo img { display: block; height: 34px; width: auto; }
+.pasek__link { color: var(--lupek); text-decoration: none; font-weight: 600; font-size: 14px; }
+.pasek__link:hover { color: var(--niebieski); }
+.strona { padding-block: 28px 56px; }
+.stopka { border-top: 1px solid var(--linia); background: var(--karta); color: var(--szary); font-size: 13px; }
+.stopka__srodek { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 20px; }
+.stopka a { color: inherit; }
+
+/* ---- pasek statusu ---- */
+.status {
+  display: flex; gap: 10px; align-items: flex-start;
+  margin: 0 0 20px; padding: 12px 16px; border-radius: 10px; font-size: 15px;
+}
+.status svg { flex: none; width: 20px; height: 20px; margin-top: 2px; fill: currentColor; }
+.status--ok { background: var(--zielony-tlo); color: var(--zielony); border: 1px solid #BBF7D0; }
+.status--blad { background: var(--czerwony-tlo); color: var(--czerwony); border: 1px solid #FECACA; }
+.status strong { font-weight: 700; }
+
+/* ---- układ ---- */
+.uklad { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: start; }
+@media (max-width: 900px) { .uklad { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- karta certyfikatu ---- */
+.cert {
+  --akcent: #2563EB;
+  position: relative; overflow: hidden;
+  display: grid; grid-template-columns: minmax(0, 1fr) 190px; gap: 24px; align-items: center;
+  padding: 36px 36px 40px; background: var(--karta);
+  border: 1px solid var(--linia); border-radius: var(--promien);
+  box-shadow: 0 1px 2px rgb(15 23 42 / .04), 0 12px 32px -12px rgb(15 23 42 / .12);
+}
+.cert::after { content: ''; position: absolute; inset: auto 0 0 0; height: 6px; background: var(--akcent); }
+.cert__nadtytul {
+  margin: 0 0 10px; color: var(--akcent, var(--niebieski));
+  font: 700 13px/1 'Montserrat', sans-serif; letter-spacing: .16em; text-transform: uppercase;
+}
+.cert__imie { font-size: clamp(28px, 4.4vw, 42px); font-weight: 800; margin-bottom: 8px; overflow-wrap: anywhere; }
+.cert__program { margin: 0; font-size: 19px; font-weight: 600; color: var(--lupek); }
+.cert__firma { margin: 4px 0 0; color: var(--szary); }
+.cert__meta { display: flex; flex-wrap: wrap; gap: 12px 32px; margin: 28px 0 0; padding-top: 20px; border-top: 1px solid var(--linia); }
+.cert__meta dt { font-size: 13px; color: var(--szary); }
+.cert__meta dd { margin: 0; font-weight: 600; }
+.cert__numer { font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+.cert__odznaka { width: 100%; height: auto; max-width: 190px; justify-self: center; }
+.cert--niewazny .cert__odznaka, .cert--niewazny .cert__tresc { filter: grayscale(1); opacity: .55; }
+@media (max-width: 600px) {
+  .cert { grid-template-columns: minmax(0, 1fr); padding: 24px 20px 30px; }
+  .cert__odznaka { grid-row: 1; max-width: 132px; justify-self: start; }
+}
+
+/* ---- akcje LinkedIn ---- */
+.akcje {
+  padding: 24px; background: var(--karta);
+  border: 1px solid var(--linia); border-radius: var(--promien);
+}
+.akcje h2 { font-size: 19px; }
+.akcje__wstep { margin: 0 0 18px; color: var(--lupek); font-size: 14px; }
+.przycisk {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 46px; padding: 10px 18px; border: 0; border-radius: 10px;
+  background: var(--niebieski); color: #fff; text-decoration: none; cursor: pointer;
+  font: 600 15px/1.2 'Open Sans', sans-serif;
+}
+.przycisk:hover { filter: brightness(1.08); }
+.przycisk:focus-visible, .link:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid #93C5FD; outline-offset: 2px; }
+.przycisk svg { width: 20px; height: 20px; fill: currentColor; }
+.akcje .przycisk { width: 100%; }
+.przycisk--linkedin { background: var(--linkedin); }
+.przycisk--obrys { margin-top: 10px; background: transparent; color: var(--linkedin); box-shadow: inset 0 0 0 1.5px var(--linkedin); }
+.przycisk--obrys:hover { background: #EEF5FC; filter: none; }
+.przycisk--maly { width: auto !important; min-height: 36px; padding: 6px 14px; font-size: 14px; }
+.akcje__inne { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 18px 0 4px; padding-top: 16px; border-top: 1px solid var(--linia); }
+.link {
+  padding: 0; border: 0; background: none; cursor: pointer;
+  color: var(--niebieski); font: 600 14px/1.6 'Open Sans', sans-serif; text-decoration: underline; text-underline-offset: 3px;
+}
+.link--maly { font-size: 12px; margin-left: 6px; }
+.link.skopiowano::after { content: ' ✓'; color: var(--zielony); }
+
+.rozwin { margin-top: 14px; border-top: 1px solid var(--linia); padding-top: 12px; }
+.rozwin summary { cursor: pointer; font-weight: 600; font-size: 14px; color: var(--lupek); }
+.rozwin[open] summary { margin-bottom: 10px; }
+.rozwin__tekst {
+  display: block; width: 100%; margin-bottom: 10px; padding: 10px 12px; resize: vertical;
+  border: 1px solid var(--linia); border-radius: 8px; background: var(--tlo); color: var(--granat);
+  font: 400 13px/1.5 'Open Sans', sans-serif;
+}
+.podpowiedz { margin: 8px 0 0; font-size: 13px; color: var(--szary); }
+.pola { margin: 10px 0 0; font-size: 13px; }
+.pola > div { padding: 6px 0; border-bottom: 1px dashed var(--linia); }
+.pola dt { color: var(--szary); }
+.pola dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+
+/* ---- sekcje opisowe ---- */
+.zakres {
+  margin-top: 24px; padding: 28px 32px; background: var(--karta);
+  border: 1px solid var(--linia); border-radius: var(--promien);
+}
+.zakres h2 { font-size: 20px; }
+.zakres h3 { font-size: 16px; margin-top: 20px; }
+.zakres p { margin: 0 0 10px; color: var(--lupek); }
+.zakres__lista { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.zakres__lista li { position: relative; padding-left: 28px; }
+.zakres__lista li::before {
+  content: ''; position: absolute; left: 0; top: .3em; width: 18px; height: 18px; border-radius: 50%;
+  background: #DBEAFE url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%231D4ED8' d='M8.2 13.6 4.9 10.3l1.2-1.2 2.1 2.1 5.7-5.7 1.2 1.2z'/%3E%3C/svg%3E") center/14px no-repeat;
+}
+.zakres--cichy { background: transparent; border-style: dashed; }
+.zakres--cichy h2 { font-size: 16px; }
+.zakres--cichy p { font-size: 14px; }
+@media (max-width: 600px) { .zakres { padding: 22px 20px; } }
+
+/* ---- formularz weryfikacji ---- */
+.weryfikacja { max-width: 640px; margin: 24px auto; padding: 36px; background: var(--karta); border: 1px solid var(--linia); border-radius: var(--promien); }
+.weryfikacja h1 { font-size: clamp(24px, 4vw, 32px); }
+.weryfikacja p { color: var(--lupek); }
+.weryfikacja__form { display: flex; gap: 10px; margin-top: 20px; }
+.weryfikacja__form input {
+  flex: 1; min-width: 0; min-height: 48px; padding: 10px 14px;
+  border: 1.5px solid #CBD5E1; border-radius: 10px; background: #fff; color: var(--granat);
+  font: 600 17px/1 'Open Sans', sans-serif; letter-spacing: .06em; text-transform: uppercase;
+}
+.weryfikacja__form input::placeholder { color: #94A3B8; letter-spacing: .06em; }
+@media (max-width: 600px) { .weryfikacja { padding: 24px 20px; } .weryfikacja__form { flex-direction: column; } }
