@@ -376,7 +376,18 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
 </style>
 <script>
+/* Zgoda i Google Tag Manager — Consent Mode v2 w trybie podstawowym.
+   GTM ładuje się dopiero po zgodzie (statystyka albo marketing). Przed zgodą do Google
+   nie wychodzi nic, nawet ping bez ciasteczek — z tego samego powodu React nie jest
+   pobierany z unpkg.com. GTM_ID wstawia build wyłącznie w wersji produkcyjnej
+   (BS_LIVE=1, wartość z .tools/analityka.json); w podglądzie zostaje pusty i loader
+   nic nie robi, więc testy nie trafiają do produkcyjnej usługi GA4.
+   Runtime wykonuje zawartość <helmet> drugi raz — stąd flaga na window. Bez niej
+   każda odsłona liczyłaby się podwójnie. */
 (function(){
+  if (window.__bsZgodaInit) return;
+  window.__bsZgodaInit = true;
+  var GTM_ID = '';
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
   var stored = null;
@@ -387,8 +398,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     ad_personalization: 'denied',
     analytics_storage: 'denied',
     functionality_storage: 'granted',
-    security_storage: 'granted',
-    wait_for_update: 500
+    security_storage: 'granted'
   });
   if (stored) {
     gtag('consent', 'update', {
@@ -398,8 +408,21 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
       ad_personalization: stored.marketing ? 'granted' : 'denied'
     });
   }
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  /* Jedno wejście dla zdarzeń konwersji. Bez zgody zdarzenie zostaje w dataLayer
+     i nigdzie nie wychodzi — miejsca wywołań nie muszą znać stanu zgody. */
+  window.bsZdarzenie = function(nazwa, parametry) {
+    window.dataLayer.push(Object.assign({ event: nazwa }, parametry || {}));
+  };
+  window.bsWczytajGtm = function() {
+    if (window.__bsGtmWczytany || !/^GTM-[A-Z0-9]+$/.test(GTM_ID)) return;
+    window.__bsGtmWczytany = true;
+    window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID;
+    document.head.appendChild(s);
+  };
+  if (stored && (stored.stats || stored.marketing)) window.bsWczytajGtm();
 })();
 </script>
 <script src="/biosys-podglad/tresc.js"></script>
@@ -434,7 +457,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     <header data-dc-tpl="59" data-sysfont="" style="background: rgb(255, 255, 255); padding: 16px 56px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgb(226, 232, 240); flex-wrap: nowrap; gap: 14px;">
       <div data-dc-tpl="60" style="display: flex; align-items: center; gap: 18px; flex-wrap: nowrap; flex: 0 0 auto;">
       <div data-dc-tpl="61" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-        <img data-dc-tpl="62" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="120" height="30" fetchpriority="high" decoding="async" style="height: 30px; width: auto; display: block; object-fit: contain;">
+        <img data-dc-tpl="62" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys — rejestracja czasu pracy i kontrola dostępu" width="120" height="30" fetchpriority="high" decoding="async" style="height: 30px; width: auto; display: block; object-fit: contain;">
         <span data-dc-tpl="63" style="flex: 0 0 auto; font: 600 10px / 1.2 Montserrat; letter-spacing: 0.06em; border-left: 2px solid rgb(15, 169, 180); padding-left: 10px; background: linear-gradient(90deg, rgb(37, 99, 235), rgb(15, 169, 180)) text; color: transparent;">CZAS POD<br data-dc-tpl="64">KONTROLĄ</span>
       </div>
       
@@ -608,96 +631,96 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     
 
     
-      <section data-dc-tpl="2129" style="padding: 42px 56px; background: rgb(255, 255, 255);">
-        <div data-dc-tpl="2130" style="max-width: 820px; display: flex; flex-direction: column; gap: 40px;">
+      <section data-dc-tpl="2132" style="padding: 42px 56px; background: rgb(255, 255, 255);">
+        <div data-dc-tpl="2133" style="max-width: 820px; display: flex; flex-direction: column; gap: 40px;">
           
-            <div data-dc-tpl="2132">
-              <h2 data-dc-tpl="2133" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Czym jest rejestracja czasu pracy</span></h2>
-              <div data-dc-tpl="2134" style="display: flex; flex-direction: column; gap: 16px;">
+            <div data-dc-tpl="2135">
+              <h2 data-dc-tpl="2136" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Czym jest rejestracja czasu pracy</span></h2>
+              <div data-dc-tpl="2137" style="display: flex; flex-direction: column; gap: 16px;">
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Rejestracja czasu pracy (RCP) to zbieranie i przetwarzanie informacji o tym, kiedy pracownik rozpoczął pracę, kiedy ją zakończył oraz co działo się pomiędzy tymi zdarzeniami: przerwy, wyjścia służbowe, wyjścia prywatne, praca w innej lokalizacji. W systemie informatycznym każde takie zdarzenie ma identyfikator pracownika, datę, godzinę, czytnik i typ. Z tych pojedynczych zapisów powstaje ewidencja czasu pracy, a z niej raporty dla kadr, płac i przełożonych.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Rejestracja czasu pracy (RCP) to zbieranie i przetwarzanie informacji o tym, kiedy pracownik rozpoczął pracę, kiedy ją zakończył oraz co działo się pomiędzy tymi zdarzeniami: przerwy, wyjścia służbowe, wyjścia prywatne, praca w innej lokalizacji. W systemie informatycznym każde takie zdarzenie ma identyfikator pracownika, datę, godzinę, czytnik i typ. Z tych pojedynczych zapisów powstaje ewidencja czasu pracy, a z niej raporty dla kadr, płac i przełożonych.</span></p>
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Rejestracja czasu pracy nie jest tym samym co kontrola obecności na terenie zakładu. Czasem pracy jest okres, w którym pracownik pozostaje w dyspozycji pracodawcy, a nie każda minuta spędzona w budynku. Dlatego system rozdziela typy zdarzeń i przypisuje im różny wpływ na wynik: wyjście służbowe nie przerywa czasu pracy, wyjście prywatne przerywa, a przerwa może być wliczana albo niewliczana zależnie od regulaminu.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Rejestracja czasu pracy nie jest tym samym co kontrola obecności na terenie zakładu. Czasem pracy jest okres, w którym pracownik pozostaje w dyspozycji pracodawcy, a nie każda minuta spędzona w budynku. Dlatego system rozdziela typy zdarzeń i przypisuje im różny wpływ na wynik: wyjście służbowe nie przerywa czasu pracy, wyjście prywatne przerywa, a przerwa może być wliczana albo niewliczana zależnie od regulaminu.</span></p>
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">W firmach, które prowadzą ewidencję ręcznie, dane o czasie pracy powstają dwa albo trzy razy: pracownik podpisuje listę, przełożony ją weryfikuje, kadry przepisują wynik do systemu kadrowo-płacowego. Każdy z tych etapów jest miejscem, w którym powstaje rozbieżność, a jej źródła po miesiącu nie da się już ustalić. Rejestracja elektroniczna eliminuje przepisywanie: dane wchodzą do systemu raz, w momencie zdarzenia.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">W firmach, które prowadzą ewidencję ręcznie, dane o czasie pracy powstają dwa albo trzy razy: pracownik podpisuje listę, przełożony ją weryfikuje, kadry przepisują wynik do systemu kadrowo-płacowego. Każdy z tych etapów jest miejscem, w którym powstaje rozbieżność, a jej źródła po miesiącu nie da się już ustalić. Rejestracja elektroniczna eliminuje przepisywanie: dane wchodzą do systemu raz, w momencie zdarzenia.</span></p>
                 
               </div>
             </div>
           
-            <div data-dc-tpl="2132">
-              <h2 data-dc-tpl="2133" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Obowiązek prowadzenia ewidencji czasu pracy</span></h2>
-              <div data-dc-tpl="2134" style="display: flex; flex-direction: column; gap: 16px;">
+            <div data-dc-tpl="2135">
+              <h2 data-dc-tpl="2136" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Obowiązek prowadzenia ewidencji czasu pracy</span></h2>
+              <div data-dc-tpl="2137" style="display: flex; flex-direction: column; gap: 16px;">
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Artykuł 149 § 1 Kodeksu pracy nakłada na pracodawcę obowiązek prowadzenia ewidencji czasu pracy pracownika do celów prawidłowego ustalenia jego wynagrodzenia i innych świadczeń związanych z pracą, a na żądanie pracownika — udostępnienia mu tej ewidencji. Przepis nie wskazuje formy: ewidencja może być prowadzona w postaci elektronicznej i coraz częściej jest, bo tylko wtedy da się ją odtworzyć na potrzeby kontroli bez ręcznego zbierania dokumentów.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Artykuł 149 § 1 Kodeksu pracy nakłada na pracodawcę obowiązek prowadzenia ewidencji czasu pracy pracownika do celów prawidłowego ustalenia jego wynagrodzenia i innych świadczeń związanych z pracą, a na żądanie pracownika — udostępnienia mu tej ewidencji. Przepis nie wskazuje formy: ewidencja może być prowadzona w postaci elektronicznej i coraz częściej jest, bo tylko wtedy da się ją odtworzyć na potrzeby kontroli bez ręcznego zbierania dokumentów.</span></p>
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Zakres karty ewidencji określa § 6 rozporządzenia Ministra Rodziny, Pracy i Polityki Społecznej z 10 grudnia 2018 r. w sprawie dokumentacji pracowniczej. Karta obejmuje między innymi liczbę godzin pracy oraz godzinę rozpoczęcia i zakończenia pracy, liczbę godzin nadliczbowych, dni wolne z oznaczeniem tytułu ich udzielenia, godziny dyżurów, zwolnienia od pracy oraz inne usprawiedliwione i nieusprawiedliwione nieobecności. To lista pól, które raport z systemu RCP musi odwzorować, żeby ewidencja była kompletna.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Zakres karty ewidencji określa § 6 rozporządzenia Ministra Rodziny, Pracy i Polityki Społecznej z 10 grudnia 2018 r. w sprawie dokumentacji pracowniczej. Karta obejmuje między innymi liczbę godzin pracy oraz godzinę rozpoczęcia i zakończenia pracy, liczbę godzin nadliczbowych, dni wolne z oznaczeniem tytułu ich udzielenia, godziny dyżurów, zwolnienia od pracy oraz inne usprawiedliwione i nieusprawiedliwione nieobecności. To lista pól, które raport z systemu RCP musi odwzorować, żeby ewidencja była kompletna.</span></p>
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Normy czasu pracy wyznacza art. 129 § 1 Kodeksu pracy: 8 godzin na dobę i przeciętnie 40 godzin w przeciętnie pięciodniowym tygodniu pracy w przyjętym okresie rozliczeniowym. Do tego dochodzą prawa do odpoczynku — co najmniej 11 godzin nieprzerwanego odpoczynku dobowego (art. 132) i 35 godzin odpoczynku tygodniowego (art. 133). Naruszenia odpoczynku widać wyłącznie w danych o godzinach faktycznych; sam harmonogram ich nie pokaże.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Normy czasu pracy wyznacza art. 129 § 1 Kodeksu pracy: 8 godzin na dobę i przeciętnie 40 godzin w przeciętnie pięciodniowym tygodniu pracy w przyjętym okresie rozliczeniowym. Do tego dochodzą prawa do odpoczynku — co najmniej 11 godzin nieprzerwanego odpoczynku dobowego (art. 132) i 35 godzin odpoczynku tygodniowego (art. 133). Naruszenia odpoczynku widać wyłącznie w danych o godzinach faktycznych; sam harmonogram ich nie pokaże.</span></p>
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Praca ponad normy albo ponad przedłużony dobowy wymiar wynikający z rozkładu stanowi pracę w godzinach nadliczbowych z dodatkiem 50% lub 100% wynagrodzenia (art. 151 i 151¹). Kwalifikacja zależy od dnia tygodnia, pory doby i przyjętego systemu czasu pracy — i właśnie dlatego reguły opłaca się ustawić raz w systemie, a nie rozstrzygać je co miesiąc w arkuszu kalkulacyjnym.</span></p>
-                
-              </div>
-            </div>
-          
-            <div data-dc-tpl="2132">
-              <h2 data-dc-tpl="2133" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Jak działa system RCP w praktyce</span></h2>
-              <div data-dc-tpl="2134" style="display: flex; flex-direction: column; gap: 16px;">
-                
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Punkt wyjścia to identyfikacja pracownika. Najczęściej jest to karta lub brelok zbliżeniowy, terminal biometryczny, kod PIN albo aplikacja WEB dla osób pracujących zdalnie i w terenie. Zdarzenie zostaje potwierdzone na wyświetlaczu terminala i trafia do bazy — jeśli łącze jest chwilowo niedostępne, terminal buforuje zapisy i wysyła je po odzyskaniu połączenia, więc żadne odbicie nie ginie.</span></p>
-                
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Drugą warstwą jest harmonogram. Ewidencja bez planu pracy pokazuje wyłącznie sumę godzin; dopiero porównanie planu z rzeczywistością daje informację o spóźnieniu, wcześniejszym wyjściu, pracy w dniu wolnym i nadgodzinach. Grafiki buduje się dla grup pracowników, zmian, brygad, a w systemach równoważnym, ruchu ciągłego czy czterobrygadowym plan bywa jedynym punktem odniesienia dla rozliczenia.</span></p>
-                
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Trzecia warstwa to reguły przeliczania. System stosuje limity dobowe i średniotygodniowe, zasady zaliczania przerw, progi dodatków za pracę w nocy i w niedzielę, sposób rozliczania wyjść prywatnych i odpracowań. Reguły definiuje się raz, na etapie wdrożenia, i przypisuje do grup pracowników — dzięki temu każdy miesiąc rozlicza się tak samo, niezależnie od tego, kto tego dnia obsługuje kadry.</span></p>
-                
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Czwarta warstwa to obieg wniosków. Urlopy, wyjścia, korekty odbić i zmiany grafiku pracownik składa w panelu, przełożony akceptuje, a zaakceptowany wniosek automatycznie wchodzi do ewidencji. Kadry przestają być skrzynką na maile, a historia decyzji zostaje w systemie razem ze zdarzeniami, do których się odnosi.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Praca ponad normy albo ponad przedłużony dobowy wymiar wynikający z rozkładu stanowi pracę w godzinach nadliczbowych z dodatkiem 50% lub 100% wynagrodzenia (art. 151 i 151¹). Kwalifikacja zależy od dnia tygodnia, pory doby i przyjętego systemu czasu pracy — i właśnie dlatego reguły opłaca się ustawić raz w systemie, a nie rozstrzygać je co miesiąc w arkuszu kalkulacyjnym.</span></p>
                 
               </div>
             </div>
           
-            <div data-dc-tpl="2132">
-              <h2 data-dc-tpl="2133" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Metody rejestracji: karta, biometria, PIN, aplikacja</span></h2>
-              <div data-dc-tpl="2134" style="display: flex; flex-direction: column; gap: 16px;">
+            <div data-dc-tpl="2135">
+              <h2 data-dc-tpl="2136" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Jak działa system RCP w praktyce</span></h2>
+              <div data-dc-tpl="2137" style="display: flex; flex-direction: column; gap: 16px;">
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Karty i breloki zbliżeniowe to najtańszy i najszybszy sposób rejestracji, sprawdzony w dużych zespołach produkcyjnych i magazynowych. Odbicie zajmuje ułamek sekundy, co ma znaczenie na przejściu, przez które w kilka minut przechodzi cała zmiana. Wadą jest możliwość przekazania karty innej osobie — problem rozwiązuje się łącząc rejestrację z kontrolą dostępu przy kołowrocie albo dodając weryfikację biometryczną w wybranych punktach.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Punkt wyjścia to identyfikacja pracownika. Najczęściej jest to karta lub brelok zbliżeniowy, terminal biometryczny, kod PIN albo aplikacja WEB dla osób pracujących zdalnie i w terenie. Zdarzenie zostaje potwierdzone na wyświetlaczu terminala i trafia do bazy — jeśli łącze jest chwilowo niedostępne, terminal buforuje zapisy i wysyła je po odzyskaniu połączenia, więc żadne odbicie nie ginie.</span></p>
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Terminale biometryczne rozpoznają cechę fizyczną — najczęściej odcisk palca lub geometrię dłoni — i eliminują odbijanie za kolegę. Wdrożenie biometrii wymaga jednak przemyślenia podstawy przetwarzania danych: dane biometryczne pracowników należą do szczególnych kategorii danych, więc zakres i sposób ich użycia trzeba udokumentować i ograniczyć do niezbędnego minimum.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Drugą warstwą jest harmonogram. Ewidencja bez planu pracy pokazuje wyłącznie sumę godzin; dopiero porównanie planu z rzeczywistością daje informację o spóźnieniu, wcześniejszym wyjściu, pracy w dniu wolnym i nadgodzinach. Grafiki buduje się dla grup pracowników, zmian, brygad, a w systemach równoważnym, ruchu ciągłego czy czterobrygadowym plan bywa jedynym punktem odniesienia dla rozliczenia.</span></p>
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">PIN jest rozwiązaniem awaryjnym i uzupełniającym — przydaje się, gdy pracownik zapomni karty albo gdy punkt rejestracji obsługuje niewielką grupę osób. Aplikacja WEB i mobilna obsługuje pracę zdalną, hybrydową i zespoły w terenie: pracownik rejestruje start i koniec pracy z telefonu lub przeglądarki, a przełożony widzi status na bieżąco. Wszystkie metody trafiają do jednej ewidencji, więc praca stacjonarna i zdalna rozliczają się wspólnie.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Trzecia warstwa to reguły przeliczania. System stosuje limity dobowe i średniotygodniowe, zasady zaliczania przerw, progi dodatków za pracę w nocy i w niedzielę, sposób rozliczania wyjść prywatnych i odpracowań. Reguły definiuje się raz, na etapie wdrożenia, i przypisuje do grup pracowników — dzięki temu każdy miesiąc rozlicza się tak samo, niezależnie od tego, kto tego dnia obsługuje kadry.</span></p>
                 
-              </div>
-            </div>
-          
-            <div data-dc-tpl="2132">
-              <h2 data-dc-tpl="2133" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Rozliczanie czasu pracy i zamknięcie miesiąca</span></h2>
-              <div data-dc-tpl="2134" style="display: flex; flex-direction: column; gap: 16px;">
-                
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Zamknięcie miesiąca w ewidencji prowadzonej ręcznie polega na uzgadnianiu: kadry porównują listę obecności z grafikiem, wyjaśniają luki, dopisują absencje, przeliczają nadgodziny i wprowadzają wynik do systemu płacowego. W firmie o kilkuset pracownikach ten proces zajmuje dni i zawsze kończy się kilkoma pozycjami przyjętymi na słowo.</span></p>
-                
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">W systemie RCP zamknięcie miesiąca to weryfikacja wyjątków. Dane są już przeliczone, więc kadry przeglądają wyłącznie pozycje wymagające decyzji: brakujące odbicia, nadgodziny do zatwierdzenia, nieobecności bez dokumentu, przekroczenia odpoczynku. Reszta ewidencji jest gotowa i spójna z zapisami zdarzeń, do których zawsze można wrócić.</span></p>
-                
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Efekt widać w trzech miejscach. Skraca się czas przygotowania danych do płac. Znika kategoria sporów, których nie da się rozstrzygnąć, bo każda pozycja ma źródło w konkretnym zdarzeniu. Pojawiają się dane, których wcześniej nie było: rzeczywisty rozkład nadgodzin między działami, skala absencji w okresach szczytowych, obsada zmian względem planu.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Czwarta warstwa to obieg wniosków. Urlopy, wyjścia, korekty odbić i zmiany grafiku pracownik składa w panelu, przełożony akceptuje, a zaakceptowany wniosek automatycznie wchodzi do ewidencji. Kadry przestają być skrzynką na maile, a historia decyzji zostaje w systemie razem ze zdarzeniami, do których się odnosi.</span></p>
                 
               </div>
             </div>
           
-            <div data-dc-tpl="2132">
-              <h2 data-dc-tpl="2133" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Integracja z systemem kadrowo-płacowym</span></h2>
-              <div data-dc-tpl="2134" style="display: flex; flex-direction: column; gap: 16px;">
+            <div data-dc-tpl="2135">
+              <h2 data-dc-tpl="2136" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Metody rejestracji: karta, biometria, PIN, aplikacja</span></h2>
+              <div data-dc-tpl="2137" style="display: flex; flex-direction: column; gap: 16px;">
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Ewidencja czasu pracy ma wartość operacyjną dopiero wtedy, gdy jej wynik trafia do systemu, w którym liczone są wynagrodzenia. Integracja wymienia zwykle trzy grupy danych: kartoteki pracowników (żeby nie zakładać ich dwa razy), czas pracy i nadgodziny w podziale na składniki oraz absencje wraz z tytułem i dokumentem.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Karty i breloki zbliżeniowe to najtańszy i najszybszy sposób rejestracji, sprawdzony w dużych zespołach produkcyjnych i magazynowych. Odbicie zajmuje ułamek sekundy, co ma znaczenie na przejściu, przez które w kilka minut przechodzi cała zmiana. Wadą jest możliwość przekazania karty innej osobie — problem rozwiązuje się łącząc rejestrację z kontrolą dostępu przy kołowrocie albo dodając weryfikację biometryczną w wybranych punktach.</span></p>
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Kierunek wymiany zależy od tego, gdzie prowadzi się kartotekę. Najczęściej dane osobowe i strukturę organizacyjną utrzymuje system kadrowo-płacowy, a system RCP dostaje z niego pracowników i oddaje przeliczony czas pracy. Zakres pól, częstotliwość wymiany i sposób obsługi korekt ustala się na etapie wdrożenia — to najważniejsza część projektu, bo od niej zależy, czy dane naprawdę przestaną być przepisywane ręcznie.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Terminale biometryczne rozpoznają cechę fizyczną — najczęściej odcisk palca lub geometrię dłoni — i eliminują odbijanie za kolegę. Wdrożenie biometrii wymaga jednak przemyślenia podstawy przetwarzania danych: dane biometryczne pracowników należą do szczególnych kategorii danych, więc zakres i sposób ich użycia trzeba udokumentować i ograniczyć do niezbędnego minimum.</span></p>
+                
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">PIN jest rozwiązaniem awaryjnym i uzupełniającym — przydaje się, gdy pracownik zapomni karty albo gdy punkt rejestracji obsługuje niewielką grupę osób. Aplikacja WEB i mobilna obsługuje pracę zdalną, hybrydową i zespoły w terenie: pracownik rejestruje start i koniec pracy z telefonu lub przeglądarki, a przełożony widzi status na bieżąco. Wszystkie metody trafiają do jednej ewidencji, więc praca stacjonarna i zdalna rozliczają się wspólnie.</span></p>
                 
               </div>
             </div>
           
-            <div data-dc-tpl="2132">
-              <h2 data-dc-tpl="2133" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Wdrożenie: co warto przygotować</span></h2>
-              <div data-dc-tpl="2134" style="display: flex; flex-direction: column; gap: 16px;">
+            <div data-dc-tpl="2135">
+              <h2 data-dc-tpl="2136" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Rozliczanie czasu pracy i zamknięcie miesiąca</span></h2>
+              <div data-dc-tpl="2137" style="display: flex; flex-direction: column; gap: 16px;">
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Przed wdrożeniem opłaca się spisać cztery rzeczy. Pierwsza: obowiązujące systemy czasu pracy i grupy pracowników, których dotyczą. Druga: zasady, które dziś funkcjonują zwyczajowo — zaliczanie przerw, tolerancje spóźnień, odpracowania, wyjścia prywatne. Trzecia: punkty rejestracji i ich przepustowość, czyli ile osób przechodzi przez dane przejście w godzinie szczytu. Czwarta: docelowy zakres integracji z systemem kadrowo-płacowym.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Zamknięcie miesiąca w ewidencji prowadzonej ręcznie polega na uzgadnianiu: kadry porównują listę obecności z grafikiem, wyjaśniają luki, dopisują absencje, przeliczają nadgodziny i wprowadzają wynik do systemu płacowego. W firmie o kilkuset pracownikach ten proces zajmuje dni i zawsze kończy się kilkoma pozycjami przyjętymi na słowo.</span></p>
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Kolejność prac jest zwykle taka sama: analiza procesu, konfiguracja reguł i grafików, montaż urządzeń, testy na wybranej grupie, szkolenie kadr i przełożonych, uruchomienie produkcyjne, a po pierwszym pełnym okresie rozliczeniowym — przegląd wyjątków i korekta reguł. Wdrożenie kończy się nie w dniu montażu czytników, ale po pierwszym miesiącu zamkniętym w nowym trybie.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">W systemie RCP zamknięcie miesiąca to weryfikacja wyjątków. Dane są już przeliczone, więc kadry przeglądają wyłącznie pozycje wymagające decyzji: brakujące odbicia, nadgodziny do zatwierdzenia, nieobecności bez dokumentu, przekroczenia odpoczynku. Reszta ewidencji jest gotowa i spójna z zapisami zdarzeń, do których zawsze można wrócić.</span></p>
+                
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Efekt widać w trzech miejscach. Skraca się czas przygotowania danych do płac. Znika kategoria sporów, których nie da się rozstrzygnąć, bo każda pozycja ma źródło w konkretnym zdarzeniu. Pojawiają się dane, których wcześniej nie było: rzeczywisty rozkład nadgodzin między działami, skala absencji w okresach szczytowych, obsada zmian względem planu.</span></p>
+                
+              </div>
+            </div>
+          
+            <div data-dc-tpl="2135">
+              <h2 data-dc-tpl="2136" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Integracja z systemem kadrowo-płacowym</span></h2>
+              <div data-dc-tpl="2137" style="display: flex; flex-direction: column; gap: 16px;">
+                
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Ewidencja czasu pracy ma wartość operacyjną dopiero wtedy, gdy jej wynik trafia do systemu, w którym liczone są wynagrodzenia. Integracja wymienia zwykle trzy grupy danych: kartoteki pracowników (żeby nie zakładać ich dwa razy), czas pracy i nadgodziny w podziale na składniki oraz absencje wraz z tytułem i dokumentem.</span></p>
+                
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Kierunek wymiany zależy od tego, gdzie prowadzi się kartotekę. Najczęściej dane osobowe i strukturę organizacyjną utrzymuje system kadrowo-płacowy, a system RCP dostaje z niego pracowników i oddaje przeliczony czas pracy. Zakres pól, częstotliwość wymiany i sposób obsługi korekt ustala się na etapie wdrożenia — to najważniejsza część projektu, bo od niej zależy, czy dane naprawdę przestaną być przepisywane ręcznie.</span></p>
+                
+              </div>
+            </div>
+          
+            <div data-dc-tpl="2135">
+              <h2 data-dc-tpl="2136" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Wdrożenie: co warto przygotować</span></h2>
+              <div data-dc-tpl="2137" style="display: flex; flex-direction: column; gap: 16px;">
+                
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Przed wdrożeniem opłaca się spisać cztery rzeczy. Pierwsza: obowiązujące systemy czasu pracy i grupy pracowników, których dotyczą. Druga: zasady, które dziś funkcjonują zwyczajowo — zaliczanie przerw, tolerancje spóźnień, odpracowania, wyjścia prywatne. Trzecia: punkty rejestracji i ich przepustowość, czyli ile osób przechodzi przez dane przejście w godzinie szczytu. Czwarta: docelowy zakres integracji z systemem kadrowo-płacowym.</span></p>
+                
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Kolejność prac jest zwykle taka sama: analiza procesu, konfiguracja reguł i grafików, montaż urządzeń, testy na wybranej grupie, szkolenie kadr i przełożonych, uruchomienie produkcyjne, a po pierwszym pełnym okresie rozliczeniowym — przegląd wyjątków i korekta reguł. Wdrożenie kończy się nie w dniu montażu czytników, ale po pierwszym miesiącu zamkniętym w nowym trybie.</span></p>
                 
               </div>
             </div>
@@ -707,13 +730,13 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     
 
     
-      <section data-dc-tpl="2138" style="padding: 42px 56px; background: rgb(248, 250, 252); border-top: 1px solid rgb(226, 232, 240);">
-        <p data-dc-tpl="2139" style="margin: 0px 0px 8px; font: 600 12px Montserrat; letter-spacing: 0.055em; color: rgb(37, 99, 235);">NASZE ROZWIĄZANIE</p>
-        <h2 data-dc-tpl="2140" style="margin: 0px 0px 22px; font: 600 30px / 1.2 Montserrat; color: rgb(15, 23, 42); max-width: 640px;">Od teorii do systemu</h2>
-        <div data-dc-tpl="2141" class="scp14" style="max-width: 640px; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 14px; padding: 26px; cursor: pointer; transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s;">
-          <p data-dc-tpl="2142" style="margin: 0px 0px 8px; font: 700 17px / 1.3 &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">RCP — Rejestracja czasu pracy</span></p>
-          <p data-dc-tpl="2143" style="margin: 0px 0px 14px; font: 400 14.5px / 1.7 &quot;Open Sans&quot;; color: rgb(100, 116, 139); text-wrap: pretty;"><span class="sc-interp">Zobacz, jak ewidencja czasu pracy, harmonogramy, wnioski i integracje działają w naszym systemie.</span></p>
-          <span data-dc-tpl="2144" style="font: 600 13.5px &quot;Open Sans&quot;; color: rgb(37, 99, 235);">Zobacz →</span>
+      <section data-dc-tpl="2141" style="padding: 42px 56px; background: rgb(248, 250, 252); border-top: 1px solid rgb(226, 232, 240);">
+        <p data-dc-tpl="2142" style="margin: 0px 0px 8px; font: 600 12px Montserrat; letter-spacing: 0.055em; color: rgb(37, 99, 235);">NASZE ROZWIĄZANIE</p>
+        <h2 data-dc-tpl="2143" style="margin: 0px 0px 22px; font: 600 30px / 1.2 Montserrat; color: rgb(15, 23, 42); max-width: 640px;">Od teorii do systemu</h2>
+        <div data-dc-tpl="2144" class="scp14" style="max-width: 640px; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 14px; padding: 26px; cursor: pointer; transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s;">
+          <p data-dc-tpl="2145" style="margin: 0px 0px 8px; font: 700 17px / 1.3 &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">RCP — Rejestracja czasu pracy</span></p>
+          <p data-dc-tpl="2146" style="margin: 0px 0px 14px; font: 400 14.5px / 1.7 &quot;Open Sans&quot;; color: rgb(100, 116, 139); text-wrap: pretty;"><span class="sc-interp">Zobacz, jak ewidencja czasu pracy, harmonogramy, wnioski i integracje działają w naszym systemie.</span></p>
+          <span data-dc-tpl="2147" style="font: 600 13.5px &quot;Open Sans&quot;; color: rgb(37, 99, 235);">Zobacz →</span>
         </div>
       </section>
     
@@ -738,10 +761,10 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     
 
     
-      <div data-dc-tpl="2654" id="kontakt-cta" style="position: relative; overflow: hidden; padding: 42px 56px; background: rgb(15, 23, 42); display: flex; align-items: center; justify-content: space-between; gap: 22px;">
-        <p data-dc-tpl="2655" style="position: relative; z-index: 1; margin: 0px; font: 600 20px / 1.4 Montserrat; color: rgb(255, 255, 255); max-width: 600px;"><span class="sc-interp">Chcesz przełożyć te zasady na konfigurację systemu w swojej firmie? Umów bezpłatną analizę procesu.</span></p>
-        <div data-dc-tpl="2656" style="position: relative; z-index: 1; display: flex; gap: 12px; flex-shrink: 0;">
-          <button data-dc-tpl="2657" class="scpx" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 14px 22px; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s;">Umów analizę →</button>
+      <div data-dc-tpl="2657" id="kontakt-cta" style="position: relative; overflow: hidden; padding: 42px 56px; background: rgb(15, 23, 42); display: flex; align-items: center; justify-content: space-between; gap: 22px;">
+        <p data-dc-tpl="2658" style="position: relative; z-index: 1; margin: 0px; font: 600 20px / 1.4 Montserrat; color: rgb(255, 255, 255); max-width: 600px;"><span class="sc-interp">Chcesz przełożyć te zasady na konfigurację systemu w swojej firmie? Umów bezpłatną analizę procesu.</span></p>
+        <div data-dc-tpl="2659" style="position: relative; z-index: 1; display: flex; gap: 12px; flex-shrink: 0;">
+          <button data-dc-tpl="2660" class="scpx" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 14px 22px; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s;">Umów analizę →</button>
         </div>
       </div>
     
@@ -752,75 +775,75 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
     </main>
 
-    <footer data-dc-tpl="2717" style="background: rgb(15, 23, 42); padding: 44px 56px 26px; border-top: 1px solid rgb(30, 41, 59);">
-      <div data-dc-tpl="2718" style="display: flex; flex-flow: wrap; gap: 40px; justify-content: space-between;">
-        <div data-dc-tpl="2719" style="max-width: 260px;">
-          <img data-dc-tpl="2720" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="80" height="20" loading="lazy" decoding="async" style="height: 20px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; margin-bottom: 14px; object-fit: contain;">
-          <p data-dc-tpl="2721" style="margin: 0px; font: 400 13px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Systemy rejestracji czasu pracy, kontroli dostępu i automatyzacji procesów dla organizacji, które potrzebują wiarygodnych danych.</p>
+    <footer data-dc-tpl="2720" style="background: rgb(15, 23, 42); padding: 44px 56px 26px; border-top: 1px solid rgb(30, 41, 59);">
+      <div data-dc-tpl="2721" style="display: flex; flex-flow: wrap; gap: 40px; justify-content: space-between;">
+        <div data-dc-tpl="2722" style="max-width: 260px;">
+          <img data-dc-tpl="2723" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="80" height="20" loading="lazy" decoding="async" style="height: 20px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; margin-bottom: 14px; object-fit: contain;">
+          <p data-dc-tpl="2724" style="margin: 0px; font: 400 13px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Systemy rejestracji czasu pracy, kontroli dostępu i automatyzacji procesów dla organizacji, które potrzebują wiarygodnych danych.</p>
         </div>
-        <div data-dc-tpl="2722">
-          <p data-dc-tpl="2723" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">ROZWIĄZANIA</p>
-          <div data-dc-tpl="2724" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2725" href="/biosys-podglad/sol-rcp/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">RCP</a><a  data-dc-tpl="2726" href="/biosys-podglad/sol-kd/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">KD</a><a data-dc-tpl="2727" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Automatyzacja</a><a data-dc-tpl="2728" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Etatomierz</a></div>
+        <div data-dc-tpl="2725">
+          <p data-dc-tpl="2726" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">ROZWIĄZANIA</p>
+          <div data-dc-tpl="2727" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2728" href="/biosys-podglad/sol-rcp/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">RCP</a><a  data-dc-tpl="2729" href="/biosys-podglad/sol-kd/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">KD</a><a data-dc-tpl="2730" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Automatyzacja</a><a data-dc-tpl="2731" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Etatomierz</a></div>
         </div>
-        <div data-dc-tpl="2729">
-          <p data-dc-tpl="2730" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">WIEDZA</p>
-          <div data-dc-tpl="2731" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2732" href="/biosys-podglad/blog/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Blog</a><a data-dc-tpl="2733" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Kalkulator oszczędności</a></div>
+        <div data-dc-tpl="2732">
+          <p data-dc-tpl="2733" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">WIEDZA</p>
+          <div data-dc-tpl="2734" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2735" href="/biosys-podglad/blog/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Blog</a><a data-dc-tpl="2736" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Kalkulator oszczędności</a></div>
         </div>
-        <div data-dc-tpl="2734">
-          <p data-dc-tpl="2735" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">KONTAKT</p>
-          <div data-dc-tpl="2736" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2737" href="/biosys-podglad/panel/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Panel klienta</a><a  data-dc-tpl="2738" href="/biosys-podglad/kontakt/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Formularz kontaktowy</a><a data-dc-tpl="2739" href="tel:+48123789537" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">+48 12 378 95 37</a><a data-dc-tpl="2740" href="mailto:biuro@biosys.pl" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">biuro@biosys.pl</a></div>
+        <div data-dc-tpl="2737">
+          <p data-dc-tpl="2738" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">KONTAKT</p>
+          <div data-dc-tpl="2739" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2740" href="/biosys-podglad/panel/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Panel klienta</a><a  data-dc-tpl="2741" href="/biosys-podglad/kontakt/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Formularz kontaktowy</a><a data-dc-tpl="2742" href="tel:+48123789537" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">+48 12 378 95 37</a><a data-dc-tpl="2743" href="mailto:biuro@biosys.pl" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">biuro@biosys.pl</a></div>
         </div>
       </div>
-      <div data-dc-tpl="2741" style="border-top: 1px solid rgb(30, 41, 59); margin-top: 32px; padding-top: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px;">
-        <div data-dc-tpl="2742" style="display: flex; flex-wrap: wrap; gap: 4px 18px;">
-          <p data-dc-tpl="2743" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">© 2026 BioSys. Wszelkie prawa zastrzeżone.</p>
-          <p data-dc-tpl="2744" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Projekt i realizacja: Adrian Brzeziński GPS4ADV</p>
+      <div data-dc-tpl="2744" style="border-top: 1px solid rgb(30, 41, 59); margin-top: 32px; padding-top: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px;">
+        <div data-dc-tpl="2745" style="display: flex; flex-wrap: wrap; gap: 4px 18px;">
+          <p data-dc-tpl="2746" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">© 2026 BioSys. Wszelkie prawa zastrzeżone.</p>
+          <p data-dc-tpl="2747" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Projekt i realizacja: Adrian Brzeziński GPS4ADV</p>
         </div>
-        <div data-dc-tpl="2745" style="display: flex; flex-wrap: wrap; gap: 20px;">
-          <a data-dc-tpl="2746" href="#" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Ustawienia cookies</a>
-          <a  data-dc-tpl="2747" href="/biosys-podglad/polityka/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Polityka prywatności</a>
-          <a  data-dc-tpl="2748" href="/biosys-podglad/regulamin/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Regulamin i dokumenty</a>
+        <div data-dc-tpl="2748" style="display: flex; flex-wrap: wrap; gap: 20px;">
+          <a data-dc-tpl="2749" href="#" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Ustawienia cookies</a>
+          <a  data-dc-tpl="2750" href="/biosys-podglad/polityka/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Polityka prywatności</a>
+          <a  data-dc-tpl="2751" href="/biosys-podglad/regulamin/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Regulamin i dokumenty</a>
         </div>
       </div>
 
-      <div data-dc-tpl="2749" data-geo-seo="" data-mobile="0" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgb(22, 35, 58);">
-        <button data-dc-tpl="2750" data-geo-toggle="" class="scp1m" style="display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin: 0px; padding: 0px; background: none; border: 0px; font: 400 11px &quot;Open Sans&quot;; letter-spacing: 0.04em; color: rgb(71, 85, 105); cursor: pointer; text-align: left;">
-          <span data-dc-tpl="2751">Systemy RCP i KD w województwach</span>
-          <span data-dc-tpl="2752" style="font-size: 9px;"><span class="sc-interp">▼</span></span>
+      <div data-dc-tpl="2752" data-geo-seo="" data-mobile="0" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgb(22, 35, 58);">
+        <button data-dc-tpl="2753" data-geo-toggle="" class="scp1m" style="display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin: 0px; padding: 0px; background: none; border: 0px; font: 400 11px &quot;Open Sans&quot;; letter-spacing: 0.04em; color: rgb(71, 85, 105); cursor: pointer; text-align: left;">
+          <span data-dc-tpl="2754">Systemy RCP i KD w województwach</span>
+          <span data-dc-tpl="2755" style="font-size: 9px;"><span class="sc-interp">▼</span></span>
         </button>
-        <div data-dc-tpl="2753" data-geo-body="" data-open="0" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 22px; margin-top: 14px;">
+        <div data-dc-tpl="2756" data-geo-body="" data-open="0" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 22px; margin-top: 14px;">
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Dolnośląskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Dolnośląskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Kujawsko-pomorskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Kujawsko-pomorskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubelskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubelskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubuskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubuskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Łódzkie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Łódzkie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Małopolskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Małopolskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Mazowieckie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Mazowieckie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Opolskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Opolskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podkarpackie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podkarpackie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podlaskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podlaskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Pomorskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Pomorskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Śląskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Śląskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Świętokrzyskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Świętokrzyskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Warmińsko-mazurskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Warmińsko-mazurskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Wielkopolskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Wielkopolskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Zachodniopomorskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Zachodniopomorskie</span></a>
           
         </div>
       </div>
@@ -828,16 +851,16 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
 
     
-      <div data-dc-tpl="2757" role="dialog" aria-label="Zgoda na pliki cookie" data-zgoda="panel" style="position: fixed; left: 20px; bottom: 20px; z-index: 9000; width: 430px; max-width: calc(-40px + 100vw); max-height: calc(-40px + 100vh); overflow: auto; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; box-shadow: rgba(15, 23, 42, 0.24) 0px 26px 64px; padding: 24px;">
-        <p data-dc-tpl="2758" style="margin: 0px 0px 10px; font: 600 16.9px Montserrat; color: rgb(15, 23, 42);">Cenimy Twoją prywatność</p>
-        <p data-dc-tpl="2759" style="margin: 0px 0px 18px; font: 400 13.5px / 1.65 &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Używamy niezbędnych plików cookie do działania serwisu. Za Twoją zgodą uruchomimy statystykę i marketing. Możesz zaakceptować wszystkie, odmówić lub wybrać preferencje. Zgodę możesz później zmienić. Szczegóły w polityce prywatności i cookies.</p>
+      <div data-dc-tpl="2760" role="dialog" aria-label="Zgoda na pliki cookie" data-zgoda="panel" style="position: fixed; left: 20px; bottom: 20px; z-index: 9000; width: 430px; max-width: calc(-40px + 100vw); max-height: calc(-40px + 100vh); overflow: auto; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; box-shadow: rgba(15, 23, 42, 0.24) 0px 26px 64px; padding: 24px;">
+        <p data-dc-tpl="2761" style="margin: 0px 0px 10px; font: 600 16.9px Montserrat; color: rgb(15, 23, 42);">Cenimy Twoją prywatność</p>
+        <p data-dc-tpl="2762" style="margin: 0px 0px 18px; font: 400 13.5px / 1.65 &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Używamy niezbędnych plików cookie do działania serwisu. Za Twoją zgodą uruchomimy statystykę i marketing. Możesz zaakceptować wszystkie, odmówić lub wybrać preferencje. Zgodę możesz później zmienić. Szczegóły w polityce prywatności i cookies.</p>
 
         
 
-        <div data-dc-tpl="2779" style="display: flex; flex-wrap: wrap; gap: 10px;">
-          <button data-dc-tpl="2780" class="scp1n" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(15, 23, 42); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: transform 0.15s;">AKCEPTUJĘ</button>
-          <button data-dc-tpl="2781" class="scp1" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border: 1px solid rgb(15, 23, 42); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;">ODMÓW</button>
-          <button data-dc-tpl="2782" class="scp1e" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(51, 65, 85); background: rgb(255, 255, 255); border: 1px solid rgb(203, 213, 225); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;"><span class="sc-interp">PREFERENCJE</span></button>
+        <div data-dc-tpl="2782" style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <button data-dc-tpl="2783" class="scp1n" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(15, 23, 42); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: transform 0.15s;">AKCEPTUJĘ</button>
+          <button data-dc-tpl="2784" class="scp1" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border: 1px solid rgb(15, 23, 42); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;">ODMÓW</button>
+          <button data-dc-tpl="2785" class="scp1e" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(51, 65, 85); background: rgb(255, 255, 255); border: 1px solid rgb(203, 213, 225); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;"><span class="sc-interp">PREFERENCJE</span></button>
         </div>
       </div>
     
@@ -856,7 +879,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
   var started = false;
   function boot() {
     if (started) return; started = true;
-    fetch('/biosys-podglad/_app/component.html').then(function (r) { return r.text(); }).then(function (h) {
+    fetch('/biosys-podglad/_app/component.html?v=1f9a144c29').then(function (r) { return r.text(); }).then(function (h) {
       document.body.insertAdjacentHTML('beforeend', h);
       /* Runtime ma wbudowaną listę adresów CDN (unpkg.com) i pobierał stamtąd
          React przy każdej wizycie. Dawało to obcemu serwerowi adres IP każdego

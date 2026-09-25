@@ -335,6 +335,7 @@
         }
         tokenCzatu = d.token;
         tryb = 'czat';
+        zdarzenie('chat_operator_requested');
         try { sessionStorage.setItem(PAMIEC + '-token', tokenCzatu); } catch (e) {}
         pole.placeholder = 'Napisz do konsultanta…';
         timerCzatu = setInterval(odbierzZCzatu, ODPYTYWANIE_MS);
@@ -454,6 +455,7 @@
         .then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
         .then(function (dane) {
           if (dane && dane.ok) {
+            zdarzenie('generate_lead', { form_name: 'czat' });
             f.remove();
             dymek('bot', dane.message ||
               'Dziękujemy. Zespół odezwie się w ciągu jednego dnia roboczego.');
@@ -556,7 +558,16 @@
 
   /* ------------------------------------------------------------ zdarzenia */
 
+  /* Zdarzenia dla GA4 idą przez window.bsZdarzenie z <helmet> strony. Bez zgody
+     zostają w dataLayer i nigdzie nie wychodzą. */
+  function zdarzenie(nazwa, parametry) {
+    if (typeof window.bsZdarzenie === 'function') window.bsZdarzenie(nazwa, parametry);
+  }
+  var otwartoRaz = false;
+
   function otworz() {
+    // Liczymy pierwsze otwarcie na odsłonę — kolejne to to samo zainteresowanie.
+    if (!otwartoRaz) { otwartoRaz = true; zdarzenie('chat_opened'); }
     panel.hidden = false;
     uchwyt.hidden = true;
     if (!rozmowa.childNodes.length) odtworz();

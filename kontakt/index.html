@@ -376,7 +376,18 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
 </style>
 <script>
+/* Zgoda i Google Tag Manager — Consent Mode v2 w trybie podstawowym.
+   GTM ładuje się dopiero po zgodzie (statystyka albo marketing). Przed zgodą do Google
+   nie wychodzi nic, nawet ping bez ciasteczek — z tego samego powodu React nie jest
+   pobierany z unpkg.com. GTM_ID wstawia build wyłącznie w wersji produkcyjnej
+   (BS_LIVE=1, wartość z .tools/analityka.json); w podglądzie zostaje pusty i loader
+   nic nie robi, więc testy nie trafiają do produkcyjnej usługi GA4.
+   Runtime wykonuje zawartość <helmet> drugi raz — stąd flaga na window. Bez niej
+   każda odsłona liczyłaby się podwójnie. */
 (function(){
+  if (window.__bsZgodaInit) return;
+  window.__bsZgodaInit = true;
+  var GTM_ID = '';
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
   var stored = null;
@@ -387,8 +398,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     ad_personalization: 'denied',
     analytics_storage: 'denied',
     functionality_storage: 'granted',
-    security_storage: 'granted',
-    wait_for_update: 500
+    security_storage: 'granted'
   });
   if (stored) {
     gtag('consent', 'update', {
@@ -398,8 +408,21 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
       ad_personalization: stored.marketing ? 'granted' : 'denied'
     });
   }
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  /* Jedno wejście dla zdarzeń konwersji. Bez zgody zdarzenie zostaje w dataLayer
+     i nigdzie nie wychodzi — miejsca wywołań nie muszą znać stanu zgody. */
+  window.bsZdarzenie = function(nazwa, parametry) {
+    window.dataLayer.push(Object.assign({ event: nazwa }, parametry || {}));
+  };
+  window.bsWczytajGtm = function() {
+    if (window.__bsGtmWczytany || !/^GTM-[A-Z0-9]+$/.test(GTM_ID)) return;
+    window.__bsGtmWczytany = true;
+    window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID;
+    document.head.appendChild(s);
+  };
+  if (stored && (stored.stats || stored.marketing)) window.bsWczytajGtm();
 })();
 </script>
 <script src="/biosys-podglad/tresc.js"></script>
@@ -434,7 +457,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     <header data-dc-tpl="59" data-sysfont="" style="background: rgb(255, 255, 255); padding: 16px 56px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgb(226, 232, 240); flex-wrap: nowrap; gap: 14px;">
       <div data-dc-tpl="60" style="display: flex; align-items: center; gap: 18px; flex-wrap: nowrap; flex: 0 0 auto;">
       <div data-dc-tpl="61" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-        <img data-dc-tpl="62" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="120" height="30" fetchpriority="high" decoding="async" style="height: 30px; width: auto; display: block; object-fit: contain;">
+        <img data-dc-tpl="62" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys — rejestracja czasu pracy i kontrola dostępu" width="120" height="30" fetchpriority="high" decoding="async" style="height: 30px; width: auto; display: block; object-fit: contain;">
         <span data-dc-tpl="63" style="flex: 0 0 auto; font: 600 10px / 1.2 Montserrat; letter-spacing: 0.06em; border-left: 2px solid rgb(15, 169, 180); padding-left: 10px; background: linear-gradient(90deg, rgb(37, 99, 235), rgb(15, 169, 180)) text; color: transparent;">CZAS POD<br data-dc-tpl="64">KONTROLĄ</span>
       </div>
       
@@ -549,85 +572,85 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
     
       
-      <div data-dc-tpl="1763" style="padding: 4px 56px 42px; background: linear-gradient(120deg, rgb(239, 246, 255) 0%, rgb(248, 250, 252) 45%, rgb(236, 253, 245) 100%); border-bottom: 1px solid rgb(226, 232, 240);">
-        <p data-dc-tpl="1764" style="margin: 0px 0px 18px; font: 600 12px Montserrat; letter-spacing: 0.055em; color: rgb(37, 99, 235);">WYBIERZ ŚCIEŻKĘ</p>
-        <div data-dc-tpl="1765" style="display: flex; flex-wrap: wrap; gap: 22px;">
+      <div data-dc-tpl="1766" style="padding: 4px 56px 42px; background: linear-gradient(120deg, rgb(239, 246, 255) 0%, rgb(248, 250, 252) 45%, rgb(236, 253, 245) 100%); border-bottom: 1px solid rgb(226, 232, 240);">
+        <p data-dc-tpl="1767" style="margin: 0px 0px 18px; font: 600 12px Montserrat; letter-spacing: 0.055em; color: rgb(37, 99, 235);">WYBIERZ ŚCIEŻKĘ</p>
+        <div data-dc-tpl="1768" style="display: flex; flex-wrap: wrap; gap: 22px;">
 
-          <div data-dc-tpl="1766" class="scpy" style="flex: 1 1 380px; min-width: 0px; display: flex; flex-direction: column; overflow: hidden; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 20px; box-shadow: rgba(15, 23, 42, 0.05) 0px 3px 10px; cursor: pointer; transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;">
-            <div data-dc-tpl="1767" style="position: relative; background: linear-gradient(140deg, rgb(15, 23, 42) 0%, rgb(21, 37, 68) 55%, rgb(30, 58, 138) 100%); padding: 22px 26px 0px; overflow: hidden;">
-              <p data-dc-tpl="1768" style="margin: 0px 0px 10px; font: 600 19px Montserrat; letter-spacing: 0.05em; color: rgb(56, 189, 248);">NOWI KLIENCI</p>
-              <p data-dc-tpl="1769" style="margin: 0px; font: 600 21px / 1.25 Montserrat; color: rgb(255, 255, 255); text-wrap: pretty;">Szukam systemu RCP lub KD</p>
-              <svg data-dc-tpl="1770" viewBox="0 0 360 150" width="360" height="150" role="img" aria-label="Trzy systemy BioSys: RCP, KD i Task Timer" style="display: block; width: 100%; height: auto; margin-top: 10px;">
-                <defs data-dc-tpl="1771">
-                  <linearGradient data-dc-tpl="1772" id="kxRcp" x1="0" y1="0" x2="1" y2="0"><stop data-dc-tpl="1773" offset="0" stop-color="#2563EB"></stop><stop data-dc-tpl="1774" offset="1" stop-color="#38BDF8"></stop></lineargradient>
-                  <linearGradient data-dc-tpl="1775" id="kxKd" x1="0" y1="0" x2="1" y2="0"><stop data-dc-tpl="1776" offset="0" stop-color="#0FA9B4"></stop><stop data-dc-tpl="1777" offset="1" stop-color="#38BDF8"></stop></lineargradient>
-                  <linearGradient data-dc-tpl="1778" id="kxTt" x1="0" y1="0" x2="1" y2="0"><stop data-dc-tpl="1779" offset="0" stop-color="#B45309"></stop><stop data-dc-tpl="1780" offset="1" stop-color="#F59E0B"></stop></lineargradient>
+          <div data-dc-tpl="1769" class="scpy" style="flex: 1 1 380px; min-width: 0px; display: flex; flex-direction: column; overflow: hidden; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 20px; box-shadow: rgba(15, 23, 42, 0.05) 0px 3px 10px; cursor: pointer; transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;">
+            <div data-dc-tpl="1770" style="position: relative; background: linear-gradient(140deg, rgb(15, 23, 42) 0%, rgb(21, 37, 68) 55%, rgb(30, 58, 138) 100%); padding: 22px 26px 0px; overflow: hidden;">
+              <p data-dc-tpl="1771" style="margin: 0px 0px 10px; font: 600 19px Montserrat; letter-spacing: 0.05em; color: rgb(56, 189, 248);">NOWI KLIENCI</p>
+              <p data-dc-tpl="1772" style="margin: 0px; font: 600 21px / 1.25 Montserrat; color: rgb(255, 255, 255); text-wrap: pretty;">Szukam systemu RCP lub KD</p>
+              <svg data-dc-tpl="1773" viewBox="0 0 360 150" width="360" height="150" role="img" aria-label="Trzy systemy BioSys: RCP, KD i Task Timer" style="display: block; width: 100%; height: auto; margin-top: 10px;">
+                <defs data-dc-tpl="1774">
+                  <linearGradient data-dc-tpl="1775" id="kxRcp" x1="0" y1="0" x2="1" y2="0"><stop data-dc-tpl="1776" offset="0" stop-color="#2563EB"></stop><stop data-dc-tpl="1777" offset="1" stop-color="#38BDF8"></stop></lineargradient>
+                  <linearGradient data-dc-tpl="1778" id="kxKd" x1="0" y1="0" x2="1" y2="0"><stop data-dc-tpl="1779" offset="0" stop-color="#0FA9B4"></stop><stop data-dc-tpl="1780" offset="1" stop-color="#38BDF8"></stop></lineargradient>
+                  <linearGradient data-dc-tpl="1781" id="kxTt" x1="0" y1="0" x2="1" y2="0"><stop data-dc-tpl="1782" offset="0" stop-color="#B45309"></stop><stop data-dc-tpl="1783" offset="1" stop-color="#F59E0B"></stop></lineargradient>
                 </defs>
-                <g data-dc-tpl="1781" stroke="#1E293B" stroke-width="1">
-                  <path data-dc-tpl="1782" d="M22 22v112M132 22v112M242 22v112M340 22v112"></path>
+                <g data-dc-tpl="1784" stroke="#1E293B" stroke-width="1">
+                  <path data-dc-tpl="1785" d="M22 22v112M132 22v112M242 22v112M340 22v112"></path>
                 </g>
-                <g data-dc-tpl="1783">
-                  <rect data-dc-tpl="1784" x="22" y="34" width="318" height="16" rx="8" fill="#16233D"></rect>
-                  <rect data-dc-tpl="1785" x="22" y="34" width="300" height="16" rx="8" fill="url(#kxRcp)"></rect>
-                  <rect data-dc-tpl="1786" x="22" y="74" width="318" height="16" rx="8" fill="#16233D"></rect>
-                  <rect data-dc-tpl="1787" x="22" y="74" width="226" height="16" rx="8" fill="url(#kxKd)"></rect>
-                  <rect data-dc-tpl="1788" x="22" y="114" width="318" height="16" rx="8" fill="#16233D"></rect>
-                  <rect data-dc-tpl="1789" x="22" y="114" width="152" height="16" rx="8" fill="url(#kxTt)"></rect>
+                <g data-dc-tpl="1786">
+                  <rect data-dc-tpl="1787" x="22" y="34" width="318" height="16" rx="8" fill="#16233D"></rect>
+                  <rect data-dc-tpl="1788" x="22" y="34" width="300" height="16" rx="8" fill="url(#kxRcp)"></rect>
+                  <rect data-dc-tpl="1789" x="22" y="74" width="318" height="16" rx="8" fill="#16233D"></rect>
+                  <rect data-dc-tpl="1790" x="22" y="74" width="226" height="16" rx="8" fill="url(#kxKd)"></rect>
+                  <rect data-dc-tpl="1791" x="22" y="114" width="318" height="16" rx="8" fill="#16233D"></rect>
+                  <rect data-dc-tpl="1792" x="22" y="114" width="152" height="16" rx="8" fill="url(#kxTt)"></rect>
                 </g>
-                <g data-dc-tpl="1790" fill="#0F172A">
-                  <circle data-dc-tpl="1791" cx="314" cy="42" r="4"></circle><circle data-dc-tpl="1792" cx="240" cy="82" r="4"></circle><circle data-dc-tpl="1793" cx="166" cy="122" r="4"></circle>
+                <g data-dc-tpl="1793" fill="#0F172A">
+                  <circle data-dc-tpl="1794" cx="314" cy="42" r="4"></circle><circle data-dc-tpl="1795" cx="240" cy="82" r="4"></circle><circle data-dc-tpl="1796" cx="166" cy="122" r="4"></circle>
                 </g>
-                <g data-dc-tpl="1794" fill="#fff" font-family="Montserrat" font-size="11" font-weight="600" letter-spacing="1">
-                  <text data-dc-tpl="1795" x="22" y="26">RCP</text><text data-dc-tpl="1796" x="22" y="66">KD</text><text data-dc-tpl="1797" x="22" y="106">TASK TIMER</text>
+                <g data-dc-tpl="1797" fill="#fff" font-family="Montserrat" font-size="11" font-weight="600" letter-spacing="1">
+                  <text data-dc-tpl="1798" x="22" y="26">RCP</text><text data-dc-tpl="1799" x="22" y="66">KD</text><text data-dc-tpl="1800" x="22" y="106">TASK TIMER</text>
                 </g>
               </svg>
             </div>
-            <div data-dc-tpl="1798" style="padding: 24px 26px 26px; display: flex; flex-direction: column; flex: 1 1 0%; gap: 16px;">
-              <p data-dc-tpl="1799" style="margin: 0px; font: 400 14.5px / 1.7 &quot;Open Sans&quot;; color: rgb(100, 116, 139); text-wrap: pretty;">Zaczynamy od tego, jak dziś rejestrujecie czas pracy i gdzie proces się zacina. Potem pokazujemy system na danych podobnych organizacji.</p>
-              <div data-dc-tpl="1800" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                <span data-dc-tpl="1801" style="font: 600 12.5px &quot;Open Sans&quot;; color: rgb(29, 78, 216); background: rgb(239, 246, 255); border: 1px solid rgb(219, 234, 254); border-radius: 999px; padding: 7px 13px;">Bezpłatna analiza procesu</span>
-                <span data-dc-tpl="1802" style="font: 600 12.5px &quot;Open Sans&quot;; color: rgb(29, 78, 216); background: rgb(239, 246, 255); border: 1px solid rgb(219, 234, 254); border-radius: 999px; padding: 7px 13px;">Wycena i zakres</span>
-                <span data-dc-tpl="1803" style="font: 600 12.5px &quot;Open Sans&quot;; color: rgb(29, 78, 216); background: rgb(239, 246, 255); border: 1px solid rgb(219, 234, 254); border-radius: 999px; padding: 7px 13px;">Prezentacja systemu</span>
+            <div data-dc-tpl="1801" style="padding: 24px 26px 26px; display: flex; flex-direction: column; flex: 1 1 0%; gap: 16px;">
+              <p data-dc-tpl="1802" style="margin: 0px; font: 400 14.5px / 1.7 &quot;Open Sans&quot;; color: rgb(100, 116, 139); text-wrap: pretty;">Zaczynamy od tego, jak dziś rejestrujecie czas pracy i gdzie proces się zacina. Potem pokazujemy system na danych podobnych organizacji.</p>
+              <div data-dc-tpl="1803" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <span data-dc-tpl="1804" style="font: 600 12.5px &quot;Open Sans&quot;; color: rgb(29, 78, 216); background: rgb(239, 246, 255); border: 1px solid rgb(219, 234, 254); border-radius: 999px; padding: 7px 13px;">Bezpłatna analiza procesu</span>
+                <span data-dc-tpl="1805" style="font: 600 12.5px &quot;Open Sans&quot;; color: rgb(29, 78, 216); background: rgb(239, 246, 255); border: 1px solid rgb(219, 234, 254); border-radius: 999px; padding: 7px 13px;">Wycena i zakres</span>
+                <span data-dc-tpl="1806" style="font: 600 12.5px &quot;Open Sans&quot;; color: rgb(29, 78, 216); background: rgb(239, 246, 255); border: 1px solid rgb(219, 234, 254); border-radius: 999px; padding: 7px 13px;">Prezentacja systemu</span>
               </div>
-              <span data-dc-tpl="1804" style="margin-top: auto; display: inline-flex; align-items: center; justify-content: center; gap: 9px; font: 700 14.5px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(120deg, rgb(37, 99, 235), rgb(56, 189, 248)); border-radius: 11px; padding: 15px 20px;">Wejdź do kontaktu dla nowych klientów
-                <svg data-dc-tpl="1805" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="1806" d="M5 12h13M13 6l6 6-6 6"></path></svg>
+              <span data-dc-tpl="1807" style="margin-top: auto; display: inline-flex; align-items: center; justify-content: center; gap: 9px; font: 700 14.5px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(120deg, rgb(37, 99, 235), rgb(56, 189, 248)); border-radius: 11px; padding: 15px 20px;">Wejdź do kontaktu dla nowych klientów
+                <svg data-dc-tpl="1808" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="1809" d="M5 12h13M13 6l6 6-6 6"></path></svg>
               </span>
             </div>
           </div>
 
-          <div data-dc-tpl="1807" class="scpz" style="flex: 1 1 380px; min-width: 0px; display: flex; flex-direction: column; overflow: hidden; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 20px; box-shadow: rgba(15, 23, 42, 0.05) 0px 3px 10px; cursor: pointer; transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;">
-            <div data-dc-tpl="1808" style="position: relative; background: linear-gradient(140deg, rgb(15, 23, 42) 0%, rgb(16, 49, 46) 60%, rgb(16, 106, 115) 100%); padding: 22px 26px 0px; overflow: hidden;">
-              <p data-dc-tpl="1809" style="margin: 0px 0px 10px; font: 600 19px Montserrat; letter-spacing: 0.05em; color: rgb(94, 234, 212);">OBECNI KLIENCI</p>
-              <p data-dc-tpl="1810" style="margin: 0px; font: 600 21px / 1.25 Montserrat; color: rgb(255, 255, 255); text-wrap: pretty;">Mam system i potrzebuję wsparcia</p>
-              <svg data-dc-tpl="1811" viewBox="0 0 360 150" width="360" height="150" role="img" aria-label="Schemat zgłoszenia serwisowego" style="display: block; width: 100%; height: auto; margin-top: 6px;">
-                <defs data-dc-tpl="1812">
-                  <linearGradient data-dc-tpl="1813" id="kxCliA" x1="0" y1="0" x2="1" y2="1"><stop data-dc-tpl="1814" offset="0" stop-color="#5EEAD4"></stop><stop data-dc-tpl="1815" offset="1" stop-color="#106A73"></stop></lineargradient>
+          <div data-dc-tpl="1810" class="scpz" style="flex: 1 1 380px; min-width: 0px; display: flex; flex-direction: column; overflow: hidden; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 20px; box-shadow: rgba(15, 23, 42, 0.05) 0px 3px 10px; cursor: pointer; transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;">
+            <div data-dc-tpl="1811" style="position: relative; background: linear-gradient(140deg, rgb(15, 23, 42) 0%, rgb(16, 49, 46) 60%, rgb(16, 106, 115) 100%); padding: 22px 26px 0px; overflow: hidden;">
+              <p data-dc-tpl="1812" style="margin: 0px 0px 10px; font: 600 19px Montserrat; letter-spacing: 0.05em; color: rgb(94, 234, 212);">OBECNI KLIENCI</p>
+              <p data-dc-tpl="1813" style="margin: 0px; font: 600 21px / 1.25 Montserrat; color: rgb(255, 255, 255); text-wrap: pretty;">Mam system i potrzebuję wsparcia</p>
+              <svg data-dc-tpl="1814" viewBox="0 0 360 150" width="360" height="150" role="img" aria-label="Schemat zgłoszenia serwisowego" style="display: block; width: 100%; height: auto; margin-top: 6px;">
+                <defs data-dc-tpl="1815">
+                  <linearGradient data-dc-tpl="1816" id="kxCliA" x1="0" y1="0" x2="1" y2="1"><stop data-dc-tpl="1817" offset="0" stop-color="#5EEAD4"></stop><stop data-dc-tpl="1818" offset="1" stop-color="#106A73"></stop></lineargradient>
                 </defs>
-                <g data-dc-tpl="1816" stroke="#1E293B" stroke-width="1">
-                  <path data-dc-tpl="1817" d="M0 40h360M0 75h360M0 110h360"></path>
+                <g data-dc-tpl="1819" stroke="#1E293B" stroke-width="1">
+                  <path data-dc-tpl="1820" d="M0 40h360M0 75h360M0 110h360"></path>
                 </g>
-                <g data-dc-tpl="1818" fill="none" stroke="url(#kxCliA)" stroke-width="2.4" stroke-linecap="round">
-                  <path data-dc-tpl="1819" d="M96 26l52 16v42c0 28-24 44-52 56-28-12-52-28-52-56V42z"></path>
-                  <path data-dc-tpl="1820" d="M78 82l14 14 26-30"></path>
+                <g data-dc-tpl="1821" fill="none" stroke="url(#kxCliA)" stroke-width="2.4" stroke-linecap="round">
+                  <path data-dc-tpl="1822" d="M96 26l52 16v42c0 28-24 44-52 56-28-12-52-28-52-56V42z"></path>
+                  <path data-dc-tpl="1823" d="M78 82l14 14 26-30"></path>
                 </g>
-                <g data-dc-tpl="1821" fill="none" stroke="#0FA9B4" stroke-width="2" stroke-linecap="round" opacity=".85">
-                  <path data-dc-tpl="1822" d="M186 44h96M186 66h132M186 88h74M186 110h108"></path>
+                <g data-dc-tpl="1824" fill="none" stroke="#0FA9B4" stroke-width="2" stroke-linecap="round" opacity=".85">
+                  <path data-dc-tpl="1825" d="M186 44h96M186 66h132M186 88h74M186 110h108"></path>
                 </g>
-                <g data-dc-tpl="1823" fill="#5EEAD4">
-                  <circle data-dc-tpl="1824" cx="170" cy="44" r="4"></circle><circle data-dc-tpl="1825" cx="170" cy="66" r="4"></circle>
-                  <circle data-dc-tpl="1826" cx="170" cy="88" r="4"></circle><circle data-dc-tpl="1827" cx="170" cy="110" r="4"></circle>
+                <g data-dc-tpl="1826" fill="#5EEAD4">
+                  <circle data-dc-tpl="1827" cx="170" cy="44" r="4"></circle><circle data-dc-tpl="1828" cx="170" cy="66" r="4"></circle>
+                  <circle data-dc-tpl="1829" cx="170" cy="88" r="4"></circle><circle data-dc-tpl="1830" cx="170" cy="110" r="4"></circle>
                 </g>
               </svg>
             </div>
-            <div data-dc-tpl="1828" style="padding: 24px 26px 26px; display: flex; flex-direction: column; flex: 1 1 0%; gap: 16px;">
-              <p data-dc-tpl="1829" style="margin: 0px; font: 400 14.5px / 1.7 &quot;Open Sans&quot;; color: rgb(100, 116, 139); text-wrap: pretty;">Zgłoszenie zakładasz w Panelu Klienta — trafia od razu do opiekuna technicznego razem z historią Twojej instalacji.</p>
-              <div data-dc-tpl="1830" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                <span data-dc-tpl="1831" style="font: 600 12.5px &quot;Open Sans&quot;; color: rgb(16, 106, 115); background: rgb(236, 253, 245); border: 1px solid rgb(204, 251, 241); border-radius: 999px; padding: 7px 13px;">Zgłoszenia serwisowe</span>
-                <span data-dc-tpl="1832" style="font: 600 12.5px &quot;Open Sans&quot;; color: rgb(16, 106, 115); background: rgb(236, 253, 245); border: 1px solid rgb(204, 251, 241); border-radius: 999px; padding: 7px 13px;">Aktualizacje</span>
-                <span data-dc-tpl="1833" style="font: 600 12.5px &quot;Open Sans&quot;; color: rgb(16, 106, 115); background: rgb(236, 253, 245); border: 1px solid rgb(204, 251, 241); border-radius: 999px; padding: 7px 13px;">Opiekun techniczny</span>
+            <div data-dc-tpl="1831" style="padding: 24px 26px 26px; display: flex; flex-direction: column; flex: 1 1 0%; gap: 16px;">
+              <p data-dc-tpl="1832" style="margin: 0px; font: 400 14.5px / 1.7 &quot;Open Sans&quot;; color: rgb(100, 116, 139); text-wrap: pretty;">Zgłoszenie zakładasz w Panelu Klienta — trafia od razu do opiekuna technicznego razem z historią Twojej instalacji.</p>
+              <div data-dc-tpl="1833" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <span data-dc-tpl="1834" style="font: 600 12.5px &quot;Open Sans&quot;; color: rgb(16, 106, 115); background: rgb(236, 253, 245); border: 1px solid rgb(204, 251, 241); border-radius: 999px; padding: 7px 13px;">Zgłoszenia serwisowe</span>
+                <span data-dc-tpl="1835" style="font: 600 12.5px &quot;Open Sans&quot;; color: rgb(16, 106, 115); background: rgb(236, 253, 245); border: 1px solid rgb(204, 251, 241); border-radius: 999px; padding: 7px 13px;">Aktualizacje</span>
+                <span data-dc-tpl="1836" style="font: 600 12.5px &quot;Open Sans&quot;; color: rgb(16, 106, 115); background: rgb(236, 253, 245); border: 1px solid rgb(204, 251, 241); border-radius: 999px; padding: 7px 13px;">Opiekun techniczny</span>
               </div>
-              <span data-dc-tpl="1834" style="margin-top: auto; display: inline-flex; align-items: center; justify-content: center; gap: 9px; font: 700 14.5px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(120deg, rgb(16, 106, 115), rgb(15, 169, 180)); border-radius: 11px; padding: 15px 20px;">Przejdź do Panelu Klienta
-                <svg data-dc-tpl="1835" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="1836" d="M5 12h13M13 6l6 6-6 6"></path></svg>
+              <span data-dc-tpl="1837" style="margin-top: auto; display: inline-flex; align-items: center; justify-content: center; gap: 9px; font: 700 14.5px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(120deg, rgb(16, 106, 115), rgb(15, 169, 180)); border-radius: 11px; padding: 15px 20px;">Przejdź do Panelu Klienta
+                <svg data-dc-tpl="1838" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="1839" d="M5 12h13M13 6l6 6-6 6"></path></svg>
               </span>
             </div>
           </div>
@@ -640,53 +663,53 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
       
 
-      <section data-dc-tpl="1954" style="padding: 42px 56px; background: linear-gradient(120deg, rgb(239, 246, 255) 0%, rgb(236, 253, 245) 100%);">
-        <h1 data-dc-tpl="1955" style="margin: 0px 0px 14px; font: 600 30px / 1.2 Montserrat; color: rgb(15, 23, 42); max-width: 760px;">Działamy na terenie <span data-dc-tpl="1956" style="font-family: inherit; font-weight: inherit; background: linear-gradient(90deg, rgb(37, 99, 235), rgb(15, 169, 180)) text; color: transparent;">całego kraju</span></h1>
-        <p data-dc-tpl="1957" style="margin: 0px; font: 400 15px / 1.6 &quot;Open Sans&quot;; color: rgb(100, 116, 139); max-width: 700px;">Wdrażamy i serwisujemy systemy rejestracji czasu pracy oraz kontroli dostępu w firmach w całej Polsce — z czterech oddziałów obsługujących wszystkie województwa.</p>
+      <section data-dc-tpl="1957" style="padding: 42px 56px; background: linear-gradient(120deg, rgb(239, 246, 255) 0%, rgb(236, 253, 245) 100%);">
+        <h1 data-dc-tpl="1958" style="margin: 0px 0px 14px; font: 600 30px / 1.2 Montserrat; color: rgb(15, 23, 42); max-width: 760px;">Działamy na terenie <span data-dc-tpl="1959" style="font-family: inherit; font-weight: inherit; background: linear-gradient(90deg, rgb(37, 99, 235), rgb(15, 169, 180)) text; color: transparent;">całego kraju</span></h1>
+        <p data-dc-tpl="1960" style="margin: 0px; font: 400 15px / 1.6 &quot;Open Sans&quot;; color: rgb(100, 116, 139); max-width: 700px;">Wdrażamy i serwisujemy systemy rejestracji czasu pracy oraz kontroli dostępu w firmach w całej Polsce — z czterech oddziałów obsługujących wszystkie województwa.</p>
       </section>
 
-      <section data-dc-tpl="1958" style="padding: 42px 56px; background: rgb(248, 250, 252); border-top: 1px solid rgb(226, 232, 240);">
-        <p data-dc-tpl="1959" style="margin: 0px 0px 8px; font: 600 12px Montserrat; letter-spacing: 0.055em; color: rgb(37, 99, 235);">ODDZIAŁY LOKALNE</p>
-        <h2 data-dc-tpl="1960" style="margin: 0px 0px 32px; font: 600 30px / 1.2 Montserrat; color: rgb(15, 23, 42); max-width: 640px;">Cztery oddziały, obsługa całej Polski</h2>
-        <div data-dc-tpl="1961" style="display: flex; flex-direction: row; gap: 48px; align-items: flex-start;">
-          <div data-dc-tpl="1962" style="flex: 0 0 auto; display: flex; justify-content: center;">
-            <iframe data-dc-tpl="1963" title="Mapa Polski z oddziałami BioSys" width="320" height="250" loading="lazy" scrolling="no" style="width: 320px; height: 250px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: transparent;" src="/biosys-podglad/poland-map.html"></iframe>
+      <section data-dc-tpl="1961" style="padding: 42px 56px; background: rgb(248, 250, 252); border-top: 1px solid rgb(226, 232, 240);">
+        <p data-dc-tpl="1962" style="margin: 0px 0px 8px; font: 600 12px Montserrat; letter-spacing: 0.055em; color: rgb(37, 99, 235);">ODDZIAŁY LOKALNE</p>
+        <h2 data-dc-tpl="1963" style="margin: 0px 0px 32px; font: 600 30px / 1.2 Montserrat; color: rgb(15, 23, 42); max-width: 640px;">Cztery oddziały, obsługa całej Polski</h2>
+        <div data-dc-tpl="1964" style="display: flex; flex-direction: row; gap: 48px; align-items: flex-start;">
+          <div data-dc-tpl="1965" style="flex: 0 0 auto; display: flex; justify-content: center;">
+            <iframe data-dc-tpl="1966" title="Mapa Polski z oddziałami BioSys" width="320" height="250" loading="lazy" scrolling="no" style="width: 320px; height: 250px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: transparent;" src="/biosys-podglad/poland-map.html"></iframe>
           </div>
-          <div data-dc-tpl="1964" style="flex: 1 1 0%; min-width: 280px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div data-dc-tpl="1967" style="flex: 1 1 0%; min-width: 280px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
             
-              <div data-dc-tpl="1966" style="background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 12px; padding: 16px 18px; cursor: default; transition: background 0.15s, border-color 0.15s;">
-                <p data-dc-tpl="1967" style="margin: 0px 0px 4px; font: 700 14.5px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">Gdańsk</span></p>
-                <p data-dc-tpl="1968" style="margin: 0px 0px 10px; font: 400 12.5px / 1.5 &quot;Open Sans&quot;; color: rgb(100, 116, 139);"><span class="sc-interp">Województwo pomorskie, warmińsko-mazurskie, zachodnio-pomorskie</span></p>
-                <div data-dc-tpl="1969" style="display: flex; flex-direction: column; gap: 3px;">
-                  <span data-dc-tpl="1970" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">+48 (58) 380 20 38</span></span>
-                  <span data-dc-tpl="1971" style="font: 500 12.5px &quot;Open Sans&quot;; color: rgb(37, 99, 235);"><span class="sc-interp">gdansk@biosys.pl</span></span>
+              <div data-dc-tpl="1969" style="background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 12px; padding: 16px 18px; cursor: default; transition: background 0.15s, border-color 0.15s;">
+                <p data-dc-tpl="1970" style="margin: 0px 0px 4px; font: 700 14.5px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">Gdańsk</span></p>
+                <p data-dc-tpl="1971" style="margin: 0px 0px 10px; font: 400 12.5px / 1.5 &quot;Open Sans&quot;; color: rgb(100, 116, 139);"><span class="sc-interp">Województwo pomorskie, warmińsko-mazurskie, zachodnio-pomorskie</span></p>
+                <div data-dc-tpl="1972" style="display: flex; flex-direction: column; gap: 3px;">
+                  <span data-dc-tpl="1973" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">+48 (58) 380 20 38</span></span>
+                  <span data-dc-tpl="1974" style="font: 500 12.5px &quot;Open Sans&quot;; color: rgb(37, 99, 235);"><span class="sc-interp">gdansk@biosys.pl</span></span>
                 </div>
               </div>
             
-              <div data-dc-tpl="1966" style="background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 12px; padding: 16px 18px; cursor: default; transition: background 0.15s, border-color 0.15s;">
-                <p data-dc-tpl="1967" style="margin: 0px 0px 4px; font: 700 14.5px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">Poznań</span></p>
-                <p data-dc-tpl="1968" style="margin: 0px 0px 10px; font: 400 12.5px / 1.5 &quot;Open Sans&quot;; color: rgb(100, 116, 139);"><span class="sc-interp">Województwo wielkopolskie, łódzkie, kujawsko-pomorskie</span></p>
-                <div data-dc-tpl="1969" style="display: flex; flex-direction: column; gap: 3px;">
-                  <span data-dc-tpl="1970" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">+48 (61) 307 06 98</span></span>
-                  <span data-dc-tpl="1971" style="font: 500 12.5px &quot;Open Sans&quot;; color: rgb(37, 99, 235);"><span class="sc-interp">poznan@biosys.pl</span></span>
+              <div data-dc-tpl="1969" style="background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 12px; padding: 16px 18px; cursor: default; transition: background 0.15s, border-color 0.15s;">
+                <p data-dc-tpl="1970" style="margin: 0px 0px 4px; font: 700 14.5px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">Poznań</span></p>
+                <p data-dc-tpl="1971" style="margin: 0px 0px 10px; font: 400 12.5px / 1.5 &quot;Open Sans&quot;; color: rgb(100, 116, 139);"><span class="sc-interp">Województwo wielkopolskie, łódzkie, kujawsko-pomorskie</span></p>
+                <div data-dc-tpl="1972" style="display: flex; flex-direction: column; gap: 3px;">
+                  <span data-dc-tpl="1973" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">+48 (61) 307 06 98</span></span>
+                  <span data-dc-tpl="1974" style="font: 500 12.5px &quot;Open Sans&quot;; color: rgb(37, 99, 235);"><span class="sc-interp">poznan@biosys.pl</span></span>
                 </div>
               </div>
             
-              <div data-dc-tpl="1966" style="background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 12px; padding: 16px 18px; cursor: default; transition: background 0.15s, border-color 0.15s;">
-                <p data-dc-tpl="1967" style="margin: 0px 0px 4px; font: 700 14.5px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">Warszawa</span></p>
-                <p data-dc-tpl="1968" style="margin: 0px 0px 10px; font: 400 12.5px / 1.5 &quot;Open Sans&quot;; color: rgb(100, 116, 139);"><span class="sc-interp">Województwo mazowieckie, podlaskie, lubelskie</span></p>
-                <div data-dc-tpl="1969" style="display: flex; flex-direction: column; gap: 3px;">
-                  <span data-dc-tpl="1970" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">+48 (22) 299 20 27</span></span>
-                  <span data-dc-tpl="1971" style="font: 500 12.5px &quot;Open Sans&quot;; color: rgb(37, 99, 235);"><span class="sc-interp">warszawa@biosys.pl</span></span>
+              <div data-dc-tpl="1969" style="background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 12px; padding: 16px 18px; cursor: default; transition: background 0.15s, border-color 0.15s;">
+                <p data-dc-tpl="1970" style="margin: 0px 0px 4px; font: 700 14.5px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">Warszawa</span></p>
+                <p data-dc-tpl="1971" style="margin: 0px 0px 10px; font: 400 12.5px / 1.5 &quot;Open Sans&quot;; color: rgb(100, 116, 139);"><span class="sc-interp">Województwo mazowieckie, podlaskie, lubelskie</span></p>
+                <div data-dc-tpl="1972" style="display: flex; flex-direction: column; gap: 3px;">
+                  <span data-dc-tpl="1973" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">+48 (22) 299 20 27</span></span>
+                  <span data-dc-tpl="1974" style="font: 500 12.5px &quot;Open Sans&quot;; color: rgb(37, 99, 235);"><span class="sc-interp">warszawa@biosys.pl</span></span>
                 </div>
               </div>
             
-              <div data-dc-tpl="1966" style="background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 12px; padding: 16px 18px; cursor: default; transition: background 0.15s, border-color 0.15s;">
-                <p data-dc-tpl="1967" style="margin: 0px 0px 4px; font: 700 14.5px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">Wrocław</span></p>
-                <p data-dc-tpl="1968" style="margin: 0px 0px 10px; font: 400 12.5px / 1.5 &quot;Open Sans&quot;; color: rgb(100, 116, 139);"><span class="sc-interp">Województwo dolnośląskie, opolskie, lubuskie</span></p>
-                <div data-dc-tpl="1969" style="display: flex; flex-direction: column; gap: 3px;">
-                  <span data-dc-tpl="1970" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">+48 (71) 307 05 47</span></span>
-                  <span data-dc-tpl="1971" style="font: 500 12.5px &quot;Open Sans&quot;; color: rgb(37, 99, 235);"><span class="sc-interp">wroclaw@biosys.pl</span></span>
+              <div data-dc-tpl="1969" style="background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 12px; padding: 16px 18px; cursor: default; transition: background 0.15s, border-color 0.15s;">
+                <p data-dc-tpl="1970" style="margin: 0px 0px 4px; font: 700 14.5px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">Wrocław</span></p>
+                <p data-dc-tpl="1971" style="margin: 0px 0px 10px; font: 400 12.5px / 1.5 &quot;Open Sans&quot;; color: rgb(100, 116, 139);"><span class="sc-interp">Województwo dolnośląskie, opolskie, lubuskie</span></p>
+                <div data-dc-tpl="1972" style="display: flex; flex-direction: column; gap: 3px;">
+                  <span data-dc-tpl="1973" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">+48 (71) 307 05 47</span></span>
+                  <span data-dc-tpl="1974" style="font: 500 12.5px &quot;Open Sans&quot;; color: rgb(37, 99, 235);"><span class="sc-interp">wroclaw@biosys.pl</span></span>
                 </div>
               </div>
             
@@ -748,75 +771,75 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
     </main>
 
-    <footer data-dc-tpl="2717" style="background: rgb(15, 23, 42); padding: 44px 56px 26px; border-top: 1px solid rgb(30, 41, 59);">
-      <div data-dc-tpl="2718" style="display: flex; flex-flow: wrap; gap: 40px; justify-content: space-between;">
-        <div data-dc-tpl="2719" style="max-width: 260px;">
-          <img data-dc-tpl="2720" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="80" height="20" loading="lazy" decoding="async" style="height: 20px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; margin-bottom: 14px; object-fit: contain;">
-          <p data-dc-tpl="2721" style="margin: 0px; font: 400 13px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Systemy rejestracji czasu pracy, kontroli dostępu i automatyzacji procesów dla organizacji, które potrzebują wiarygodnych danych.</p>
+    <footer data-dc-tpl="2720" style="background: rgb(15, 23, 42); padding: 44px 56px 26px; border-top: 1px solid rgb(30, 41, 59);">
+      <div data-dc-tpl="2721" style="display: flex; flex-flow: wrap; gap: 40px; justify-content: space-between;">
+        <div data-dc-tpl="2722" style="max-width: 260px;">
+          <img data-dc-tpl="2723" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="80" height="20" loading="lazy" decoding="async" style="height: 20px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; margin-bottom: 14px; object-fit: contain;">
+          <p data-dc-tpl="2724" style="margin: 0px; font: 400 13px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Systemy rejestracji czasu pracy, kontroli dostępu i automatyzacji procesów dla organizacji, które potrzebują wiarygodnych danych.</p>
         </div>
-        <div data-dc-tpl="2722">
-          <p data-dc-tpl="2723" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">ROZWIĄZANIA</p>
-          <div data-dc-tpl="2724" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2725" href="/biosys-podglad/sol-rcp/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">RCP</a><a  data-dc-tpl="2726" href="/biosys-podglad/sol-kd/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">KD</a><a data-dc-tpl="2727" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Automatyzacja</a><a data-dc-tpl="2728" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Etatomierz</a></div>
+        <div data-dc-tpl="2725">
+          <p data-dc-tpl="2726" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">ROZWIĄZANIA</p>
+          <div data-dc-tpl="2727" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2728" href="/biosys-podglad/sol-rcp/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">RCP</a><a  data-dc-tpl="2729" href="/biosys-podglad/sol-kd/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">KD</a><a data-dc-tpl="2730" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Automatyzacja</a><a data-dc-tpl="2731" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Etatomierz</a></div>
         </div>
-        <div data-dc-tpl="2729">
-          <p data-dc-tpl="2730" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">WIEDZA</p>
-          <div data-dc-tpl="2731" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2732" href="/biosys-podglad/blog/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Blog</a><a data-dc-tpl="2733" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Kalkulator oszczędności</a></div>
+        <div data-dc-tpl="2732">
+          <p data-dc-tpl="2733" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">WIEDZA</p>
+          <div data-dc-tpl="2734" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2735" href="/biosys-podglad/blog/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Blog</a><a data-dc-tpl="2736" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Kalkulator oszczędności</a></div>
         </div>
-        <div data-dc-tpl="2734">
-          <p data-dc-tpl="2735" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">KONTAKT</p>
-          <div data-dc-tpl="2736" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2737" href="/biosys-podglad/panel/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Panel klienta</a><a  data-dc-tpl="2738" href="/biosys-podglad/kontakt/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Formularz kontaktowy</a><a data-dc-tpl="2739" href="tel:+48123789537" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">+48 12 378 95 37</a><a data-dc-tpl="2740" href="mailto:biuro@biosys.pl" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">biuro@biosys.pl</a></div>
+        <div data-dc-tpl="2737">
+          <p data-dc-tpl="2738" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">KONTAKT</p>
+          <div data-dc-tpl="2739" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2740" href="/biosys-podglad/panel/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Panel klienta</a><a  data-dc-tpl="2741" href="/biosys-podglad/kontakt/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Formularz kontaktowy</a><a data-dc-tpl="2742" href="tel:+48123789537" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">+48 12 378 95 37</a><a data-dc-tpl="2743" href="mailto:biuro@biosys.pl" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">biuro@biosys.pl</a></div>
         </div>
       </div>
-      <div data-dc-tpl="2741" style="border-top: 1px solid rgb(30, 41, 59); margin-top: 32px; padding-top: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px;">
-        <div data-dc-tpl="2742" style="display: flex; flex-wrap: wrap; gap: 4px 18px;">
-          <p data-dc-tpl="2743" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">© 2026 BioSys. Wszelkie prawa zastrzeżone.</p>
-          <p data-dc-tpl="2744" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Projekt i realizacja: Adrian Brzeziński GPS4ADV</p>
+      <div data-dc-tpl="2744" style="border-top: 1px solid rgb(30, 41, 59); margin-top: 32px; padding-top: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px;">
+        <div data-dc-tpl="2745" style="display: flex; flex-wrap: wrap; gap: 4px 18px;">
+          <p data-dc-tpl="2746" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">© 2026 BioSys. Wszelkie prawa zastrzeżone.</p>
+          <p data-dc-tpl="2747" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Projekt i realizacja: Adrian Brzeziński GPS4ADV</p>
         </div>
-        <div data-dc-tpl="2745" style="display: flex; flex-wrap: wrap; gap: 20px;">
-          <a data-dc-tpl="2746" href="#" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Ustawienia cookies</a>
-          <a  data-dc-tpl="2747" href="/biosys-podglad/polityka/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Polityka prywatności</a>
-          <a  data-dc-tpl="2748" href="/biosys-podglad/regulamin/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Regulamin i dokumenty</a>
+        <div data-dc-tpl="2748" style="display: flex; flex-wrap: wrap; gap: 20px;">
+          <a data-dc-tpl="2749" href="#" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Ustawienia cookies</a>
+          <a  data-dc-tpl="2750" href="/biosys-podglad/polityka/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Polityka prywatności</a>
+          <a  data-dc-tpl="2751" href="/biosys-podglad/regulamin/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Regulamin i dokumenty</a>
         </div>
       </div>
 
-      <div data-dc-tpl="2749" data-geo-seo="" data-mobile="0" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgb(22, 35, 58);">
-        <button data-dc-tpl="2750" data-geo-toggle="" class="scp1m" style="display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin: 0px; padding: 0px; background: none; border: 0px; font: 400 11px &quot;Open Sans&quot;; letter-spacing: 0.04em; color: rgb(71, 85, 105); cursor: pointer; text-align: left;">
-          <span data-dc-tpl="2751">Systemy RCP i KD w województwach</span>
-          <span data-dc-tpl="2752" style="font-size: 9px;"><span class="sc-interp">▼</span></span>
+      <div data-dc-tpl="2752" data-geo-seo="" data-mobile="0" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgb(22, 35, 58);">
+        <button data-dc-tpl="2753" data-geo-toggle="" class="scp1m" style="display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin: 0px; padding: 0px; background: none; border: 0px; font: 400 11px &quot;Open Sans&quot;; letter-spacing: 0.04em; color: rgb(71, 85, 105); cursor: pointer; text-align: left;">
+          <span data-dc-tpl="2754">Systemy RCP i KD w województwach</span>
+          <span data-dc-tpl="2755" style="font-size: 9px;"><span class="sc-interp">▼</span></span>
         </button>
-        <div data-dc-tpl="2753" data-geo-body="" data-open="0" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 22px; margin-top: 14px;">
+        <div data-dc-tpl="2756" data-geo-body="" data-open="0" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 22px; margin-top: 14px;">
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Dolnośląskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Dolnośląskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Kujawsko-pomorskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Kujawsko-pomorskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubelskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubelskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubuskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubuskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Łódzkie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Łódzkie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Małopolskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Małopolskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Mazowieckie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Mazowieckie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Opolskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Opolskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podkarpackie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podkarpackie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podlaskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podlaskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Pomorskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Pomorskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Śląskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Śląskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Świętokrzyskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Świętokrzyskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Warmińsko-mazurskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Warmińsko-mazurskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Wielkopolskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Wielkopolskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Zachodniopomorskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Zachodniopomorskie</span></a>
           
         </div>
       </div>
@@ -824,16 +847,16 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
 
     
-      <div data-dc-tpl="2757" role="dialog" aria-label="Zgoda na pliki cookie" data-zgoda="panel" style="position: fixed; left: 20px; bottom: 20px; z-index: 9000; width: 430px; max-width: calc(-40px + 100vw); max-height: calc(-40px + 100vh); overflow: auto; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; box-shadow: rgba(15, 23, 42, 0.24) 0px 26px 64px; padding: 24px;">
-        <p data-dc-tpl="2758" style="margin: 0px 0px 10px; font: 600 16.9px Montserrat; color: rgb(15, 23, 42);">Cenimy Twoją prywatność</p>
-        <p data-dc-tpl="2759" style="margin: 0px 0px 18px; font: 400 13.5px / 1.65 &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Używamy niezbędnych plików cookie do działania serwisu. Za Twoją zgodą uruchomimy statystykę i marketing. Możesz zaakceptować wszystkie, odmówić lub wybrać preferencje. Zgodę możesz później zmienić. Szczegóły w polityce prywatności i cookies.</p>
+      <div data-dc-tpl="2760" role="dialog" aria-label="Zgoda na pliki cookie" data-zgoda="panel" style="position: fixed; left: 20px; bottom: 20px; z-index: 9000; width: 430px; max-width: calc(-40px + 100vw); max-height: calc(-40px + 100vh); overflow: auto; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; box-shadow: rgba(15, 23, 42, 0.24) 0px 26px 64px; padding: 24px;">
+        <p data-dc-tpl="2761" style="margin: 0px 0px 10px; font: 600 16.9px Montserrat; color: rgb(15, 23, 42);">Cenimy Twoją prywatność</p>
+        <p data-dc-tpl="2762" style="margin: 0px 0px 18px; font: 400 13.5px / 1.65 &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Używamy niezbędnych plików cookie do działania serwisu. Za Twoją zgodą uruchomimy statystykę i marketing. Możesz zaakceptować wszystkie, odmówić lub wybrać preferencje. Zgodę możesz później zmienić. Szczegóły w polityce prywatności i cookies.</p>
 
         
 
-        <div data-dc-tpl="2779" style="display: flex; flex-wrap: wrap; gap: 10px;">
-          <button data-dc-tpl="2780" class="scp1n" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(15, 23, 42); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: transform 0.15s;">AKCEPTUJĘ</button>
-          <button data-dc-tpl="2781" class="scp1" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border: 1px solid rgb(15, 23, 42); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;">ODMÓW</button>
-          <button data-dc-tpl="2782" class="scp1e" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(51, 65, 85); background: rgb(255, 255, 255); border: 1px solid rgb(203, 213, 225); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;"><span class="sc-interp">PREFERENCJE</span></button>
+        <div data-dc-tpl="2782" style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <button data-dc-tpl="2783" class="scp1n" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(15, 23, 42); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: transform 0.15s;">AKCEPTUJĘ</button>
+          <button data-dc-tpl="2784" class="scp1" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border: 1px solid rgb(15, 23, 42); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;">ODMÓW</button>
+          <button data-dc-tpl="2785" class="scp1e" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(51, 65, 85); background: rgb(255, 255, 255); border: 1px solid rgb(203, 213, 225); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;"><span class="sc-interp">PREFERENCJE</span></button>
         </div>
       </div>
     
@@ -852,7 +875,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
   var started = false;
   function boot() {
     if (started) return; started = true;
-    fetch('/biosys-podglad/_app/component.html').then(function (r) { return r.text(); }).then(function (h) {
+    fetch('/biosys-podglad/_app/component.html?v=1f9a144c29').then(function (r) { return r.text(); }).then(function (h) {
       document.body.insertAdjacentHTML('beforeend', h);
       /* Runtime ma wbudowaną listę adresów CDN (unpkg.com) i pobierał stamtąd
          React przy każdej wizycie. Dawało to obcemu serwerowi adres IP każdego

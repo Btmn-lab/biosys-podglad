@@ -188,17 +188,30 @@ const PAGES = [
   ],
   aboutTimeKicker:'OŚ CZASU',
   aboutTimeTitle:'[Nagłówek sekcji z osią czasu]',
+  // Osiemnascie wpisow dzieli pietnascie rocznikow, wiec rok bywa wspolny dla
+  // kilku zdarzen — grupowanie robi renderVals, tu zostaje plaska lista w kolejnosci
+  // podanej przez klienta. `m:1` oznacza kamien milowy liczby wdrozen: te wpisy
+  // powtarzaja sie co kilka lat i tworza czytelny rytm na osi.
   aboutTimeline:[
-    {y:'2007', t:'Idea', d:'[Jak narodził się pomysł na BioSys — jedno, dwa zdania.]'},
-    {y:'2008', t:'Powstanie firmy', d:'[Założenie BioSys i pierwsi klienci.]'},
-    {y:'[rok]', t:'[Pierwszy rejestrator]', d:'[Pierwsze własne urządzenie i pierwsze wdrożenia.]'},
-    {y:'[rok]', t:'[Druga generacja urządzeń]', d:'[Co się zmieniło względem pierwszej generacji.]'},
-    {y:'[rok]', t:'[Własne oprogramowanie]', d:'[Start autorskiego systemu do rozliczania czasu pracy.]'},
-    {y:'[rok]', t:'[Kontrola dostępu]', d:'[Rozszerzenie oferty o systemy KD.]'},
-    {y:'[rok]', t:'[Trzecia generacja urządzeń]', d:'[Kolejna generacja rejestratorów.]'},
-    {y:'[rok]', t:'[Platforma WEB]', d:'[Panel pracownika i przełożonego w przeglądarce.]'},
-    {y:'[rok]', t:'[Etatomierz]', d:'[Premiera oprogramowania Etatomierz.]'},
-    {y:'Dziś', t:'[Gdzie jesteśmy dzisiaj]', d:'[Skala: wdrożenia, urządzenia w pracy, zasięg obsługi.]'}
+    {y:'2007', t:'Pasja. Pomysł. Decyzja.', d:'Startujemy w 3-osobowym zespole.'},
+    {y:'2008', t:'Formalna rejestracja BioSys s.c.', d:'Pierwsze sukcesy i zadowoleni klienci.'},
+    {y:'2010', t:'Pierwszy autorski system Rejestracji Czasu Pracy — Core5', d:''},
+    {y:'2012', t:'Fundamentalna zmiana — powstaje Etatomierz Core7.', d:'W pełni skalowalny i modułowy system Rejestracji Czasu Pracy, który jest rozwijany do dnia dzisiejszego.'},
+    {y:'2012', t:'Pierwsze wdrożenie Etatomierz Core7', d:''},
+    {y:'2013', t:'100 wdrożonych systemów Etatomierz', d:'', m:1},
+    {y:'2014', t:'Targi Securex.', d:'Intensywny rozwój spółki i powiększenie zespołu.'},
+    {y:'2014', t:'Pierwsze duże wdrożenie systemu Kontroli Dostępu zintegrowanego z systemem RCP', d:'Dostęp do pomieszczeń powiązany z planem pracy.'},
+    {y:'2016', t:'Pierwsze urządzenia własnej produkcji SMART.', d:''},
+    {y:'2017', t:'500 wdrożonych systemów Etatomierz', d:'', m:1},
+    {y:'2017', t:'Skala działalności rośnie, BioSys również.', d:'Decyzja o przekształceniu w spółkę z o.o.'},
+    {y:'2017', t:'Pierwsze duże wdrożenie systemu Task Timer', d:'Pomiar czasu dla zleceń produkcyjnych.'},
+    {y:'2020', t:'Decyzja o realizacji projektu Systemu RCP w Chmurze (SaaS)', d:''},
+    {y:'2021', t:'Rozszerzenie składu zarządu spółki', d:'Andrzej Pilch zostaje prokurentem.'},
+    {y:'2021', t:'1000 wdrożonych systemów Etatomierz', d:'', m:1},
+    {y:'2022', t:'Prace B+R w obszarze bezpieczeństwa hardware.', d:''},
+    {y:'2023', t:'W pełni szyfrowany system Kontroli Dostępu i RCP', d:'Od karty aż po bazę danych.'},
+    {y:'2024', t:'1500 wdrożonych systemów Etatomierz', d:'', m:1},
+    {y:'2026', t:'Pierwsi klienci korzystają z RCP w Chmurze (SaaS)', d:''}
   ],
   aboutBoardKicker:'ZARZĄD',
   aboutBoardTitle:'[Nagłówek sekcji z zarządem]',
@@ -208,11 +221,10 @@ const PAGES = [
   // Dzięki rozdzieleniu obie części można złożyć innym krojem, a wiersz zostaje
   // jednolinijkowy — trzy karty równają się do siebie co do piksela.
   aboutBoard:[
-    {img:'/biosys-podglad/assets/karol-jura.webp', n:'Karol Jura', zal:'Założyciel', r:'Członek zarządu', d:'[Jedno zdanie o tym, za co odpowiada.]'},
-    {img:'/biosys-podglad/assets/pawel-zurek.webp', n:'Paweł Żurek', zal:'Założyciel', r:'Członek zarządu', d:'[Jedno zdanie o tym, za co odpowiada.]'},
-    {img:'/biosys-podglad/assets/andrzej-pilch.webp', n:'Andrzej Pilch', zal:'', r:'Członek zarządu', d:'[Jedno zdanie o tym, za co odpowiada.]'}
-  ]
-},
+    {img:'/biosys-podglad/assets/pawel-zurek.webp', n:'Paweł Żurek', zal:'', r:'Prezes Zarządu', d:'Oprogramowanie i Technologia'},
+    {img:'/biosys-podglad/assets/karol-jura.webp', n:'Karol Jura', zal:'', r:'Członek Zarządu', d:'Sprzedaż, Wdrożenia i Relacje z Klientami'},
+    {img:'/biosys-podglad/assets/andrzej-pilch.webp', n:'Andrzej Pilch', zal:'', r:'Członek Zarządu', d:'Projektowanie, produkcja oraz nadzór nad infrastrukturą sprzętową.'}
+  ]},
 {
   key:'onas-case', tag:'Case study', isOnasChild:true, kicker:'O NAS', kicker2:'Wdrożenia BioSys w praktyce',
   title1:'Case study.', title2:'Wdrożenia opisane przez naszych klientów.',

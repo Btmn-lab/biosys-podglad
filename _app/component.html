@@ -123,7 +123,18 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
 </style>
 <script>
+/* Zgoda i Google Tag Manager — Consent Mode v2 w trybie podstawowym.
+   GTM ładuje się dopiero po zgodzie (statystyka albo marketing). Przed zgodą do Google
+   nie wychodzi nic, nawet ping bez ciasteczek — z tego samego powodu React nie jest
+   pobierany z unpkg.com. GTM_ID wstawia build wyłącznie w wersji produkcyjnej
+   (BS_LIVE=1, wartość z .tools/analityka.json); w podglądzie zostaje pusty i loader
+   nic nie robi, więc testy nie trafiają do produkcyjnej usługi GA4.
+   Runtime wykonuje zawartość <helmet> drugi raz — stąd flaga na window. Bez niej
+   każda odsłona liczyłaby się podwójnie. */
 (function(){
+  if (window.__bsZgodaInit) return;
+  window.__bsZgodaInit = true;
+  var GTM_ID = '';
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
   var stored = null;
@@ -134,8 +145,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     ad_personalization: 'denied',
     analytics_storage: 'denied',
     functionality_storage: 'granted',
-    security_storage: 'granted',
-    wait_for_update: 500
+    security_storage: 'granted'
   });
   if (stored) {
     gtag('consent', 'update', {
@@ -145,8 +155,21 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
       ad_personalization: stored.marketing ? 'granted' : 'denied'
     });
   }
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  /* Jedno wejście dla zdarzeń konwersji. Bez zgody zdarzenie zostaje w dataLayer
+     i nigdzie nie wychodzi — miejsca wywołań nie muszą znać stanu zgody. */
+  window.bsZdarzenie = function(nazwa, parametry) {
+    window.dataLayer.push(Object.assign({ event: nazwa }, parametry || {}));
+  };
+  window.bsWczytajGtm = function() {
+    if (window.__bsGtmWczytany || !/^GTM-[A-Z0-9]+$/.test(GTM_ID)) return;
+    window.__bsGtmWczytany = true;
+    window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID;
+    document.head.appendChild(s);
+  };
+  if (stored && (stored.stats || stored.marketing)) window.bsWczytajGtm();
 })();
 </script>
 <script src="/biosys-podglad/tresc.js"></script>
@@ -176,7 +199,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     <header data-sysfont style="{{ headerRowStyle }}">
       <div ref="{{ brandRef }}" style="display:flex;align-items:center;gap:18px;flex-wrap:nowrap;flex:none">
       <div onClick="{{ goToStart }}" style="display:flex;align-items:center;gap:10px;cursor:pointer">
-        <img src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="120" height="30" fetchpriority="high" decoding="async" style="height:30px;width:auto;display:block;object-fit:contain"/>
+        <img src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys — rejestracja czasu pracy i kontrola dostępu" width="120" height="30" fetchpriority="high" decoding="async" style="height:30px;width:auto;display:block;object-fit:contain"/>
         <span style="{{ brandTaglineStyle }}">CZAS POD<br/>KONTROLĄ</span>
       </div>
       <sc-if value="{{ showHeaderCtas }}" hint-placeholder-val="{{ false }}">
@@ -357,7 +380,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           <div style="position:relative;border-radius:22px;overflow:hidden;border:1px solid rgba(56,189,248,.26);box-shadow:0 34px 80px rgba(2,6,23,.62);background:#0F172A;height:{{ prodCarH }}px">
             <div style="{{ prodSlide0 }}">
               <sc-if value="{{ car0.hasSrc }}" hint-placeholder-val="{{ false }}">
-                <div role="img" aria-label="{{ car0.alt }}" style="{{ car0.imgStyle }}"></div>
+                <img src="{{ car0.src }}" alt="{{ car0.alt }}" loading="lazy" decoding="async" style="{{ car0.imgStyle }}"/>
               </sc-if>
               <sc-if value="{{ car0.hasCap }}" hint-placeholder-val="{{ false }}">
                 <div style="position:absolute;left:0;right:0;bottom:0;height:52%;background:linear-gradient(180deg,rgba(11,18,32,0) 0%,rgba(11,18,32,.86) 72%,rgba(11,18,32,.95) 100%);pointer-events:none"></div>
@@ -366,7 +389,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
             </div>
             <div style="{{ prodSlide1 }}">
               <sc-if value="{{ car1.hasSrc }}" hint-placeholder-val="{{ false }}">
-                <div role="img" aria-label="{{ car1.alt }}" style="{{ car1.imgStyle }}"></div>
+                <img src="{{ car1.src }}" alt="{{ car1.alt }}" loading="lazy" decoding="async" style="{{ car1.imgStyle }}"/>
               </sc-if>
               <sc-if value="{{ car1.hasCap }}" hint-placeholder-val="{{ false }}">
                 <div style="position:absolute;left:0;right:0;bottom:0;height:52%;background:linear-gradient(180deg,rgba(11,18,32,0) 0%,rgba(11,18,32,.86) 72%,rgba(11,18,32,.95) 100%);pointer-events:none"></div>
@@ -375,7 +398,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
             </div>
             <div style="{{ prodSlide2 }}">
               <sc-if value="{{ car2.hasSrc }}" hint-placeholder-val="{{ false }}">
-                <div role="img" aria-label="{{ car2.alt }}" style="{{ car2.imgStyle }}"></div>
+                <img src="{{ car2.src }}" alt="{{ car2.alt }}" loading="lazy" decoding="async" style="{{ car2.imgStyle }}"/>
               </sc-if>
               <sc-if value="{{ showCarCard }}" hint-placeholder-val="{{ true }}">
               <div style="height:100%;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;padding:30px;background:linear-gradient(155deg,#132038 0%,#0F172A 70%)">
@@ -621,7 +644,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
             <sc-if value="{{ heroPanePhoto }}" hint-placeholder-val="{{ false }}">
             <div style="background:#0F172A;border-radius:18px;box-shadow:0 18px 44px rgba(15,23,42,.28);height:{{ dashH }}px;box-sizing:border-box;overflow:hidden;position:relative">
-              <img src="{{ heroPaneImg }}" alt="Wdrożenie BioSys" width="1400" height="1050" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;animation:fadeUp .6s ease both"/>
+              <img src="{{ heroPaneImg }}" alt="{{ heroPaneAlt }}" width="1400" height="1050" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;animation:fadeUp .6s ease both"/>
             </div>
             </sc-if>
 
@@ -800,7 +823,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
             <div style="display:flex;flex-direction:column;gap:22px">
               <div style="height:360px;display:flex;align-items:center;justify-content:center;position:relative;background:radial-gradient(circle at 50% 46%,rgba(255,255,255,.95) 0%,rgba(255,255,255,.6) 46%,rgba(255,255,255,0) 72%)">
                 <sc-for list="{{ heroSlides }}" as="hs" hint-placeholder-count="1">
-                  <img src="{{ hs.img }}" alt="{{ hs.cap }}" width="1280" height="960" loading="lazy" decoding="async" style="{{ hs.style }}"/>
+                  <img src="{{ hs.img }}" alt="{{ hs.alt }}" width="1280" height="960" loading="lazy" decoding="async" style="{{ hs.style }}"/>
                 </sc-for>
               </div>
               <div style="display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap">
@@ -1552,7 +1575,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
             <sc-for list="{{ kdAreas }}" as="ka" hint-placeholder-count="4">
               <button onClick="{{ ka.pick }}" style="{{ ka.style }}">
                 <span style="display:block;border-radius:11px;overflow:hidden;margin-bottom:12px;background:#E2E8F0">
-                  <img src="{{ ka.img }}" alt="{{ ka.t }}" width="420" height="104" loading="lazy" decoding="async" style="display:block;width:100%;height:104px;object-fit:cover" />
+                  <img src="{{ ka.img }}" alt="{{ ka.alt }}" width="420" height="104" loading="lazy" decoding="async" style="display:block;width:100%;height:104px;object-fit:cover" />
                 </span>
                 <span style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px">
                   <span style="font:800 12px/1 'Open Sans';letter-spacing:.06em;color:{{ ka.numColor }}">{{ ka.num }}</span>
@@ -1882,7 +1905,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           <sc-for list="{{ segTabs }}" as="st" hint-placeholder-count="6">
             <button onClick="{{ st.pick }}" style="{{ st.style }}" style-hover="transform:translateY(-3px);box-shadow:0 18px 36px rgba(15,23,42,.18)">
               <span style="position:absolute;inset:0;overflow:hidden;border-radius:15px">
-                <img src="{{ st.photo }}" alt="{{ st.tag }}" width="640" height="420" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"/>
+                <img src="{{ st.photo }}" alt="{{ st.alt }}" width="640" height="420" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"/>
                 <span style="{{ st.veilStyle }}"></span>
               </span>
               <span style="position:relative;flex:1;display:flex;flex-direction:column;gap:4px;padding:13px 15px;min-height:126px;justify-content:flex-end">
@@ -2073,7 +2096,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           </div>
           <sc-if value="{{ hasSolQuote }}" hint-placeholder-val="{{ false }}">
           <div style="position:relative;overflow:hidden;display:flex;flex-wrap:wrap;align-items:stretch;gap:30px;margin-top:24px;background:linear-gradient(150deg,#ffffff 0%,#F7FAFF 58%,#EFF6FF 100%);border:1px solid #E9EEF5;border-radius:18px;padding:30px 34px;max-width:940px;box-shadow:0 10px 30px rgba(15,23,42,.05)">
-            <img src="/biosys-podglad/assets/karol-jura.webp" alt="Karol Jura" width="220" height="220" loading="lazy" decoding="async" style="flex:none;width:220px;height:220px;max-width:100%;border-radius:16px;object-fit:cover;object-position:50% 18%;display:block;box-shadow:0 8px 24px rgba(15,23,42,.12)"/>
+            <img src="/biosys-podglad/assets/karol-jura.webp" alt="Karol Jura — założyciel i członek zarządu BioSys" width="220" height="220" loading="lazy" decoding="async" style="flex:none;width:220px;height:220px;max-width:100%;border-radius:16px;object-fit:cover;object-position:50% 18%;display:block;box-shadow:0 8px 24px rgba(15,23,42,.12)"/>
             <div style="flex:1 1 380px;min-width:260px;display:flex;flex-direction:column;justify-content:space-between;gap:22px">
               <p style="position:relative;margin:0;font:500 19px/1.65 'Open Sans';color:#0F172A;text-wrap:pretty">
                 <span aria-hidden="true" style="position:absolute;top:-26px;right:0;font:800 108px/1 'Montserrat',system-ui,sans-serif;color:rgba(37,99,235,.07);pointer-events:none">&rdquo;</span>{{ current.solQuote }}</p>
@@ -2515,12 +2538,12 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
               <div style="display:flex;align-items:flex-end;gap:12px;margin-top:auto">
                 <sc-if value="{{ tm.hasLogoLight }}" hint-placeholder-val="{{ false }}">
                   <span style="height:40px;min-width:56px;padding:8px 10px;box-sizing:border-box;border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                    <img src="{{ tm.logo }}" alt="{{ tm.company }}" loading="lazy" decoding="async" style="{{ tm.logoImgStyle }}"/>
+                    <img src="{{ tm.logo }}" alt="{{ tm.logoAlt }}" loading="lazy" decoding="async" style="{{ tm.logoImgStyle }}"/>
                   </span>
                 </sc-if>
                 <sc-if value="{{ tm.hasLogoDark }}" hint-placeholder-val="{{ false }}">
                   <span style="height:40px;min-width:56px;padding:8px 0;box-sizing:border-box;display:flex;align-items:center;flex-shrink:0">
-                    <img src="{{ tm.logo }}" alt="{{ tm.company }}" loading="lazy" decoding="async" style="{{ tm.logoImgStyle }}"/>
+                    <img src="{{ tm.logo }}" alt="{{ tm.logoAlt }}" loading="lazy" decoding="async" style="{{ tm.logoImgStyle }}"/>
                   </span>
                 </sc-if>
                 <sc-if value="{{ tm.noLogo }}" hint-placeholder-val="{{ false }}">
@@ -2541,7 +2564,8 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     </sc-if>
 
     <sc-if value="{{ isOnas }}" hint-placeholder-val="{{ false }}">
-      <section style="position:relative;overflow:hidden;padding:{{ sectionPadV }}px {{ pad }}px;background:#0F172A">
+      <div style="display:flex;flex-direction:column">
+      <section style="order:{{ aboutWhyOrder }};position:relative;overflow:hidden;padding:{{ sectionPadV }}px {{ pad }}px;background:#0F172A">
         <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(900px 380px at 8% -12%,rgba(37,99,235,.30) 0%,rgba(37,99,235,0) 62%),radial-gradient(760px 340px at 94% 6%,rgba(15,169,180,.24) 0%,rgba(15,169,180,0) 60%)"></div>
         <div style="position:relative">
           <p style="margin:0 0 8px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#38BDF8">{{ current.aboutWhyKicker }}</p>
@@ -2564,7 +2588,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
         </div>
       </section>
 
-      <section style="padding:{{ sectionPadV }}px {{ pad }}px;background:#fff">
+      <section style="order:1;padding:{{ sectionPadV }}px {{ pad }}px;background:#fff">
         <div style="{{ histRowStyle }}">
           <div style="{{ histAsideStyle }}">
             <p style="margin:0 0 8px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#2563EB">{{ current.aboutHistKicker }}</p>
@@ -2579,7 +2603,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
         </div>
       </section>
 
-      <section style="padding:{{ sectionPadV }}px {{ pad }}px;background:#F8FAFC;border-top:1px solid #eef2f7">
+      <section style="order:1;padding:{{ sectionPadV }}px {{ pad }}px;background:#F8FAFC;border-top:1px solid #eef2f7">
         <p style="margin:0 0 8px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#2563EB">{{ current.aboutTimeKicker }}</p>
         <h2 style="margin:0 0 32px;font:600 {{ h2Size }}px/1.25 'Montserrat';color:#0F172A;max-width:640px;text-wrap:pretty">{{ current.aboutTimeTitle }}</h2>
         <div style="{{ tlWrapStyle }}">
@@ -2591,29 +2615,32 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
                 <span style="{{ tl.lineStyle }}"></span>
               </div>
               <div style="{{ tl.bodyStyle }}">
-                <p style="{{ tlTitleStyle }}">{{ tl.t }}</p>
-                <p style="{{ tlDescStyle }}">{{ tl.d }}</p>
+                <p style="{{ tl.titleStyle }}">{{ tl.t }}</p>
+                <p style="{{ tl.descStyle }}">{{ tl.d }}</p>
               </div>
             </div>
           </sc-for>
         </div>
       </section>
 
-      <section style="padding:{{ sectionPadV }}px {{ pad }}px;background:#fff;border-top:1px solid #eef2f7">
+      <section style="order:1;padding:{{ sectionPadV }}px {{ pad }}px;background:#fff;border-top:1px solid #eef2f7">
         <p style="margin:0 0 8px;font:600 12px 'Montserrat';letter-spacing:.055em;color:#2563EB">{{ current.aboutBoardKicker }}</p>
         <h2 style="margin:0 0 12px;font:600 {{ h2Size }}px/1.25 'Montserrat';color:#0F172A;max-width:640px;text-wrap:pretty">{{ current.aboutBoardTitle }}</h2>
         <p style="margin:0 0 30px;font:400 15px/1.7 'Open Sans';color:#64748B;max-width:620px;text-wrap:pretty">{{ current.aboutBoardLead }}</p>
         <div style="{{ boardGridStyle }}">
           <sc-for list="{{ aboutBoardCards }}" as="bm" hint-placeholder-count="3">
-            <div style="display:flex;flex-direction:column;min-width:0">
-              <img src="{{ bm.img }}" alt="{{ bm.n }}" width="1024" height="1024" loading="lazy" decoding="async" style="{{ boardImgStyle }}"/>
-              <p style="margin:16px 0 3px;font:600 17px/1.35 'Montserrat';color:#0F172A">{{ bm.n }}</p>
-              <p style="{{ boardRoleRowStyle }}"><span style="{{ bm.zalStyle }}">{{ bm.zal }}</span>{{ bm.r }}</p>
-              <p style="margin:0;font:400 14px/1.7 'Open Sans';color:#64748B;text-wrap:pretty">{{ bm.d }}</p>
+            <div style="{{ boardCardStyle }}">
+              <img src="{{ bm.img }}" alt="{{ bm.alt }}" width="1024" height="1024" loading="lazy" decoding="async" style="{{ boardImgStyle }}"/>
+              <div style="{{ boardTextStyle }}">
+                <p style="{{ boardNameStyle }}">{{ bm.n }}</p>
+                <p style="{{ boardRoleRowStyle }}"><span style="{{ bm.zalStyle }}">{{ bm.zal }}</span>{{ bm.r }}</p>
+                <p style="{{ boardDescStyle }}">{{ bm.d }}</p>
+              </div>
             </div>
           </sc-for>
         </div>
       </section>
+      </div>
     </sc-if>
 
     <sc-if value="{{ isKontakt }}" hint-placeholder-val="{{ false }}">
@@ -2930,7 +2957,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           <sc-for list="{{ galleryItems }}" as="gi" hint-placeholder-count="4">
             <div style="flex:0 0 {{ galCardW }};scroll-snap-align:start;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:16px">
               <div style="height:240px;display:flex;align-items:center;justify-content:center">
-                <img src="{{ gi.img }}" alt="{{ gi.cap }}" width="1280" height="960" loading="lazy" decoding="async" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/>
+                <img src="{{ gi.img }}" alt="{{ gi.alt }}" width="1280" height="960" loading="lazy" decoding="async" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/>
               </div>
               <p style="margin:0;font:500 14.5px/1.55 'Open Sans';color:#334155;text-wrap:pretty">{{ gi.cap }}</p>
             </div>
@@ -2946,9 +2973,9 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
         <h2 style="margin:0 0 10px;font:600 {{ h2Size }}px/1.2 'Montserrat';color:#0F172A">{{ current.modelsTitle }}</h2>
         <p style="margin:0 0 30px;font:400 15px/1.6 'Open Sans';color:#64748B;max-width:680px">{{ current.modelsLead }}</p>
         <div style="display:grid;grid-template-columns:{{ modelCols }};gap:22px">
-          <sc-for list="{{ current.models }}" as="md" hint-placeholder-count="2">
+          <sc-for list="{{ modelCards }}" as="md" hint-placeholder-count="2">
             <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:16px">
-              <div style="width:100%;height:220px;background-image:url({{ md.img }});background-size:contain;background-position:center;background-repeat:no-repeat" role="img" aria-label="{{ md.name }}"></div>
+              <img src="{{ md.img }}" alt="{{ md.alt }}" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:contain;object-position:center;display:block"/>
               <div>
                 <h3 style="margin:0 0 6px;font:600 17.9px/1.25 'Montserrat';color:#0F172A">{{ md.name }}</h3>
                 <p style="margin:0;font:400 13.5px/1.65 'Open Sans';color:#64748B;text-wrap:pretty">{{ md.desc }}</p>
@@ -3428,7 +3455,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
                   <div style="display:flex;align-items:center;gap:18px">
                     <span style="{{ cs.logoBoxStyle }}">
                       <sc-if value="{{ cs.hasLogo }}" hint-placeholder-val="{{ false }}">
-                        <span role="img" aria-label="{{ cs.logoAlt }}" style="{{ cs.logoImgStyle }}"></span>
+                        <img src="{{ cs.logoSrc }}" alt="{{ cs.logoAlt }}" loading="lazy" decoding="async" style="{{ cs.logoImgStyle }}"/>
                       </sc-if>
                       <sc-if value="{{ cs.isWordmark }}" hint-placeholder-val="{{ false }}">
                         <span style="font:800 14px 'Open Sans';letter-spacing:.16em;color:#0F172A">{{ cs.wordmark }}</span>
@@ -3613,15 +3640,15 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
         <div style="{{ careerPhotosGridStyle }}">
           <div style="position:relative;border-radius:18px;overflow:hidden;min-height:230px">
-            <img src="/biosys-podglad/assets/seg-magazyn.webp" alt="Wdrożenia w terenie" width="640" height="440" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"/>
+            <img src="/biosys-podglad/assets/seg-magazyn.webp" alt="Wdrożenia BioSys w terenie — hale, magazyny i biura" width="640" height="440" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"/>
             <span style="position:absolute;inset:auto 0 0 0;padding:34px 18px 16px;background:linear-gradient(180deg,rgba(15,23,42,0),rgba(15,23,42,.82));font:700 13.5px/1.4 'Open Sans';color:#fff">Wdrożenia w terenie — hale, magazyny, biura</span>
           </div>
           <div style="position:relative;border-radius:18px;overflow:hidden;min-height:230px">
-            <img src="/biosys-podglad/assets/rejestrator-2.webp" alt="Urządzenia BioSys" width="640" height="440" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;display:block;background:linear-gradient(160deg,#F8FAFC,#EFF6FF);padding:22px;box-sizing:border-box"/>
+            <img src="/biosys-podglad/assets/rejestrator-2.webp" alt="Rejestrator czasu pracy z własnej produkcji BioSys" width="640" height="440" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;display:block;background:linear-gradient(160deg,#F8FAFC,#EFF6FF);padding:22px;box-sizing:border-box"/>
             <span style="position:absolute;inset:auto 0 0 0;padding:34px 18px 16px;background:linear-gradient(180deg,rgba(15,23,42,0),rgba(15,23,42,.82));font:700 13.5px/1.4 'Open Sans';color:#fff">Własna produkcja urządzeń</span>
           </div>
           <div style="position:relative;border-radius:18px;overflow:hidden;min-height:230px">
-            <img src="/biosys-podglad/assets/seg-biura.webp" alt="Zespół BioSys" width="640" height="440" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"/>
+            <img src="/biosys-podglad/assets/seg-biura.webp" alt="Zespół BioSys w biurze w Krakowie" width="640" height="440" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block"/>
             <span style="position:absolute;inset:auto 0 0 0;padding:34px 18px 16px;background:linear-gradient(180deg,rgba(15,23,42,0),rgba(15,23,42,.82));font:700 13.5px/1.4 'Open Sans';color:#fff">Zespół w biurze w Krakowie</span>
           </div>
         </div>
@@ -3883,7 +3910,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
           <p style="margin:0;font:700 15px 'Open Sans';color:#fff">{{ refOpenName }}</p>
           <button onClick="{{ closeRef }}" style="font:600 13.5px 'Open Sans';color:#0F172A;background:#fff;border:none;border-radius:8px;padding:9px 16px;cursor:pointer">Zamknij ✕</button>
         </div>
-        <div role="img" aria-label="List referencyjny" style="{{ refOpenImgStyle }}"></div>
+        <div role="img" aria-label="{{ refOpenAlt }}" style="{{ refOpenImgStyle }}"></div>
       </div>
     </sc-if>
 
@@ -4653,6 +4680,7 @@ class Component extends DCLogic {
     if (typeof window.gtag === 'function') window.gtag('consent', 'update', v);
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push(Object.assign({ event: 'biosys_consent_update' }, v));
+    if ((p.stats || p.marketing) && typeof window.bsWczytajGtm === 'function') window.bsWczytajGtm();
     try { localStorage.setItem('biosys_consent_v1', JSON.stringify({ stats: !!p.stats, marketing: !!p.marketing, ts: Date.now() })); } catch (e) {}
     this.setState({ consentOpen: false, consentBadge: true, consentDetails: false, cStats: !!p.stats, cMkt: !!p.marketing });
   }
@@ -4696,6 +4724,12 @@ class Component extends DCLogic {
       .then(({ ok, j }) => {
         if (ok && j && j.ok) {
           this._lastSent = Object.assign({}, this._lastSent, { [prefix]: Date.now() });
+          // Konwersja dla GA4. Gałąź bota (_spamOk) kończy się wyżej, więc boty jej nie zawyżą.
+          if (typeof window.bsZdarzenie === 'function') {
+            window.bsZdarzenie('generate_lead', {
+              form_name: ({ glowny: 'kontakt', kdq: 'wycena_kd', rcpq: 'wycena_rcp' })[prefix] || prefix
+            });
+          }
           this.setState(Object.assign({
             [prefix + 'Sending']: false, [prefix + 'Sent']: true, [prefix + 'Error']: false,
             [prefix + 'SentMsg']: j.message || ''
@@ -5218,7 +5252,7 @@ class Component extends DCLogic {
       isPdf: /\.pdf$/i.test(c.f || ''), file: RES_URL(c.f),
       thumb: /\.webp$/i.test(c.f || '') ? RES_URL(String(c.f).replace('/biosys-podglad/assets/ref/lite/', '/biosys-podglad/assets/ref/thumb/')) : RES_URL(c.f),
       open: /\.pdf$/i.test(c.f || '') ? (() => window.open(RES_URL(c.f), '_blank')) : (() => this.setState({ refOpen: c })),
-      thumbAlt: 'List referencyjny — ' + c.n,
+      thumbAlt: 'List referencyjny dla BioSys — ' + c.n,
       isImg: !/\.pdf$/i.test(c.f || ''),
       cta: /\.pdf$/i.test(c.f || '') ? 'Otwórz PDF →' : 'Zobacz list →',
       sys: (c.s || '').split(',').map(x => x.trim()).filter(Boolean),
@@ -5438,7 +5472,7 @@ class Component extends DCLogic {
       const c = carList[i] || { src: '', alt: '', pos: '50% 50%', cap: '' };
       return {
         src: c.src, alt: c.alt, cap: c.cap, hasCap: !!c.cap, hasSrc: !!c.src,
-        imgStyle: 'width:100%;height:100%;display:block;background-image:url("' + c.src + '");background-size:cover;background-position:' + c.pos + ';background-repeat:no-repeat'
+        imgStyle: 'width:100%;height:100%;display:block;object-fit:cover;object-position:' + c.pos
       };
     };
 
@@ -5513,6 +5547,7 @@ class Component extends DCLogic {
       hasLogoLight: !!t.logo && !t.logoDark,
       hasLogoDark: !!t.logo && !!t.logoDark,
       noLogo: !t.logo,
+      logoAlt: 'Logo ' + t.company + ' — klient BioSys',
       logoImgStyle: 'height:' + (t.logoH || 22) + 'px;max-height:' + (t.logoH || 22) + 'px;max-width:104px;width:auto;object-fit:contain;display:block;flex:none'
     }));
 
@@ -5670,6 +5705,7 @@ class Component extends DCLogic {
           const on = idx === act;
           return {
             tag: p.tag, sub: p.kicker2, num: String(idx + 1).padStart(2, '0'), photo: kadr(RES_URL(SEG_PHOTOS[p.key])),
+            alt: p.tag + (p.kicker2 ? ' — ' + p.kicker2 : '') + ' | BioSys',
             pick: () => this.setState({ segTab: idx }, () => scrollToSel('[data-seg-panel]')),
             style: `position:relative;overflow:hidden;text-align:left;cursor:pointer;padding:0;display:flex;flex-direction:column;align-items:stretch;border-radius:16px;border:${on ? '2px solid #2563EB' : '1px solid #e2e8f0'};background:#0F172A;box-shadow:${on ? '0 18px 38px rgba(37,99,235,.28)' : '0 2px 8px rgba(15,23,42,.08)'};transition:transform .18s,box-shadow .18s,border-color .18s`,
             veilStyle: `position:absolute;inset:0;background:${on ? 'linear-gradient(180deg,rgba(37,99,235,.28) 0%,rgba(15,23,42,.86) 100%)' : 'linear-gradient(180deg,rgba(15,23,42,.35) 0%,rgba(15,23,42,.8) 100%)'}`,
@@ -5749,6 +5785,7 @@ class Component extends DCLogic {
       isPhotoHero: current.heroVariant === 'photo' && !!(current.gallery && current.gallery.length),
       heroSlides: (current.gallery || []).map((g, i) => ({
         img: kadr(g.img), cap: g.cap,
+        alt: (current.tag ? current.tag + ' BioSys — ' : '') + g.cap,
         style: `position:absolute;inset:0;margin:auto;max-width:100%;max-height:100%;object-fit:contain;display:block;filter:drop-shadow(0 26px 40px rgba(15,23,42,.22));transition:opacity .6s ease;opacity:${i === heroIdx ? 1 : 0}`
       })),
       heroDots: (current.gallery || []).map((g, i) => ({
@@ -5768,7 +5805,8 @@ class Component extends DCLogic {
       })),
       kdMiniCap: (KD_MINI[kdMiniIdx] && KD_MINI[kdMiniIdx].cap) || '',
       hasGallery: !!(current.gallery && current.gallery.length),
-      galleryItems: (current.gallery || []).map(g => ({ ...g, img: kadr(g.img) })),
+      galleryItems: (current.gallery || []).map(g => ({ ...g, img: kadr(g.img),
+        alt: (current.tag ? current.tag + ' BioSys — ' : '') + g.cap })),
       galCardW: isMobile ? '82%' : '320px',
       galRef: this._galRef || (this._galRef = React.createRef()),
       galPrev: () => { const el = this._galRef && this._galRef.current; if (el) el.scrollBy({ left: -(el.clientWidth * 0.8), behavior: 'smooth' }); },
@@ -5885,7 +5923,7 @@ class Component extends DCLogic {
       onRefBranch: e => this.setState({ refBranch: e.target.value, refLimit: 12 }),
       refShowMore: () => this.setState({ refLimit: (this.state.refLimit || 12) + 12 }),
       refOpen: !!refOpen, refOpenFile: refOpen ? RES_URL(refOpen.f) : '',
-      refOpenImgStyle: refOpen ? ('width:100%;max-width:900px;aspect-ratio:1240/1754;border-radius:10px;background:#fff center top / contain no-repeat;background-image:url("' + RES_URL(refOpen.f) + '");box-shadow:0 30px 80px rgba(0,0,0,.5)') : 'display:none', refOpenName: refOpen ? refOpen.n : '',
+      refOpenImgStyle: refOpen ? ('width:100%;max-width:900px;aspect-ratio:1240/1754;border-radius:10px;background:#fff center top / contain no-repeat;background-image:url("' + RES_URL(refOpen.f) + '");box-shadow:0 30px 80px rgba(0,0,0,.5)') : 'display:none', refOpenName: refOpen ? refOpen.n : '', refOpenAlt: refOpen ? ('List referencyjny dla BioSys — ' + refOpen.n) : 'List referencyjny',
       closeRef: () => this.setState({ refOpen: null }),
       refCount: String(refShown.length),
       refTotal: String(REF_CLIENTS.length),
@@ -5906,10 +5944,10 @@ class Component extends DCLogic {
           brand: c.brand, meta: c.meta, title: c.title, lead: c.lead, tags: c.tags,
           hasLogo: !!c.logo, isWordmark: !c.logo, wordmark: c.wordmark || '',
           logoSrc: c.logo ? RES_URL(c.logo) : '',
-          logoAlt: 'Logo ' + c.brand,
+          logoAlt: 'Logo ' + c.brand + ' — klient BioSys',
           logoBoxStyle: 'width:132px;height:72px;flex-shrink:0;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:10px;box-sizing:border-box;'
             + (c.logoDark ? 'background:#0F172A;border:1px solid #0F172A' : 'background:#fff;border:1px solid #e2e8f0'),
-          logoImgStyle: 'display:block;width:104px;height:' + (c.logoMaxH || 28) + 'px;background-image:url(' + (c.logo ? RES_URL(c.logo) : '') + ');background-repeat:no-repeat;background-position:center;background-size:contain',
+          logoImgStyle: 'display:block;width:104px;height:' + (c.logoMaxH || 28) + 'px;object-fit:contain;object-position:center',
           open,
           toggleLabel: open ? 'Zwiń case study ↑' : 'Przeczytaj case study →',
           toggle: () => this.setState({ caseOpen: open ? null : c.key }),
@@ -5997,6 +6035,7 @@ class Component extends DCLogic {
           .then(r => r.json().then(j => ({ ok: r.ok, j })).catch(() => ({ ok: false, j: {} })))
           .then(({ ok, j }) => {
             if (ok && j && j.ok) {
+              if (typeof window.bsZdarzenie === 'function') window.bsZdarzenie('application_submitted', { form_name: 'rekrutacja' });
               this.setState({
                 cvSending: false, cvSent: true, cvError: false,
                 cvSentMsg: j.message || 'Dziękujemy — zgłoszenie zostało wysłane.',
@@ -6421,6 +6460,7 @@ class Component extends DCLogic {
         const c = ['37,99,235', '2,132,199', '20,184,166', '180,83,9'][i];
         const c2 = ['#0FA9B4', '#38BDF8', '#0D8577', '#B45309'][i];
         return { ...k, img: kadr(k.img),
+          alt: k.t + ' — kontrola dostępu BioSys',
           pick: () => this.setState({ kdArea: i }, () => scrollToSel('[data-kd-panel]')),
           style: `position:relative;text-align:left;cursor:pointer;border-radius:14px;padding:18px 16px;transition:all .2s;border:1px solid ${on ? 'transparent' : `rgba(${c},.28)`};background:${on ? `linear-gradient(135deg,rgb(${c}) 0%,${c2} 125%)` : '#fff'};box-shadow:${on ? `0 14px 30px rgba(${c},.3)` : '0 2px 8px rgba(15,23,42,.04)'};transform:${on ? 'translateY(-2px)' : 'none'}`,
           numColor: on ? 'rgba(255,255,255,.8)' : `rgba(${c},.9)`,
@@ -6490,6 +6530,10 @@ class Component extends DCLogic {
       article: (current.article || []).map(a => ({ h: a.h || '', p: a.p || [], ul: (a.ul || []).map(u => (typeof u === 'string' ? { t: u, href: '', isLink: false, isText: true, pre: '', hasPre: false } : { t: u.t, href: u.href, isLink: !!u.href, isText: !u.href, pre: u.pre || '', hasPre: !!u.pre })), pairs: a.pairs || [], hasUl: !!(a.ul && a.ul.length), hasPairs: !!(a.pairs && a.pairs.length) })),
       hasModels: !!(current.models && current.models.length),
       modelCols: isMobile ? '1fr' : 'repeat(2,1fr)',
+      modelCards: (current.models || []).map(md => ({
+        ...md,
+        alt: md.name + ' — ' + (current.tag || '') + ' BioSys'
+      })),
       seoCols: isMobile ? '1fr' : 'repeat(2,1fr)',
       showDashBars: !current.dashList,
       // donut zamiast kafelków: tylko gdy pierwsze dwie wartości to porównywalne liczby całkowite
@@ -6558,6 +6602,7 @@ class Component extends DCLogic {
         + ";border-top:1px solid #e2e8f0;background:#F8FAFC;font:600 "
         + (isMobile ? '12' : '12.5') + "px/1.5 'Open Sans';color:#0F172A",
       heroPaneImg: kadr(HERO_PHOTO_AT[heroPane] || ''),
+      heroPaneAlt: 'Wdrożenie systemu BioSys' + (current.tag ? ' — ' + current.tag : ''),
       kadrBiuroBiosys1: kadr('/biosys-podglad/assets/m/biuro-biosys-1.webp'),
       kadrBiuroBiosys2: kadr('/biosys-podglad/assets/m/biuro-biosys-2.webp'),
       kadrPodpisKarolJura: kadr('/biosys-podglad/assets/m/podpis-karol-jura.webp'),
@@ -7210,24 +7255,50 @@ class Component extends DCLogic {
         ? 'display:flex;flex-direction:column;gap:14px'
         : 'flex:1;min-width:0;display:flex;flex-direction:column;gap:16px;max-width:640px',
       tlWrapStyle: 'display:flex;flex-direction:column;max-width:' + (isMobile ? '100%' : '820px'),
-      tlTitleStyle: `margin:0 0 5px;font:600 ${isMobile ? 15.5 : 17}px/1.35 'Montserrat';color:#0F172A;text-wrap:pretty`,
-      tlDescStyle: `margin:0;font:400 ${isMobile ? 13.5 : 14.5}px/1.7 'Open Sans';color:#64748B;text-wrap:pretty`,
       // Kropki przechodzą od Royal Blue do turkusu — kolor liczony osobno dla każdej
       // pozycji, bo gradient rozciągnięty na całą oś rozjeżdża się, gdy wpisy mają
       // różną wysokość. Linia ostatniej pozycji jest przezroczysta, żeby oś nie
       // wystawała pod ostatnią kropkę.
+      // Osiemnascie zdarzen dzieli pietnascie rocznikow. Rok powtorzony przy kazdym
+      // z nich rozciagal os o kilkanascie wierszy, nie wnoszac ani jednej informacji —
+      // dlatego etykieta roku pojawia sie raz na rocznik, a kolejne zdarzenia tego
+      // samego roku dostaja pusta rynne i mniejsza, pusta w srodku kropke. Czyta sie
+      // to jak akapit pod data, a nie jak osobny punkt na osi.
       aboutTl: (current.aboutTimeline || []).map((it, i, lista) => {
         const A = [0x25, 0x63, 0xEB], B = [0x14, 0xB8, 0xA6];
         const t = lista.length > 1 ? i / (lista.length - 1) : 0;
         const kol = '#' + [0, 1, 2].map(k =>
           ('0' + Math.round(A[k] + (B[k] - A[k]) * t).toString(16)).slice(-2)).join('');
+        const pierwszy = i === 0 || lista[i - 1].y !== it.y;
+        const ostatni = i === lista.length - 1;
+        // Kamienie milowe liczby wdrozen (100, 500, 1000, 1500) wracaja co kilka lat
+        // i same z siebie tworza rytm. Amber jest czwartym akcentem palety i nie
+        // koliduje z gradientem niebiesko-turkusowym, ktory niesie uplyw czasu.
+        const kamien = !!it.m;
+        const barwa = kamien ? '#F59E0B' : kol;
         return {
-          y: it.y, t: it.t, d: it.d,
-          rowStyle: `display:flex;gap:${isMobile ? 12 : 20}px;align-items:stretch`,
-          yearStyle: `flex:none;width:${isMobile ? 48 : 84}px;text-align:${isMobile ? 'left' : 'right'};margin:0;padding-top:${isMobile ? 1 : 2}px;font:700 ${isMobile ? 13 : 16}px 'Montserrat';color:${kol}`,
-          dotStyle: `flex:none;width:11px;height:11px;border-radius:50%;background:${kol};margin-top:${isMobile ? 5 : 7}px;box-shadow:0 0 0 4px rgba(37,99,235,.09)`,
-          lineStyle: `flex:1;width:2px;margin-top:4px;background:${i === lista.length - 1 ? 'transparent' : '#E2E8F0'}`,
-          bodyStyle: `flex:1;min-width:0;padding:0 0 ${isMobile ? 22 : 30}px`
+          y: pierwszy ? it.y : '',
+          t: it.t, d: it.d,
+          rowStyle: `display:flex;gap:${isMobile ? 11 : 18}px;align-items:stretch`,
+          yearStyle: `flex:none;width:${isMobile ? 42 : 68}px;text-align:${isMobile ? 'left' : 'right'};`
+            + `margin:0;padding-top:${isMobile ? 1 : 2}px;`
+            + `font:700 ${isMobile ? 13 : 15.5}px 'Montserrat';color:${kol}`,
+          // Kamien milowy dostaje pelna kropke niezaleznie od miejsca w roczniku:
+          // 1000 wdrozen wypadlo drugie w 2021 i z puste w srodku kropka wygladalo
+          // na slabsze wydarzenie niz 1500 w 2024, choc to ta sama kategoria.
+          dotStyle: (pierwszy || kamien)
+            ? `flex:none;width:11px;height:11px;border-radius:50%;background:${barwa};`
+              + `margin-top:${isMobile ? 5 : 6}px;box-shadow:0 0 0 4px ${kamien ? 'rgba(245,158,11,.14)' : 'rgba(37,99,235,.09)'}`
+            : `flex:none;width:7px;height:7px;border-radius:50%;background:#fff;`
+              + `border:2px solid #CBD5E1;margin-top:${isMobile ? 7 : 8}px;box-sizing:border-box`,
+          lineStyle: `flex:1;width:2px;margin-top:4px;background:${ostatni ? 'transparent' : '#E2E8F0'}`,
+          // Wpis bez opisu nie potrzebuje odstepu pod tytulem — stad dwa warianty.
+          titleStyle: `margin:0 0 ${it.d ? 3 : 0}px;font:${kamien ? 700 : 600} ${isMobile ? 14.5 : 15.5}px/1.4 'Montserrat';`
+            + `color:${kamien ? '#B45309' : '#0F172A'};text-wrap:pretty`,
+          descStyle: it.d
+            ? `margin:0;font:400 ${isMobile ? 13 : 13.5}px/1.6 'Open Sans';color:#64748B;text-wrap:pretty`
+            : 'display:none',
+          bodyStyle: `flex:1;min-width:0;padding:0 0 ${pierwszy ? (isMobile ? 14 : 16) : (isMobile ? 11 : 12)}px`
         };
       }),
       aboutWhyCards: ((current.aboutWhy || [])).map((w, i) => ({
@@ -7252,16 +7323,40 @@ class Component extends DCLogic {
       // w pionie, gdy ktoś wyróżnienia nie ma. Pusty `zal` znika bez śladu.
       aboutBoardCards: ((current.aboutBoard || [])).map(bm => ({
         ...bm,
+        alt: bm.n + ' — ' + (bm.zal ? bm.zal + ', ' : '') + bm.r + ' BioSys',
         zal: bm.zal ? bm.zal + ' \u00b7 ' : '',
         zalStyle: bm.zal
           ? "font-weight:700;color:#14B8A6;letter-spacing:.03em"
           : 'display:none'
       })),
-      boardRoleRowStyle: "margin:0 0 10px;font:600 12.5px/1.45 'Open Sans';letter-spacing:.02em;color:#64748B",
+      // Na telefonie portret zajmowal 339x452 px — trzy takie karty to 1900 px
+      // przewijania, czyli ponad dwa ekrany na trzy nazwiska. Na telefonie karta
+      // klada sie w wiersz: kwadratowa miniatura 92 px i tekst obok. Zrodla portretow
+      // sa kwadratowe, wiec proporcja 1:1 nie obcina ich tak jak kadr 3:4 na desktopie.
+      boardCardStyle: isMobile
+        ? 'display:flex;flex-direction:row;gap:14px;align-items:flex-start;min-width:0;'
+          + 'padding:14px 0;border-bottom:1px solid #eef2f7'
+        : 'display:flex;flex-direction:column;min-width:0',
+      boardTextStyle: isMobile ? 'flex:1;min-width:0;padding-top:2px' : 'min-width:0',
+      boardNameStyle: isMobile
+        ? "margin:0 0 2px;font:600 15.5px/1.3 'Montserrat';color:#0F172A"
+        : "margin:16px 0 3px;font:600 17px/1.35 'Montserrat';color:#0F172A",
+      boardDescStyle: isMobile
+        ? "margin:0;font:400 13px/1.55 'Open Sans';color:#64748B;text-wrap:pretty"
+        : "margin:0;font:400 14px/1.7 'Open Sans';color:#64748B;text-wrap:pretty",
+      boardRoleRowStyle: isMobile
+        ? "margin:0 0 4px;font:600 12px/1.4 'Open Sans';letter-spacing:.02em;color:#64748B"
+        : "margin:0 0 10px;font:600 12.5px/1.45 'Open Sans';letter-spacing:.02em;color:#64748B",
       boardGridStyle: isMobile
         ? 'display:grid;grid-template-columns:1fr;gap:26px'
         : 'display:grid;grid-template-columns:repeat(3,1fr);gap:30px;max-width:980px',
-      boardImgStyle: 'width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:50% 20%;border-radius:14px;display:block;background:#F1F5F9',
+      boardImgStyle: isMobile
+        ? 'flex:none;width:92px;height:92px;object-fit:cover;object-position:50% 16%;border-radius:14px;display:block;background:#F1F5F9'
+        : 'width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:50% 20%;border-radius:14px;display:block;background:#F1F5F9',
+      // Baner "Dlaczego BioSys" otwiera podstrone na desktopie, ale na telefonie
+      // wpadalo sie w niego od razu po naglowku, przed jakimkolwiek wprowadzeniem.
+      // Kolejnosc zmienia flexbox, nie duplikat znacznika — tresc zostaje jedna.
+      aboutWhyOrder: isMobile ? 2 : 0,
       // Zakres rozwiązania (tylko Task Timer). Na telefonie sześć oramkowanych kafelków
       // z ikoną w osobnym wierszu zajmowało 894 px; ikona wchodzi w wiersz tytułu,
       // a ramkę zastępuje włoskowa linia — tekst zyskuje przy tym 36 px szerokości.

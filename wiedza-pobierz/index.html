@@ -376,7 +376,18 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
 </style>
 <script>
+/* Zgoda i Google Tag Manager — Consent Mode v2 w trybie podstawowym.
+   GTM ładuje się dopiero po zgodzie (statystyka albo marketing). Przed zgodą do Google
+   nie wychodzi nic, nawet ping bez ciasteczek — z tego samego powodu React nie jest
+   pobierany z unpkg.com. GTM_ID wstawia build wyłącznie w wersji produkcyjnej
+   (BS_LIVE=1, wartość z .tools/analityka.json); w podglądzie zostaje pusty i loader
+   nic nie robi, więc testy nie trafiają do produkcyjnej usługi GA4.
+   Runtime wykonuje zawartość <helmet> drugi raz — stąd flaga na window. Bez niej
+   każda odsłona liczyłaby się podwójnie. */
 (function(){
+  if (window.__bsZgodaInit) return;
+  window.__bsZgodaInit = true;
+  var GTM_ID = '';
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
   var stored = null;
@@ -387,8 +398,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     ad_personalization: 'denied',
     analytics_storage: 'denied',
     functionality_storage: 'granted',
-    security_storage: 'granted',
-    wait_for_update: 500
+    security_storage: 'granted'
   });
   if (stored) {
     gtag('consent', 'update', {
@@ -398,8 +408,21 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
       ad_personalization: stored.marketing ? 'granted' : 'denied'
     });
   }
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  /* Jedno wejście dla zdarzeń konwersji. Bez zgody zdarzenie zostaje w dataLayer
+     i nigdzie nie wychodzi — miejsca wywołań nie muszą znać stanu zgody. */
+  window.bsZdarzenie = function(nazwa, parametry) {
+    window.dataLayer.push(Object.assign({ event: nazwa }, parametry || {}));
+  };
+  window.bsWczytajGtm = function() {
+    if (window.__bsGtmWczytany || !/^GTM-[A-Z0-9]+$/.test(GTM_ID)) return;
+    window.__bsGtmWczytany = true;
+    window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID;
+    document.head.appendChild(s);
+  };
+  if (stored && (stored.stats || stored.marketing)) window.bsWczytajGtm();
 })();
 </script>
 <script src="/biosys-podglad/tresc.js"></script>
@@ -434,7 +457,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     <header data-dc-tpl="59" data-sysfont="" style="background: rgb(255, 255, 255); padding: 16px 56px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgb(226, 232, 240); flex-wrap: nowrap; gap: 14px;">
       <div data-dc-tpl="60" style="display: flex; align-items: center; gap: 18px; flex-wrap: nowrap; flex: 0 0 auto;">
       <div data-dc-tpl="61" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-        <img data-dc-tpl="62" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="120" height="30" fetchpriority="high" decoding="async" style="height: 30px; width: auto; display: block; object-fit: contain;">
+        <img data-dc-tpl="62" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys — rejestracja czasu pracy i kontrola dostępu" width="120" height="30" fetchpriority="high" decoding="async" style="height: 30px; width: auto; display: block; object-fit: contain;">
         <span data-dc-tpl="63" style="flex: 0 0 auto; font: 600 10px / 1.2 Montserrat; letter-spacing: 0.06em; border-left: 2px solid rgb(15, 169, 180); padding-left: 10px; background: linear-gradient(90deg, rgb(37, 99, 235), rgb(15, 169, 180)) text; color: transparent;">CZAS POD<br data-dc-tpl="64">KONTROLĄ</span>
       </div>
       
@@ -606,233 +629,242 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
 
     
-      <section data-dc-tpl="2093" style="padding: 42px 56px; background: rgb(248, 250, 252); border-top: 1px solid rgb(226, 232, 240); border-bottom: 1px solid rgb(226, 232, 240);">
-        <div data-dc-tpl="2094" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin: 0px 0px 22px;">
-          <div data-dc-tpl="2095" style="flex: 1 1 420px; min-width: 0px;">
-            <p data-dc-tpl="2096" style="margin: 0px 0px 8px; font: 600 12px Montserrat; letter-spacing: 0.055em; color: rgb(37, 99, 235);">WZORY DO POBRANIA</p>
-            <h2 data-dc-tpl="2097" style="margin: 0px 0px 10px; font: 600 30px / 1.2 Montserrat; color: rgb(15, 23, 42); max-width: 720px; text-wrap: pretty;"><span class="sc-interp">Cztery wzory, które zastępują arkusz prowadzony ręcznie</span></h2>
-            <p data-dc-tpl="2098" style="margin: 0px; font: 400 15px / 1.7 &quot;Open Sans&quot;; color: rgb(100, 116, 139); max-width: 780px; text-wrap: pretty;"><span class="sc-interp">Pliki otwierają się w nowej karcie i drukują bezpośrednio z przeglądarki — bez rejestracji, bez podawania adresu e-mail. Każdy wzór ma logotyp BioSys z hasłem „Czas pod kontrolą” i przypis z podstawą prawną, więc możesz go od razu włożyć do dokumentacji.</span></p>
+      <section data-dc-tpl="2096" style="padding: 42px 56px; background: rgb(248, 250, 252); border-top: 1px solid rgb(226, 232, 240); border-bottom: 1px solid rgb(226, 232, 240);">
+        <div data-dc-tpl="2097" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin: 0px 0px 22px;">
+          <div data-dc-tpl="2098" style="flex: 1 1 420px; min-width: 0px;">
+            <p data-dc-tpl="2099" style="margin: 0px 0px 8px; font: 600 12px Montserrat; letter-spacing: 0.055em; color: rgb(37, 99, 235);">WZORY DO POBRANIA</p>
+            <h2 data-dc-tpl="2100" style="margin: 0px 0px 10px; font: 600 30px / 1.2 Montserrat; color: rgb(15, 23, 42); max-width: 720px; text-wrap: pretty;"><span class="sc-interp">Cztery wzory, które zastępują arkusz prowadzony ręcznie</span></h2>
+            <p data-dc-tpl="2101" style="margin: 0px; font: 400 15px / 1.7 &quot;Open Sans&quot;; color: rgb(100, 116, 139); max-width: 780px; text-wrap: pretty;"><span class="sc-interp">Pliki otwierają się w nowej karcie i drukują bezpośrednio z przeglądarki — bez rejestracji, bez podawania adresu e-mail. Każdy wzór ma logotyp BioSys z hasłem „Czas pod kontrolą” i przypis z podstawą prawną, więc możesz go od razu włożyć do dokumentacji.</span></p>
           </div>
-          <p data-dc-tpl="2099" style="margin: 0px 0px 5px; font: 600 13px &quot;Open Sans&quot;; color: rgb(100, 116, 139); white-space: nowrap;"><span class="sc-interp">4 wzorów gotowych do wydruku</span></p>
+          <p data-dc-tpl="2102" style="margin: 0px 0px 5px; font: 600 13px &quot;Open Sans&quot;; color: rgb(100, 116, 139); white-space: nowrap;"><span class="sc-interp">4 wzorów gotowych do wydruku</span></p>
         </div>
-        <div data-dc-tpl="2100" style="display: flex; gap: 9px; flex-wrap: wrap; margin: 0px 0px 24px;">
+        <div data-dc-tpl="2103" style="display: flex; gap: 9px; flex-wrap: wrap; margin: 0px 0px 24px;">
           
-            <button data-dc-tpl="2102" style="font: 600 12.5px &quot;Open Sans&quot;; border-radius: 999px; padding: 9px 16px; cursor: pointer; white-space: nowrap; transition: 0.15s; border: 1px solid rgb(15, 23, 42); background: rgb(15, 23, 42); color: rgb(255, 255, 255);"><span class="sc-interp">Wszystkie</span></button>
+            <button data-dc-tpl="2105" style="font: 600 12.5px &quot;Open Sans&quot;; border-radius: 999px; padding: 9px 16px; cursor: pointer; white-space: nowrap; transition: 0.15s; border: 1px solid rgb(15, 23, 42); background: rgb(15, 23, 42); color: rgb(255, 255, 255);"><span class="sc-interp">Wszystkie</span></button>
           
-            <button data-dc-tpl="2102" style="font: 600 12.5px &quot;Open Sans&quot;; border-radius: 999px; padding: 9px 16px; cursor: pointer; white-space: nowrap; transition: 0.15s; border: 1px solid rgb(219, 227, 236); background: rgb(255, 255, 255); color: rgb(71, 85, 105);"><span class="sc-interp">Czas pracy</span></button>
+            <button data-dc-tpl="2105" style="font: 600 12.5px &quot;Open Sans&quot;; border-radius: 999px; padding: 9px 16px; cursor: pointer; white-space: nowrap; transition: 0.15s; border: 1px solid rgb(219, 227, 236); background: rgb(255, 255, 255); color: rgb(71, 85, 105);"><span class="sc-interp">Czas pracy</span></button>
           
-            <button data-dc-tpl="2102" style="font: 600 12.5px &quot;Open Sans&quot;; border-radius: 999px; padding: 9px 16px; cursor: pointer; white-space: nowrap; transition: 0.15s; border: 1px solid rgb(219, 227, 236); background: rgb(255, 255, 255); color: rgb(71, 85, 105);"><span class="sc-interp">Produkcja</span></button>
+            <button data-dc-tpl="2105" style="font: 600 12.5px &quot;Open Sans&quot;; border-radius: 999px; padding: 9px 16px; cursor: pointer; white-space: nowrap; transition: 0.15s; border: 1px solid rgb(219, 227, 236); background: rgb(255, 255, 255); color: rgb(71, 85, 105);"><span class="sc-interp">Produkcja</span></button>
           
-            <button data-dc-tpl="2102" style="font: 600 12.5px &quot;Open Sans&quot;; border-radius: 999px; padding: 9px 16px; cursor: pointer; white-space: nowrap; transition: 0.15s; border: 1px solid rgb(219, 227, 236); background: rgb(255, 255, 255); color: rgb(71, 85, 105);"><span class="sc-interp">Kadry</span></button>
-          
-        </div>
-        <div data-dc-tpl="2103" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 16px;">
-          
-            <div data-dc-tpl="2105" class="scp15" style="display: flex; gap: 18px; align-items: flex-start; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; padding: 22px 24px; transition: box-shadow 0.16s, transform 0.16s;">
-              <div data-dc-tpl="2106" class="bs-sheet" style="flex: 0 0 auto; position: relative; width: 78px; height: 106px; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 5px; overflow: hidden; box-shadow: rgba(15, 23, 42, 0.09) 0px 6px 14px;">
-                <span data-dc-tpl="2107" style="position: absolute; left: 0px; right: 0px; top: 0px; height: 7px; background: linear-gradient(90deg, rgb(37, 99, 235), rgb(56, 189, 248));"></span>
-                <span data-dc-tpl="2108" style="position: absolute; left: 8px; top: 16px; width: 30px; height: 3px; border-radius: 2px; background: rgb(15, 23, 42);"></span>
-                <span data-dc-tpl="2109" style="position: absolute; left: 8px; top: 23px; width: 20px; height: 3px; border-radius: 2px; background: rgb(148, 163, 184);"></span>
-                <span data-dc-tpl="2110" style="position: absolute; left: 8px; right: 8px; top: 34px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0s infinite normal none running sheetFill;"></span>
-                <span data-dc-tpl="2111" style="position: absolute; left: 8px; right: 8px; top: 41px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.32s infinite normal none running sheetFill;"></span>
-                <span data-dc-tpl="2112" style="position: absolute; left: 8px; right: 8px; top: 48px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.64s infinite normal none running sheetFill;"></span>
-                <span data-dc-tpl="2113" style="position: absolute; left: 8px; right: 8px; top: 58px; height: 34px; border: 1px solid rgb(219, 227, 236); border-radius: 2px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 12px, rgb(232, 238, 247) 12px, rgb(232, 238, 247) 13px), repeating-linear-gradient(transparent 0px, transparent 8px, rgb(232, 238, 247) 8px, rgb(232, 238, 247) 9px);"></span>
-                <span data-dc-tpl="2114" style="position: absolute; left: 8px; bottom: 9px; width: 26px; height: 2px; border-radius: 2px; background: rgb(203, 213, 225);"></span>
-              </div>
-              <div data-dc-tpl="2115" style="flex: 1 1 0px; min-width: 0px; display: flex; flex-direction: column; gap: 9px;">
-                <div data-dc-tpl="2116" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                  <span data-dc-tpl="2117" style="font: 600 11px Montserrat; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(29, 78, 216); background: rgb(239, 246, 255); border: 1px solid rgb(191, 219, 254); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">Czas pracy</span></span>
-                  <span data-dc-tpl="2118" style="font: 600 10.5px &quot;Open Sans&quot;; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(148, 163, 184);"><span class="sc-interp">A4 poziomo · 1 strona</span></span>
-                </div>
-                <h3 data-dc-tpl="2119" style="margin: 0px; font: 600 17.5px / 1.3 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Ewidencja czasu pracy — miesięczna karta</span></h3>
-                <p data-dc-tpl="2120" style="margin: 0px; font: 400 14px / 1.7 &quot;Open Sans&quot;; color: rgb(71, 85, 105); text-wrap: pretty;"><span class="sc-interp">Karta jednego pracownika na cały miesiąc: godziny rozpoczęcia i zakończenia, przerwa, godziny przepracowane, nadgodziny, praca w nocy i kod nieobecności. Na dole suma miesięczna, legenda dwunastu kodów i miejsce na podpisy.</span></p>
-                <div data-dc-tpl="2121" style="display: flex; gap: 7px; flex-wrap: wrap;">
-                  
-                    <span data-dc-tpl="2123" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">31 dni + suma</span></span>
-                  
-                    <span data-dc-tpl="2123" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">12 kodów nieobecności</span></span>
-                  
-                    <span data-dc-tpl="2123" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">art. 149 Kodeksu pracy</span></span>
-                  
-                </div>
-                <div data-dc-tpl="2124" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 2px;">
-                  <a data-dc-tpl="2125" href="/biosys-podglad/materialy/ewidencja-czasu-pracy-wzor.dc.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; font: 700 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(135deg, rgb(37, 99, 235), rgb(15, 169, 180)); border-radius: 11px; padding: 0px 20px; text-decoration: none; box-shadow: rgba(37, 99, 235, 0.24) 0px 10px 22px;">Otwórz wzór</a>
-                  <span data-dc-tpl="2126" style="font: 400 12px / 1.5 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Nowa karta · Ctrl+P zapisuje jako PDF</span>
-                </div>
-              </div>
-            </div>
-          
-            <div data-dc-tpl="2105" class="scp15" style="display: flex; gap: 18px; align-items: flex-start; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; padding: 22px 24px; transition: box-shadow 0.16s, transform 0.16s;">
-              <div data-dc-tpl="2106" class="bs-sheet" style="flex: 0 0 auto; position: relative; width: 78px; height: 106px; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 5px; overflow: hidden; box-shadow: rgba(15, 23, 42, 0.09) 0px 6px 14px;">
-                <span data-dc-tpl="2107" style="position: absolute; left: 0px; right: 0px; top: 0px; height: 7px; background: linear-gradient(90deg, rgb(245, 158, 11), rgb(252, 211, 77));"></span>
-                <span data-dc-tpl="2108" style="position: absolute; left: 8px; top: 16px; width: 30px; height: 3px; border-radius: 2px; background: rgb(15, 23, 42);"></span>
-                <span data-dc-tpl="2109" style="position: absolute; left: 8px; top: 23px; width: 20px; height: 3px; border-radius: 2px; background: rgb(148, 163, 184);"></span>
-                <span data-dc-tpl="2110" style="position: absolute; left: 8px; right: 8px; top: 34px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0s infinite normal none running sheetFill;"></span>
-                <span data-dc-tpl="2111" style="position: absolute; left: 8px; right: 8px; top: 41px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.32s infinite normal none running sheetFill;"></span>
-                <span data-dc-tpl="2112" style="position: absolute; left: 8px; right: 8px; top: 48px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.64s infinite normal none running sheetFill;"></span>
-                <span data-dc-tpl="2113" style="position: absolute; left: 8px; right: 8px; top: 58px; height: 34px; border: 1px solid rgb(219, 227, 236); border-radius: 2px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 12px, rgb(232, 238, 247) 12px, rgb(232, 238, 247) 13px), repeating-linear-gradient(transparent 0px, transparent 8px, rgb(232, 238, 247) 8px, rgb(232, 238, 247) 9px);"></span>
-                <span data-dc-tpl="2114" style="position: absolute; left: 8px; bottom: 9px; width: 26px; height: 2px; border-radius: 2px; background: rgb(203, 213, 225);"></span>
-              </div>
-              <div data-dc-tpl="2115" style="flex: 1 1 0px; min-width: 0px; display: flex; flex-direction: column; gap: 9px;">
-                <div data-dc-tpl="2116" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                  <span data-dc-tpl="2117" style="font: 600 11px Montserrat; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(180, 83, 9); background: rgb(254, 243, 199); border: 1px solid rgb(252, 211, 77); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">Produkcja</span></span>
-                  <span data-dc-tpl="2118" style="font: 600 10.5px &quot;Open Sans&quot;; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(148, 163, 184);"><span class="sc-interp">A4 poziomo · 1 strona</span></span>
-                </div>
-                <h3 data-dc-tpl="2119" style="margin: 0px; font: 600 17.5px / 1.3 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Karta pracy — rozliczenie zlecenia produkcyjnego</span></h3>
-                <p data-dc-tpl="2120" style="margin: 0px; font: 400 14px / 1.7 &quot;Open Sans&quot;; color: rgb(71, 85, 105); text-wrap: pretty;"><span class="sc-interp">Rozliczenie jednego zlecenia: osiemnaście wierszy na czynności i etapy, czas rzeczywisty obok technologicznego, kolumna odchylenia i ilość wykonana. Osobna tabela na zdarzenia specjalne — awarie, przestoje i zdarzenia losowe wraz z miejscem wystąpienia.</span></p>
-                <div data-dc-tpl="2121" style="display: flex; gap: 7px; flex-wrap: wrap;">
-                  
-                    <span data-dc-tpl="2123" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">18 czynności</span></span>
-                  
-                    <span data-dc-tpl="2123" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">odchylenie od normy</span></span>
-                  
-                    <span data-dc-tpl="2123" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">awarie i przestoje</span></span>
-                  
-                </div>
-                <div data-dc-tpl="2124" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 2px;">
-                  <a data-dc-tpl="2125" href="/biosys-podglad/materialy/karta-pracy-zlecenie-wzor.dc.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; font: 700 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(135deg, rgb(37, 99, 235), rgb(15, 169, 180)); border-radius: 11px; padding: 0px 20px; text-decoration: none; box-shadow: rgba(37, 99, 235, 0.24) 0px 10px 22px;">Otwórz wzór</a>
-                  <span data-dc-tpl="2126" style="font: 400 12px / 1.5 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Nowa karta · Ctrl+P zapisuje jako PDF</span>
-                </div>
-              </div>
-            </div>
-          
-            <div data-dc-tpl="2105" class="scp15" style="display: flex; gap: 18px; align-items: flex-start; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; padding: 22px 24px; transition: box-shadow 0.16s, transform 0.16s;">
-              <div data-dc-tpl="2106" class="bs-sheet" style="flex: 0 0 auto; position: relative; width: 78px; height: 106px; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 5px; overflow: hidden; box-shadow: rgba(15, 23, 42, 0.09) 0px 6px 14px;">
-                <span data-dc-tpl="2107" style="position: absolute; left: 0px; right: 0px; top: 0px; height: 7px; background: linear-gradient(90deg, rgb(15, 169, 180), rgb(56, 189, 248));"></span>
-                <span data-dc-tpl="2108" style="position: absolute; left: 8px; top: 16px; width: 30px; height: 3px; border-radius: 2px; background: rgb(15, 23, 42);"></span>
-                <span data-dc-tpl="2109" style="position: absolute; left: 8px; top: 23px; width: 20px; height: 3px; border-radius: 2px; background: rgb(148, 163, 184);"></span>
-                <span data-dc-tpl="2110" style="position: absolute; left: 8px; right: 8px; top: 34px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0s infinite normal none running sheetFill;"></span>
-                <span data-dc-tpl="2111" style="position: absolute; left: 8px; right: 8px; top: 41px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.32s infinite normal none running sheetFill;"></span>
-                <span data-dc-tpl="2112" style="position: absolute; left: 8px; right: 8px; top: 48px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.64s infinite normal none running sheetFill;"></span>
-                <span data-dc-tpl="2113" style="position: absolute; left: 8px; right: 8px; top: 58px; height: 34px; border: 1px solid rgb(219, 227, 236); border-radius: 2px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 12px, rgb(232, 238, 247) 12px, rgb(232, 238, 247) 13px), repeating-linear-gradient(transparent 0px, transparent 8px, rgb(232, 238, 247) 8px, rgb(232, 238, 247) 9px);"></span>
-                <span data-dc-tpl="2114" style="position: absolute; left: 8px; bottom: 9px; width: 26px; height: 2px; border-radius: 2px; background: rgb(203, 213, 225);"></span>
-              </div>
-              <div data-dc-tpl="2115" style="flex: 1 1 0px; min-width: 0px; display: flex; flex-direction: column; gap: 9px;">
-                <div data-dc-tpl="2116" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                  <span data-dc-tpl="2117" style="font: 600 11px Montserrat; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(13, 133, 119); background: rgb(236, 253, 245); border: 1px solid rgb(153, 246, 228); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">Kadry</span></span>
-                  <span data-dc-tpl="2118" style="font: 600 10.5px &quot;Open Sans&quot;; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(148, 163, 184);"><span class="sc-interp">A4 pionowo · 1 strona</span></span>
-                </div>
-                <h3 data-dc-tpl="2119" style="margin: 0px; font: 600 17.5px / 1.3 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Wniosek urlopowy i zgoda na wyjście prywatne</span></h3>
-                <p data-dc-tpl="2120" style="margin: 0px; font: 400 14px / 1.7 &quot;Open Sans&quot;; color: rgb(71, 85, 105); text-wrap: pretty;"><span class="sc-interp">Dwa formularze na jednej stronie. Część A: wniosek o urlop z sześcioma rodzajami do zaznaczenia, terminem, liczbą dni i zastępstwem. Część B: wyjście prywatne z godziną wyjścia i powrotu oraz terminem odpracowania i przypisem o art. 151 § 2¹ Kodeksu pracy.</span></p>
-                <div data-dc-tpl="2121" style="display: flex; gap: 7px; flex-wrap: wrap;">
-                  
-                    <span data-dc-tpl="2123" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">6 rodzajów urlopu</span></span>
-                  
-                    <span data-dc-tpl="2123" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">wyjście i odpracowanie</span></span>
-                  
-                    <span data-dc-tpl="2123" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">trzy podpisy</span></span>
-                  
-                </div>
-                <div data-dc-tpl="2124" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 2px;">
-                  <a data-dc-tpl="2125" href="/biosys-podglad/materialy/wniosek-urlopowy-wyjscie-prywatne-wzor.dc.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; font: 700 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(135deg, rgb(37, 99, 235), rgb(15, 169, 180)); border-radius: 11px; padding: 0px 20px; text-decoration: none; box-shadow: rgba(37, 99, 235, 0.24) 0px 10px 22px;">Otwórz wzór</a>
-                  <span data-dc-tpl="2126" style="font: 400 12px / 1.5 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Nowa karta · Ctrl+P zapisuje jako PDF</span>
-                </div>
-              </div>
-            </div>
-          
-            <div data-dc-tpl="2105" class="scp15" style="display: flex; gap: 18px; align-items: flex-start; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; padding: 22px 24px; transition: box-shadow 0.16s, transform 0.16s;">
-              <div data-dc-tpl="2106" class="bs-sheet" style="flex: 0 0 auto; position: relative; width: 78px; height: 106px; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 5px; overflow: hidden; box-shadow: rgba(15, 23, 42, 0.09) 0px 6px 14px;">
-                <span data-dc-tpl="2107" style="position: absolute; left: 0px; right: 0px; top: 0px; height: 7px; background: linear-gradient(90deg, rgb(37, 99, 235), rgb(56, 189, 248));"></span>
-                <span data-dc-tpl="2108" style="position: absolute; left: 8px; top: 16px; width: 30px; height: 3px; border-radius: 2px; background: rgb(15, 23, 42);"></span>
-                <span data-dc-tpl="2109" style="position: absolute; left: 8px; top: 23px; width: 20px; height: 3px; border-radius: 2px; background: rgb(148, 163, 184);"></span>
-                <span data-dc-tpl="2110" style="position: absolute; left: 8px; right: 8px; top: 34px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0s infinite normal none running sheetFill;"></span>
-                <span data-dc-tpl="2111" style="position: absolute; left: 8px; right: 8px; top: 41px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.32s infinite normal none running sheetFill;"></span>
-                <span data-dc-tpl="2112" style="position: absolute; left: 8px; right: 8px; top: 48px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.64s infinite normal none running sheetFill;"></span>
-                <span data-dc-tpl="2113" style="position: absolute; left: 8px; right: 8px; top: 58px; height: 34px; border: 1px solid rgb(219, 227, 236); border-radius: 2px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 12px, rgb(232, 238, 247) 12px, rgb(232, 238, 247) 13px), repeating-linear-gradient(transparent 0px, transparent 8px, rgb(232, 238, 247) 8px, rgb(232, 238, 247) 9px);"></span>
-                <span data-dc-tpl="2114" style="position: absolute; left: 8px; bottom: 9px; width: 26px; height: 2px; border-radius: 2px; background: rgb(203, 213, 225);"></span>
-              </div>
-              <div data-dc-tpl="2115" style="flex: 1 1 0px; min-width: 0px; display: flex; flex-direction: column; gap: 9px;">
-                <div data-dc-tpl="2116" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                  <span data-dc-tpl="2117" style="font: 600 11px Montserrat; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(29, 78, 216); background: rgb(239, 246, 255); border: 1px solid rgb(191, 219, 254); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">Czas pracy</span></span>
-                  <span data-dc-tpl="2118" style="font: 600 10.5px &quot;Open Sans&quot;; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(148, 163, 184);"><span class="sc-interp">A4 poziomo · 1 strona</span></span>
-                </div>
-                <h3 data-dc-tpl="2119" style="margin: 0px; font: 600 17.5px / 1.3 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Harmonogram (grafik) pracy — miesiąc</span></h3>
-                <p data-dc-tpl="2120" style="margin: 0px; font: 400 14px / 1.7 &quot;Open Sans&quot;; color: rgb(71, 85, 105); text-wrap: pretty;"><span class="sc-interp">Siatka piętnastu pracowników na dni od 1 do 31, z kolumnami planu godzin, normy i różnicy. Dziewięć oznaczeń zmian i nieobecności — od zmiany nocnej po delegację — oraz przypis o terminie przekazania rozkładu pracownikom.</span></p>
-                <div data-dc-tpl="2121" style="display: flex; gap: 7px; flex-wrap: wrap;">
-                  
-                    <span data-dc-tpl="2123" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">15 pracowników × 31 dni</span></span>
-                  
-                    <span data-dc-tpl="2123" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">9 oznaczeń zmian</span></span>
-                  
-                    <span data-dc-tpl="2123" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">art. 129 § 3 Kodeksu pracy</span></span>
-                  
-                </div>
-                <div data-dc-tpl="2124" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 2px;">
-                  <a data-dc-tpl="2125" href="/biosys-podglad/materialy/harmonogram-pracy-wzor.dc.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; font: 700 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(135deg, rgb(37, 99, 235), rgb(15, 169, 180)); border-radius: 11px; padding: 0px 20px; text-decoration: none; box-shadow: rgba(37, 99, 235, 0.24) 0px 10px 22px;">Otwórz wzór</a>
-                  <span data-dc-tpl="2126" style="font: 400 12px / 1.5 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Nowa karta · Ctrl+P zapisuje jako PDF</span>
-                </div>
-              </div>
-            </div>
+            <button data-dc-tpl="2105" style="font: 600 12.5px &quot;Open Sans&quot;; border-radius: 999px; padding: 9px 16px; cursor: pointer; white-space: nowrap; transition: 0.15s; border: 1px solid rgb(219, 227, 236); background: rgb(255, 255, 255); color: rgb(71, 85, 105);"><span class="sc-interp">Kadry</span></button>
           
         </div>
-        <p data-dc-tpl="2127" style="margin: 24px 0px 0px; font: 400 14px / 1.7 &quot;Open Sans&quot;; color: rgb(100, 116, 139); max-width: 820px; text-wrap: pretty;"><span class="sc-interp">Wzory pobierasz bez formularza. Rozbudowane poradniki wdrożeniowe — projekt stref kontroli dostępu, migracja danych z arkuszy, konfiguracja reguł rozliczania — wysyłamy na wskazany adres e-mail; poproś o nie w formularzu kontaktowym.</span></p>
+        <div data-dc-tpl="2106" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 16px;">
+          
+            <div data-dc-tpl="2108" class="scp15" style="display: flex; gap: 18px; align-items: flex-start; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; padding: 22px 24px; transition: box-shadow 0.16s, transform 0.16s;">
+              <div data-dc-tpl="2109" class="bs-sheet" style="flex: 0 0 auto; position: relative; width: 78px; height: 106px; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 5px; overflow: hidden; box-shadow: rgba(15, 23, 42, 0.09) 0px 6px 14px;">
+                <span data-dc-tpl="2110" style="position: absolute; left: 0px; right: 0px; top: 0px; height: 7px; background: linear-gradient(90deg, rgb(37, 99, 235), rgb(56, 189, 248));"></span>
+                <span data-dc-tpl="2111" style="position: absolute; left: 8px; top: 16px; width: 30px; height: 3px; border-radius: 2px; background: rgb(15, 23, 42);"></span>
+                <span data-dc-tpl="2112" style="position: absolute; left: 8px; top: 23px; width: 20px; height: 3px; border-radius: 2px; background: rgb(148, 163, 184);"></span>
+                <span data-dc-tpl="2113" style="position: absolute; left: 8px; right: 8px; top: 34px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0s infinite normal none running sheetFill;"></span>
+                <span data-dc-tpl="2114" style="position: absolute; left: 8px; right: 8px; top: 41px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.32s infinite normal none running sheetFill;"></span>
+                <span data-dc-tpl="2115" style="position: absolute; left: 8px; right: 8px; top: 48px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.64s infinite normal none running sheetFill;"></span>
+                <span data-dc-tpl="2116" style="position: absolute; left: 8px; right: 8px; top: 58px; height: 34px; border: 1px solid rgb(219, 227, 236); border-radius: 2px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 12px, rgb(232, 238, 247) 12px, rgb(232, 238, 247) 13px), repeating-linear-gradient(transparent 0px, transparent 8px, rgb(232, 238, 247) 8px, rgb(232, 238, 247) 9px);"></span>
+                <span data-dc-tpl="2117" style="position: absolute; left: 8px; bottom: 9px; width: 26px; height: 2px; border-radius: 2px; background: rgb(203, 213, 225);"></span>
+              </div>
+              <div data-dc-tpl="2118" style="flex: 1 1 0px; min-width: 0px; display: flex; flex-direction: column; gap: 9px;">
+                <div data-dc-tpl="2119" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <span data-dc-tpl="2120" style="font: 600 11px Montserrat; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(29, 78, 216); background: rgb(239, 246, 255); border: 1px solid rgb(191, 219, 254); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">Czas pracy</span></span>
+                  <span data-dc-tpl="2121" style="font: 600 10.5px &quot;Open Sans&quot;; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(148, 163, 184);"><span class="sc-interp">A4 poziomo · 1 strona</span></span>
+                </div>
+                <h3 data-dc-tpl="2122" style="margin: 0px; font: 600 17.5px / 1.3 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Ewidencja czasu pracy — miesięczna karta</span></h3>
+                <p data-dc-tpl="2123" style="margin: 0px; font: 400 14px / 1.7 &quot;Open Sans&quot;; color: rgb(71, 85, 105); text-wrap: pretty;"><span class="sc-interp">Karta jednego pracownika na cały miesiąc: godziny rozpoczęcia i zakończenia, przerwa, godziny przepracowane, nadgodziny, praca w nocy i kod nieobecności. Na dole suma miesięczna, legenda dwunastu kodów i miejsce na podpisy.</span></p>
+                <div data-dc-tpl="2124" style="display: flex; gap: 7px; flex-wrap: wrap;">
+                  
+                    <span data-dc-tpl="2126" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">31 dni + suma</span></span>
+                  
+                    <span data-dc-tpl="2126" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">12 kodów nieobecności</span></span>
+                  
+                    <span data-dc-tpl="2126" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">art. 149 Kodeksu pracy</span></span>
+                  
+                </div>
+                <div data-dc-tpl="2127" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 2px;">
+                  <a data-dc-tpl="2128" href="/biosys-podglad/materialy/ewidencja-czasu-pracy-wzor.dc.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; font: 700 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(135deg, rgb(37, 99, 235), rgb(15, 169, 180)); border-radius: 11px; padding: 0px 20px; text-decoration: none; box-shadow: rgba(37, 99, 235, 0.24) 0px 10px 22px;">Otwórz wzór</a>
+                  <span data-dc-tpl="2129" style="font: 400 12px / 1.5 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Nowa karta · Ctrl+P zapisuje jako PDF</span>
+                </div>
+              </div>
+            </div>
+          
+            <div data-dc-tpl="2108" class="scp15" style="display: flex; gap: 18px; align-items: flex-start; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; padding: 22px 24px; transition: box-shadow 0.16s, transform 0.16s;">
+              <div data-dc-tpl="2109" class="bs-sheet" style="flex: 0 0 auto; position: relative; width: 78px; height: 106px; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 5px; overflow: hidden; box-shadow: rgba(15, 23, 42, 0.09) 0px 6px 14px;">
+                <span data-dc-tpl="2110" style="position: absolute; left: 0px; right: 0px; top: 0px; height: 7px; background: linear-gradient(90deg, rgb(245, 158, 11), rgb(252, 211, 77));"></span>
+                <span data-dc-tpl="2111" style="position: absolute; left: 8px; top: 16px; width: 30px; height: 3px; border-radius: 2px; background: rgb(15, 23, 42);"></span>
+                <span data-dc-tpl="2112" style="position: absolute; left: 8px; top: 23px; width: 20px; height: 3px; border-radius: 2px; background: rgb(148, 163, 184);"></span>
+                <span data-dc-tpl="2113" style="position: absolute; left: 8px; right: 8px; top: 34px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0s infinite normal none running sheetFill;"></span>
+                <span data-dc-tpl="2114" style="position: absolute; left: 8px; right: 8px; top: 41px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.32s infinite normal none running sheetFill;"></span>
+                <span data-dc-tpl="2115" style="position: absolute; left: 8px; right: 8px; top: 48px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.64s infinite normal none running sheetFill;"></span>
+                <span data-dc-tpl="2116" style="position: absolute; left: 8px; right: 8px; top: 58px; height: 34px; border: 1px solid rgb(219, 227, 236); border-radius: 2px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 12px, rgb(232, 238, 247) 12px, rgb(232, 238, 247) 13px), repeating-linear-gradient(transparent 0px, transparent 8px, rgb(232, 238, 247) 8px, rgb(232, 238, 247) 9px);"></span>
+                <span data-dc-tpl="2117" style="position: absolute; left: 8px; bottom: 9px; width: 26px; height: 2px; border-radius: 2px; background: rgb(203, 213, 225);"></span>
+              </div>
+              <div data-dc-tpl="2118" style="flex: 1 1 0px; min-width: 0px; display: flex; flex-direction: column; gap: 9px;">
+                <div data-dc-tpl="2119" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <span data-dc-tpl="2120" style="font: 600 11px Montserrat; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(180, 83, 9); background: rgb(254, 243, 199); border: 1px solid rgb(252, 211, 77); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">Produkcja</span></span>
+                  <span data-dc-tpl="2121" style="font: 600 10.5px &quot;Open Sans&quot;; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(148, 163, 184);"><span class="sc-interp">A4 poziomo · 1 strona</span></span>
+                </div>
+                <h3 data-dc-tpl="2122" style="margin: 0px; font: 600 17.5px / 1.3 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Karta pracy — rozliczenie zlecenia produkcyjnego</span></h3>
+                <p data-dc-tpl="2123" style="margin: 0px; font: 400 14px / 1.7 &quot;Open Sans&quot;; color: rgb(71, 85, 105); text-wrap: pretty;"><span class="sc-interp">Rozliczenie jednego zlecenia: osiemnaście wierszy na czynności i etapy, czas rzeczywisty obok technologicznego, kolumna odchylenia i ilość wykonana. Osobna tabela na zdarzenia specjalne — awarie, przestoje i zdarzenia losowe wraz z miejscem wystąpienia.</span></p>
+                <div data-dc-tpl="2124" style="display: flex; gap: 7px; flex-wrap: wrap;">
+                  
+                    <span data-dc-tpl="2126" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">18 czynności</span></span>
+                  
+                    <span data-dc-tpl="2126" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">odchylenie od normy</span></span>
+                  
+                    <span data-dc-tpl="2126" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">awarie i przestoje</span></span>
+                  
+                </div>
+                <div data-dc-tpl="2127" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 2px;">
+                  <a data-dc-tpl="2128" href="/biosys-podglad/materialy/karta-pracy-zlecenie-wzor.dc.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; font: 700 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(135deg, rgb(37, 99, 235), rgb(15, 169, 180)); border-radius: 11px; padding: 0px 20px; text-decoration: none; box-shadow: rgba(37, 99, 235, 0.24) 0px 10px 22px;">Otwórz wzór</a>
+                  <span data-dc-tpl="2129" style="font: 400 12px / 1.5 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Nowa karta · Ctrl+P zapisuje jako PDF</span>
+                </div>
+              </div>
+            </div>
+          
+            <div data-dc-tpl="2108" class="scp15" style="display: flex; gap: 18px; align-items: flex-start; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; padding: 22px 24px; transition: box-shadow 0.16s, transform 0.16s;">
+              <div data-dc-tpl="2109" class="bs-sheet" style="flex: 0 0 auto; position: relative; width: 78px; height: 106px; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 5px; overflow: hidden; box-shadow: rgba(15, 23, 42, 0.09) 0px 6px 14px;">
+                <span data-dc-tpl="2110" style="position: absolute; left: 0px; right: 0px; top: 0px; height: 7px; background: linear-gradient(90deg, rgb(15, 169, 180), rgb(56, 189, 248));"></span>
+                <span data-dc-tpl="2111" style="position: absolute; left: 8px; top: 16px; width: 30px; height: 3px; border-radius: 2px; background: rgb(15, 23, 42);"></span>
+                <span data-dc-tpl="2112" style="position: absolute; left: 8px; top: 23px; width: 20px; height: 3px; border-radius: 2px; background: rgb(148, 163, 184);"></span>
+                <span data-dc-tpl="2113" style="position: absolute; left: 8px; right: 8px; top: 34px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0s infinite normal none running sheetFill;"></span>
+                <span data-dc-tpl="2114" style="position: absolute; left: 8px; right: 8px; top: 41px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.32s infinite normal none running sheetFill;"></span>
+                <span data-dc-tpl="2115" style="position: absolute; left: 8px; right: 8px; top: 48px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.64s infinite normal none running sheetFill;"></span>
+                <span data-dc-tpl="2116" style="position: absolute; left: 8px; right: 8px; top: 58px; height: 34px; border: 1px solid rgb(219, 227, 236); border-radius: 2px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 12px, rgb(232, 238, 247) 12px, rgb(232, 238, 247) 13px), repeating-linear-gradient(transparent 0px, transparent 8px, rgb(232, 238, 247) 8px, rgb(232, 238, 247) 9px);"></span>
+                <span data-dc-tpl="2117" style="position: absolute; left: 8px; bottom: 9px; width: 26px; height: 2px; border-radius: 2px; background: rgb(203, 213, 225);"></span>
+              </div>
+              <div data-dc-tpl="2118" style="flex: 1 1 0px; min-width: 0px; display: flex; flex-direction: column; gap: 9px;">
+                <div data-dc-tpl="2119" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <span data-dc-tpl="2120" style="font: 600 11px Montserrat; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(13, 133, 119); background: rgb(236, 253, 245); border: 1px solid rgb(153, 246, 228); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">Kadry</span></span>
+                  <span data-dc-tpl="2121" style="font: 600 10.5px &quot;Open Sans&quot;; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(148, 163, 184);"><span class="sc-interp">A4 pionowo · 1 strona</span></span>
+                </div>
+                <h3 data-dc-tpl="2122" style="margin: 0px; font: 600 17.5px / 1.3 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Wniosek urlopowy i zgoda na wyjście prywatne</span></h3>
+                <p data-dc-tpl="2123" style="margin: 0px; font: 400 14px / 1.7 &quot;Open Sans&quot;; color: rgb(71, 85, 105); text-wrap: pretty;"><span class="sc-interp">Dwa formularze na jednej stronie. Część A: wniosek o urlop z sześcioma rodzajami do zaznaczenia, terminem, liczbą dni i zastępstwem. Część B: wyjście prywatne z godziną wyjścia i powrotu oraz terminem odpracowania i przypisem o art. 151 § 2¹ Kodeksu pracy.</span></p>
+                <div data-dc-tpl="2124" style="display: flex; gap: 7px; flex-wrap: wrap;">
+                  
+                    <span data-dc-tpl="2126" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">6 rodzajów urlopu</span></span>
+                  
+                    <span data-dc-tpl="2126" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">wyjście i odpracowanie</span></span>
+                  
+                    <span data-dc-tpl="2126" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">trzy podpisy</span></span>
+                  
+                </div>
+                <div data-dc-tpl="2127" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 2px;">
+                  <a data-dc-tpl="2128" href="/biosys-podglad/materialy/wniosek-urlopowy-wyjscie-prywatne-wzor.dc.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; font: 700 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(135deg, rgb(37, 99, 235), rgb(15, 169, 180)); border-radius: 11px; padding: 0px 20px; text-decoration: none; box-shadow: rgba(37, 99, 235, 0.24) 0px 10px 22px;">Otwórz wzór</a>
+                  <span data-dc-tpl="2129" style="font: 400 12px / 1.5 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Nowa karta · Ctrl+P zapisuje jako PDF</span>
+                </div>
+              </div>
+            </div>
+          
+            <div data-dc-tpl="2108" class="scp15" style="display: flex; gap: 18px; align-items: flex-start; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; padding: 22px 24px; transition: box-shadow 0.16s, transform 0.16s;">
+              <div data-dc-tpl="2109" class="bs-sheet" style="flex: 0 0 auto; position: relative; width: 78px; height: 106px; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 5px; overflow: hidden; box-shadow: rgba(15, 23, 42, 0.09) 0px 6px 14px;">
+                <span data-dc-tpl="2110" style="position: absolute; left: 0px; right: 0px; top: 0px; height: 7px; background: linear-gradient(90deg, rgb(37, 99, 235), rgb(56, 189, 248));"></span>
+                <span data-dc-tpl="2111" style="position: absolute; left: 8px; top: 16px; width: 30px; height: 3px; border-radius: 2px; background: rgb(15, 23, 42);"></span>
+                <span data-dc-tpl="2112" style="position: absolute; left: 8px; top: 23px; width: 20px; height: 3px; border-radius: 2px; background: rgb(148, 163, 184);"></span>
+                <span data-dc-tpl="2113" style="position: absolute; left: 8px; right: 8px; top: 34px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0s infinite normal none running sheetFill;"></span>
+                <span data-dc-tpl="2114" style="position: absolute; left: 8px; right: 8px; top: 41px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.32s infinite normal none running sheetFill;"></span>
+                <span data-dc-tpl="2115" style="position: absolute; left: 8px; right: 8px; top: 48px; height: 1px; background: rgb(219, 227, 236); transform-origin: left center; animation: 6s ease-in-out 0.64s infinite normal none running sheetFill;"></span>
+                <span data-dc-tpl="2116" style="position: absolute; left: 8px; right: 8px; top: 58px; height: 34px; border: 1px solid rgb(219, 227, 236); border-radius: 2px; background: repeating-linear-gradient(90deg, transparent 0px, transparent 12px, rgb(232, 238, 247) 12px, rgb(232, 238, 247) 13px), repeating-linear-gradient(transparent 0px, transparent 8px, rgb(232, 238, 247) 8px, rgb(232, 238, 247) 9px);"></span>
+                <span data-dc-tpl="2117" style="position: absolute; left: 8px; bottom: 9px; width: 26px; height: 2px; border-radius: 2px; background: rgb(203, 213, 225);"></span>
+              </div>
+              <div data-dc-tpl="2118" style="flex: 1 1 0px; min-width: 0px; display: flex; flex-direction: column; gap: 9px;">
+                <div data-dc-tpl="2119" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <span data-dc-tpl="2120" style="font: 600 11px Montserrat; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(29, 78, 216); background: rgb(239, 246, 255); border: 1px solid rgb(191, 219, 254); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">Czas pracy</span></span>
+                  <span data-dc-tpl="2121" style="font: 600 10.5px &quot;Open Sans&quot;; letter-spacing: 0.05em; text-transform: uppercase; color: rgb(148, 163, 184);"><span class="sc-interp">A4 poziomo · 1 strona</span></span>
+                </div>
+                <h3 data-dc-tpl="2122" style="margin: 0px; font: 600 17.5px / 1.3 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Harmonogram (grafik) pracy — miesiąc</span></h3>
+                <p data-dc-tpl="2123" style="margin: 0px; font: 400 14px / 1.7 &quot;Open Sans&quot;; color: rgb(71, 85, 105); text-wrap: pretty;"><span class="sc-interp">Siatka piętnastu pracowników na dni od 1 do 31, z kolumnami planu godzin, normy i różnicy. Dziewięć oznaczeń zmian i nieobecności — od zmiany nocnej po delegację — oraz przypis o terminie przekazania rozkładu pracownikom.</span></p>
+                <div data-dc-tpl="2124" style="display: flex; gap: 7px; flex-wrap: wrap;">
+                  
+                    <span data-dc-tpl="2126" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">15 pracowników × 31 dni</span></span>
+                  
+                    <span data-dc-tpl="2126" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">9 oznaczeń zmian</span></span>
+                  
+                    <span data-dc-tpl="2126" style="font: 600 11.5px &quot;Open Sans&quot;; color: rgb(71, 85, 105); background: rgb(241, 245, 249); border: 1px solid rgb(226, 232, 240); border-radius: 999px; padding: 5px 11px;"><span class="sc-interp">art. 129 § 3 Kodeksu pracy</span></span>
+                  
+                </div>
+                <div data-dc-tpl="2127" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 2px;">
+                  <a data-dc-tpl="2128" href="/biosys-podglad/materialy/harmonogram-pracy-wzor.dc.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; font: 700 14px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: linear-gradient(135deg, rgb(37, 99, 235), rgb(15, 169, 180)); border-radius: 11px; padding: 0px 20px; text-decoration: none; box-shadow: rgba(37, 99, 235, 0.24) 0px 10px 22px;">Otwórz wzór</a>
+                  <span data-dc-tpl="2129" style="font: 400 12px / 1.5 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Nowa karta · Ctrl+P zapisuje jako PDF</span>
+                </div>
+              </div>
+            </div>
+          
+        </div>
+        <p data-dc-tpl="2130" style="margin: 24px 0px 0px; font: 400 14px / 1.7 &quot;Open Sans&quot;; color: rgb(100, 116, 139); max-width: 820px; text-wrap: pretty;"><span class="sc-interp">Wzory pobierasz bez formularza. Rozbudowane poradniki wdrożeniowe — projekt stref kontroli dostępu, migracja danych z arkuszy, konfiguracja reguł rozliczania — wysyłamy na wskazany adres e-mail; poproś o nie w formularzu kontaktowym.</span></p>
       </section>
     
 
     
-      <section data-dc-tpl="2129" style="padding: 42px 56px; background: rgb(255, 255, 255);">
-        <div data-dc-tpl="2130" style="max-width: 820px; display: flex; flex-direction: column; gap: 40px;">
+      <section data-dc-tpl="2132" style="padding: 42px 56px; background: rgb(255, 255, 255);">
+        <div data-dc-tpl="2133" style="max-width: 820px; display: flex; flex-direction: column; gap: 40px;">
           
-            <div data-dc-tpl="2132">
-              <h2 data-dc-tpl="2133" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Jak korzystać z tych wzorów</span></h2>
-              <div data-dc-tpl="2134" style="display: flex; flex-direction: column; gap: 16px;">
+            <div data-dc-tpl="2135">
+              <h2 data-dc-tpl="2136" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Jak korzystać z tych wzorów</span></h2>
+              <div data-dc-tpl="2137" style="display: flex; flex-direction: column; gap: 16px;">
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Każdy plik otwiera się jako gotowa strona A4 i drukuje wprost z przeglądarki — skrót Ctrl+P (na macOS Cmd+P) pozwala wydrukować kartę albo zapisać ją jako PDF. Wzory nie wymagają rejestracji ani podania adresu e-mail.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Każdy plik otwiera się jako gotowa strona A4 i drukuje wprost z przeglądarki — skrót Ctrl+P (na macOS Cmd+P) pozwala wydrukować kartę albo zapisać ją jako PDF. Wzory nie wymagają rejestracji ani podania adresu e-mail.</span></p>
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Wypełniać można je odręcznie po wydruku albo elektronicznie, jeśli zapiszesz plik jako PDF i użyjesz narzędzia do adnotacji. Karty mają rubryki opisane tak, jak nazywa je Kodeks pracy i rozporządzenie o dokumentacji pracowniczej, więc dane z nich przenosi się do listy płac bez tłumaczenia pojęć.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Wypełniać można je odręcznie po wydruku albo elektronicznie, jeśli zapiszesz plik jako PDF i użyjesz narzędzia do adnotacji. Karty mają rubryki opisane tak, jak nazywa je Kodeks pracy i rozporządzenie o dokumentacji pracowniczej, więc dane z nich przenosi się do listy płac bez tłumaczenia pojęć.</span></p>
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Wzory są neutralne i pasują do firmy o dowolnej wielkości. Jeśli w Twoim regulaminie pracy funkcjonują własne kody nieobecności albo dodatkowe rubryki, dopisz je w kolumnie „Uwagi” — struktura karty tego nie psuje.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Wzory są neutralne i pasują do firmy o dowolnej wielkości. Jeśli w Twoim regulaminie pracy funkcjonują własne kody nieobecności albo dodatkowe rubryki, dopisz je w kolumnie „Uwagi” — struktura karty tego nie psuje.</span></p>
                 
               </div>
             </div>
           
-            <div data-dc-tpl="2132">
-              <h2 data-dc-tpl="2133" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Kiedy wzór przestaje wystarczać</span></h2>
-              <div data-dc-tpl="2134" style="display: flex; flex-direction: column; gap: 16px;">
+            <div data-dc-tpl="2135">
+              <h2 data-dc-tpl="2136" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Kiedy wzór przestaje wystarczać</span></h2>
+              <div data-dc-tpl="2137" style="display: flex; flex-direction: column; gap: 16px;">
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Papierowa karta i arkusz kalkulacyjny sprawdzają się do kilku osób. Powyżej tego progu zaczyna dominować praca administracyjna: przepisywanie godzin, dopytywanie o brakujące wpisy, korekty po zamknięciu miesiąca i ustalanie, kto wpisał dane za kogo.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Papierowa karta i arkusz kalkulacyjny sprawdzają się do kilku osób. Powyżej tego progu zaczyna dominować praca administracyjna: przepisywanie godzin, dopytywanie o brakujące wpisy, korekty po zamknięciu miesiąca i ustalanie, kto wpisał dane za kogo.</span></p>
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Drugi sygnał to niezgodności, których nie da się rozstrzygnąć. Papierowa lista obecności nie zapisuje, kto i kiedy dokonał wpisu, więc spór o spóźnienie albo o wyjście prywatne kończy się słowem przeciwko słowu. Zapis z rejestratora ma znacznik czasu i nie podlega uzupełnianiu po fakcie.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Drugi sygnał to niezgodności, których nie da się rozstrzygnąć. Papierowa lista obecności nie zapisuje, kto i kiedy dokonał wpisu, więc spór o spóźnienie albo o wyjście prywatne kończy się słowem przeciwko słowu. Zapis z rejestratora ma znacznik czasu i nie podlega uzupełnianiu po fakcie.</span></p>
                 
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Trzeci to skala danych. Przy kilkunastu zleceniach dziennie ręczne karty pracy nie dają odpowiedzi, ile realnie zajmuje etap produkcji i który z nich odbiega od normy — bez porównania czasu technologicznego z rzeczywistym kalkulacja kosztów opiera się na szacunku.</span></p>
-                
-              </div>
-            </div>
-          
-            <div data-dc-tpl="2132">
-              <h2 data-dc-tpl="2133" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Pytania i odpowiedzi o dokumentację czasu pracy</span></h2>
-              <div data-dc-tpl="2134" style="display: flex; flex-direction: column; gap: 16px;">
-                
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Czy ewidencja czasu pracy musi być prowadzona w konkretnej formie? Nie. Przepisy nie narzucają formy — ewidencja może być papierowa albo elektroniczna. Określony jest natomiast zakres danych, który musi zawierać, oraz obowiązek jej prowadzenia dla każdego pracownika (art. 149 Kodeksu pracy).</span></p>
-                
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Czy pracownik podpisuje kartę ewidencji? Przepisy tego nie wymagają. Wielu pracodawców zbiera podpis jako potwierdzenie zapoznania się z rozliczeniem miesiąca i dlatego w naszym wzorze jest na niego miejsce — obok podpisu przełożonego.</span></p>
-                
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Kiedy trzeba przekazać pracownikom harmonogram? Rozkład czasu pracy przekazuje się co najmniej tydzień przed rozpoczęciem okresu, na jaki został sporządzony; okres ten nie może być krótszy niż miesiąc (art. 129 § 3 Kodeksu pracy).</span></p>
-                
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Czy odpracowanie wyjścia prywatnego to nadgodziny? Nie, jeżeli wyjście zostało udzielone na pisemny wniosek pracownika — czas odpracowania nie stanowi wtedy pracy w godzinach nadliczbowych (art. 151 § 2¹ Kodeksu pracy). Odpracowanie nie może jednak naruszać prawa do odpoczynku dobowego i tygodniowego.</span></p>
-                
-                  <p data-dc-tpl="2136" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Jak długo przechowuje się dokumentację czasu pracy? Dokumentacja pracownicza, w tym ewidencja czasu pracy, jest przechowywana przez 10 lat licząc od końca roku kalendarzowego, w którym stosunek pracy ustał — dla pracowników zatrudnionych od 1 stycznia 2019 roku.</span></p>
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Trzeci to skala danych. Przy kilkunastu zleceniach dziennie ręczne karty pracy nie dają odpowiedzi, ile realnie zajmuje etap produkcji i który z nich odbiega od normy — bez porównania czasu technologicznego z rzeczywistym kalkulacja kosztów opiera się na szacunku.</span></p>
                 
               </div>
             </div>
           
-        </div>
-      </section>
-    
-
-    
-      <section data-dc-tpl="2138" style="padding: 42px 56px; background: rgb(248, 250, 252); border-top: 1px solid rgb(226, 232, 240);">
-        <p data-dc-tpl="2139" style="margin: 0px 0px 8px; font: 600 12px Montserrat; letter-spacing: 0.055em; color: rgb(37, 99, 235);">NASZE ROZWIĄZANIE</p>
-        <h2 data-dc-tpl="2140" style="margin: 0px 0px 22px; font: 600 30px / 1.2 Montserrat; color: rgb(15, 23, 42); max-width: 640px;">Od teorii do systemu</h2>
-        <div data-dc-tpl="2141" class="scp14" style="max-width: 640px; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 14px; padding: 26px; cursor: pointer; transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s;">
-          <p data-dc-tpl="2142" style="margin: 0px 0px 8px; font: 700 17px / 1.3 &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">RCP — Rejestracja czasu pracy</span></p>
-          <p data-dc-tpl="2143" style="margin: 0px 0px 14px; font: 400 14.5px / 1.7 &quot;Open Sans&quot;; color: rgb(100, 116, 139); text-wrap: pretty;"><span class="sc-interp">Zobacz, jak te same dane powstają automatycznie: ewidencja, grafiki, wnioski i raporty w jednym systemie.</span></p>
-          <span data-dc-tpl="2144" style="font: 600 13.5px &quot;Open Sans&quot;; color: rgb(37, 99, 235);">Zobacz →</span>
+            <div data-dc-tpl="2135">
+              <h2 data-dc-tpl="2136" style="margin: 0px 0px 16px; font: 600 25px / 1.25 Montserrat; color: rgb(15, 23, 42); text-wrap: pretty;"><span class="sc-interp">Pytania i odpowiedzi o dokumentację czasu pracy</span></h2>
+              <div data-dc-tpl="2137" style="display: flex; flex-direction: column; gap: 16px;">
+                
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Czy ewidencja czasu pracy musi być prowadzona w konkretnej formie? Nie. Przepisy nie narzucają formy — ewidencja może być papierowa albo elektroniczna. Określony jest natomiast zakres danych, który musi zawierać, oraz obowiązek jej prowadzenia dla każdego pracownika (art. 149 Kodeksu pracy).</span></p>
+                
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Czy pracownik podpisuje kartę ewidencji? Przepisy tego nie wymagają. Wielu pracodawców zbiera podpis jako potwierdzenie zapoznania się z rozliczeniem miesiąca i dlatego w naszym wzorze jest na niego miejsce — obok podpisu przełożonego.</span></p>
+                
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Kiedy trzeba przekazać pracownikom harmonogram? Rozkład czasu pracy przekazuje się co najmniej tydzień przed rozpoczęciem okresu, na jaki został sporządzony; okres ten nie może być krótszy niż miesiąc (art. 129 § 3 Kodeksu pracy).</span></p>
+                
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Czy odpracowanie wyjścia prywatnego to nadgodziny? Nie, jeżeli wyjście zostało udzielone na pisemny wniosek pracownika — czas odpracowania nie stanowi wtedy pracy w godzinach nadliczbowych (art. 151 § 2¹ Kodeksu pracy). Odpracowanie nie może jednak naruszać prawa do odpoczynku dobowego i tygodniowego.</span></p>
+                
+                  <p data-dc-tpl="2139" style="margin: 0px; font: 400 16px / 1.85 &quot;Open Sans&quot;; color: rgb(51, 65, 85); text-wrap: pretty;"><span class="sc-interp">Jak długo przechowuje się dokumentację czasu pracy? Dokumentacja pracownicza, w tym ewidencja czasu pracy, jest przechowywana przez 10 lat licząc od końca roku kalendarzowego, w którym stosunek pracy ustał — dla pracowników zatrudnionych od 1 stycznia 2019 roku.</span></p>
+                
+              </div>
+            </div>
+          
         </div>
       </section>
     
 
     
+      <section data-dc-tpl="2141" style="padding: 42px 56px; background: rgb(248, 250, 252); border-top: 1px solid rgb(226, 232, 240);">
+        <p data-dc-tpl="2142" style="margin: 0px 0px 8px; font: 600 12px Montserrat; letter-spacing: 0.055em; color: rgb(37, 99, 235);">NASZE ROZWIĄZANIE</p>
+        <h2 data-dc-tpl="2143" style="margin: 0px 0px 22px; font: 600 30px / 1.2 Montserrat; color: rgb(15, 23, 42); max-width: 640px;">Od teorii do systemu</h2>
+        <div data-dc-tpl="2144" class="scp14" style="max-width: 640px; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 14px; padding: 26px; cursor: pointer; transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s;">
+          <p data-dc-tpl="2145" style="margin: 0px 0px 8px; font: 700 17px / 1.3 &quot;Open Sans&quot;; color: rgb(15, 23, 42);"><span class="sc-interp">RCP — Rejestracja czasu pracy</span></p>
+          <p data-dc-tpl="2146" style="margin: 0px 0px 14px; font: 400 14.5px / 1.7 &quot;Open Sans&quot;; color: rgb(100, 116, 139); text-wrap: pretty;"><span class="sc-interp">Zobacz, jak te same dane powstają automatycznie: ewidencja, grafiki, wnioski i raporty w jednym systemie.</span></p>
+          <span data-dc-tpl="2147" style="font: 600 13.5px &quot;Open Sans&quot;; color: rgb(37, 99, 235);">Zobacz →</span>
+        </div>
+      </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
 
     
 
@@ -841,21 +873,12 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
     
 
     
-    
 
     
-
-    
-
-    
-
-    
-
-    
-      <div data-dc-tpl="2654" id="kontakt-cta" style="position: relative; overflow: hidden; padding: 42px 56px; background: rgb(15, 23, 42); display: flex; align-items: center; justify-content: space-between; gap: 22px;">
-        <p data-dc-tpl="2655" style="position: relative; z-index: 1; margin: 0px; font: 600 20px / 1.4 Montserrat; color: rgb(255, 255, 255); max-width: 600px;"><span class="sc-interp">Wypełnianie tych kart zajmuje kadrom kilka godzin w miesiącu. Umów bezpłatną analizę procesu i zobacz, ile z tego przejmuje system.</span></p>
-        <div data-dc-tpl="2656" style="position: relative; z-index: 1; display: flex; gap: 12px; flex-shrink: 0;">
-          <button data-dc-tpl="2657" class="scpx" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 14px 22px; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s;">Umów analizę →</button>
+      <div data-dc-tpl="2657" id="kontakt-cta" style="position: relative; overflow: hidden; padding: 42px 56px; background: rgb(15, 23, 42); display: flex; align-items: center; justify-content: space-between; gap: 22px;">
+        <p data-dc-tpl="2658" style="position: relative; z-index: 1; margin: 0px; font: 600 20px / 1.4 Montserrat; color: rgb(255, 255, 255); max-width: 600px;"><span class="sc-interp">Wypełnianie tych kart zajmuje kadrom kilka godzin w miesiącu. Umów bezpłatną analizę procesu i zobacz, ile z tego przejmuje system.</span></p>
+        <div data-dc-tpl="2659" style="position: relative; z-index: 1; display: flex; gap: 12px; flex-shrink: 0;">
+          <button data-dc-tpl="2660" class="scpx" style="font: 600 15px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 14px 22px; cursor: pointer; white-space: nowrap; transition: transform 0.15s, box-shadow 0.15s;">Umów analizę →</button>
         </div>
       </div>
     
@@ -866,75 +889,75 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
     </main>
 
-    <footer data-dc-tpl="2717" style="background: rgb(15, 23, 42); padding: 44px 56px 26px; border-top: 1px solid rgb(30, 41, 59);">
-      <div data-dc-tpl="2718" style="display: flex; flex-flow: wrap; gap: 40px; justify-content: space-between;">
-        <div data-dc-tpl="2719" style="max-width: 260px;">
-          <img data-dc-tpl="2720" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="80" height="20" loading="lazy" decoding="async" style="height: 20px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; margin-bottom: 14px; object-fit: contain;">
-          <p data-dc-tpl="2721" style="margin: 0px; font: 400 13px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Systemy rejestracji czasu pracy, kontroli dostępu i automatyzacji procesów dla organizacji, które potrzebują wiarygodnych danych.</p>
+    <footer data-dc-tpl="2720" style="background: rgb(15, 23, 42); padding: 44px 56px 26px; border-top: 1px solid rgb(30, 41, 59);">
+      <div data-dc-tpl="2721" style="display: flex; flex-flow: wrap; gap: 40px; justify-content: space-between;">
+        <div data-dc-tpl="2722" style="max-width: 260px;">
+          <img data-dc-tpl="2723" src="/biosys-podglad/assets/biosys-logo-cropped.webp" alt="BioSys" width="80" height="20" loading="lazy" decoding="async" style="height: 20px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; margin-bottom: 14px; object-fit: contain;">
+          <p data-dc-tpl="2724" style="margin: 0px; font: 400 13px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184);">Systemy rejestracji czasu pracy, kontroli dostępu i automatyzacji procesów dla organizacji, które potrzebują wiarygodnych danych.</p>
         </div>
-        <div data-dc-tpl="2722">
-          <p data-dc-tpl="2723" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">ROZWIĄZANIA</p>
-          <div data-dc-tpl="2724" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2725" href="/biosys-podglad/sol-rcp/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">RCP</a><a  data-dc-tpl="2726" href="/biosys-podglad/sol-kd/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">KD</a><a data-dc-tpl="2727" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Automatyzacja</a><a data-dc-tpl="2728" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Etatomierz</a></div>
+        <div data-dc-tpl="2725">
+          <p data-dc-tpl="2726" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">ROZWIĄZANIA</p>
+          <div data-dc-tpl="2727" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2728" href="/biosys-podglad/sol-rcp/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">RCP</a><a  data-dc-tpl="2729" href="/biosys-podglad/sol-kd/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">KD</a><a data-dc-tpl="2730" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Automatyzacja</a><a data-dc-tpl="2731" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Etatomierz</a></div>
         </div>
-        <div data-dc-tpl="2729">
-          <p data-dc-tpl="2730" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">WIEDZA</p>
-          <div data-dc-tpl="2731" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2732" href="/biosys-podglad/blog/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Blog</a><a data-dc-tpl="2733" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Kalkulator oszczędności</a></div>
+        <div data-dc-tpl="2732">
+          <p data-dc-tpl="2733" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">WIEDZA</p>
+          <div data-dc-tpl="2734" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2735" href="/biosys-podglad/blog/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Blog</a><a data-dc-tpl="2736" href="#" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Kalkulator oszczędności</a></div>
         </div>
-        <div data-dc-tpl="2734">
-          <p data-dc-tpl="2735" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">KONTAKT</p>
-          <div data-dc-tpl="2736" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2737" href="/biosys-podglad/panel/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Panel klienta</a><a  data-dc-tpl="2738" href="/biosys-podglad/kontakt/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Formularz kontaktowy</a><a data-dc-tpl="2739" href="tel:+48123789537" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">+48 12 378 95 37</a><a data-dc-tpl="2740" href="mailto:biuro@biosys.pl" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">biuro@biosys.pl</a></div>
+        <div data-dc-tpl="2737">
+          <p data-dc-tpl="2738" style="margin: 0px 0px 14px; font: 600 12px Montserrat; letter-spacing: 0.06em; color: rgb(255, 255, 255);">KONTAKT</p>
+          <div data-dc-tpl="2739" style="display: flex; flex-direction: column; gap: 10px;"><a  data-dc-tpl="2740" href="/biosys-podglad/panel/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Panel klienta</a><a  data-dc-tpl="2741" href="/biosys-podglad/kontakt/" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Formularz kontaktowy</a><a data-dc-tpl="2742" href="tel:+48123789537" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">+48 12 378 95 37</a><a data-dc-tpl="2743" href="mailto:biuro@biosys.pl" class="scp1l" style="font: 400 13.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184);">biuro@biosys.pl</a></div>
         </div>
       </div>
-      <div data-dc-tpl="2741" style="border-top: 1px solid rgb(30, 41, 59); margin-top: 32px; padding-top: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px;">
-        <div data-dc-tpl="2742" style="display: flex; flex-wrap: wrap; gap: 4px 18px;">
-          <p data-dc-tpl="2743" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">© 2026 BioSys. Wszelkie prawa zastrzeżone.</p>
-          <p data-dc-tpl="2744" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Projekt i realizacja: Adrian Brzeziński GPS4ADV</p>
+      <div data-dc-tpl="2744" style="border-top: 1px solid rgb(30, 41, 59); margin-top: 32px; padding-top: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px;">
+        <div data-dc-tpl="2745" style="display: flex; flex-wrap: wrap; gap: 4px 18px;">
+          <p data-dc-tpl="2746" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">© 2026 BioSys. Wszelkie prawa zastrzeżone.</p>
+          <p data-dc-tpl="2747" style="margin: 0px; font: 400 12.5px &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Projekt i realizacja: Adrian Brzeziński GPS4ADV</p>
         </div>
-        <div data-dc-tpl="2745" style="display: flex; flex-wrap: wrap; gap: 20px;">
-          <a data-dc-tpl="2746" href="#" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Ustawienia cookies</a>
-          <a  data-dc-tpl="2747" href="/biosys-podglad/polityka/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Polityka prywatności</a>
-          <a  data-dc-tpl="2748" href="/biosys-podglad/regulamin/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Regulamin i dokumenty</a>
+        <div data-dc-tpl="2748" style="display: flex; flex-wrap: wrap; gap: 20px;">
+          <a data-dc-tpl="2749" href="#" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Ustawienia cookies</a>
+          <a  data-dc-tpl="2750" href="/biosys-podglad/polityka/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Polityka prywatności</a>
+          <a  data-dc-tpl="2751" href="/biosys-podglad/regulamin/" class="scp1l" style="font: 400 12.5px &quot;Open Sans&quot;; color: rgb(148, 163, 184); cursor: pointer;">Regulamin i dokumenty</a>
         </div>
       </div>
 
-      <div data-dc-tpl="2749" data-geo-seo="" data-mobile="0" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgb(22, 35, 58);">
-        <button data-dc-tpl="2750" data-geo-toggle="" class="scp1m" style="display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin: 0px; padding: 0px; background: none; border: 0px; font: 400 11px &quot;Open Sans&quot;; letter-spacing: 0.04em; color: rgb(71, 85, 105); cursor: pointer; text-align: left;">
-          <span data-dc-tpl="2751">Systemy RCP i KD w województwach</span>
-          <span data-dc-tpl="2752" style="font-size: 9px;"><span class="sc-interp">▼</span></span>
+      <div data-dc-tpl="2752" data-geo-seo="" data-mobile="0" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgb(22, 35, 58);">
+        <button data-dc-tpl="2753" data-geo-toggle="" class="scp1m" style="display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin: 0px; padding: 0px; background: none; border: 0px; font: 400 11px &quot;Open Sans&quot;; letter-spacing: 0.04em; color: rgb(71, 85, 105); cursor: pointer; text-align: left;">
+          <span data-dc-tpl="2754">Systemy RCP i KD w województwach</span>
+          <span data-dc-tpl="2755" style="font-size: 9px;"><span class="sc-interp">▼</span></span>
         </button>
-        <div data-dc-tpl="2753" data-geo-body="" data-open="0" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 22px; margin-top: 14px;">
+        <div data-dc-tpl="2756" data-geo-body="" data-open="0" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 22px; margin-top: 14px;">
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Dolnośląskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Dolnośląskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Kujawsko-pomorskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Kujawsko-pomorskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubelskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubelskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubuskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Lubuskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Łódzkie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Łódzkie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Małopolskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Małopolskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Mazowieckie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Mazowieckie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Opolskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Opolskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podkarpackie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podkarpackie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podlaskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Podlaskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Pomorskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Pomorskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Śląskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Śląskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Świętokrzyskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Świętokrzyskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Warmińsko-mazurskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Warmińsko-mazurskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Wielkopolskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Wielkopolskie</span></a>
           
-            <a data-dc-tpl="2755" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Zachodniopomorskie</span></a>
+            <a data-dc-tpl="2758" href="#" class="scp1l" style="font: 400 12.5px / 1.6 &quot;Open Sans&quot;; color: rgb(148, 163, 184); text-decoration: none; cursor: pointer;"><span class="sc-interp">Systemy RCP i KD Zachodniopomorskie</span></a>
           
         </div>
       </div>
@@ -942,16 +965,16 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
 
 
     
-      <div data-dc-tpl="2757" role="dialog" aria-label="Zgoda na pliki cookie" data-zgoda="panel" style="position: fixed; left: 20px; bottom: 20px; z-index: 9000; width: 430px; max-width: calc(-40px + 100vw); max-height: calc(-40px + 100vh); overflow: auto; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; box-shadow: rgba(15, 23, 42, 0.24) 0px 26px 64px; padding: 24px;">
-        <p data-dc-tpl="2758" style="margin: 0px 0px 10px; font: 600 16.9px Montserrat; color: rgb(15, 23, 42);">Cenimy Twoją prywatność</p>
-        <p data-dc-tpl="2759" style="margin: 0px 0px 18px; font: 400 13.5px / 1.65 &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Używamy niezbędnych plików cookie do działania serwisu. Za Twoją zgodą uruchomimy statystykę i marketing. Możesz zaakceptować wszystkie, odmówić lub wybrać preferencje. Zgodę możesz później zmienić. Szczegóły w polityce prywatności i cookies.</p>
+      <div data-dc-tpl="2760" role="dialog" aria-label="Zgoda na pliki cookie" data-zgoda="panel" style="position: fixed; left: 20px; bottom: 20px; z-index: 9000; width: 430px; max-width: calc(-40px + 100vw); max-height: calc(-40px + 100vh); overflow: auto; background: rgb(255, 255, 255); border: 1px solid rgb(226, 232, 240); border-radius: 16px; box-shadow: rgba(15, 23, 42, 0.24) 0px 26px 64px; padding: 24px;">
+        <p data-dc-tpl="2761" style="margin: 0px 0px 10px; font: 600 16.9px Montserrat; color: rgb(15, 23, 42);">Cenimy Twoją prywatność</p>
+        <p data-dc-tpl="2762" style="margin: 0px 0px 18px; font: 400 13.5px / 1.65 &quot;Open Sans&quot;; color: rgb(100, 116, 139);">Używamy niezbędnych plików cookie do działania serwisu. Za Twoją zgodą uruchomimy statystykę i marketing. Możesz zaakceptować wszystkie, odmówić lub wybrać preferencje. Zgodę możesz później zmienić. Szczegóły w polityce prywatności i cookies.</p>
 
         
 
-        <div data-dc-tpl="2779" style="display: flex; flex-wrap: wrap; gap: 10px;">
-          <button data-dc-tpl="2780" class="scp1n" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(15, 23, 42); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: transform 0.15s;">AKCEPTUJĘ</button>
-          <button data-dc-tpl="2781" class="scp1" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border: 1px solid rgb(15, 23, 42); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;">ODMÓW</button>
-          <button data-dc-tpl="2782" class="scp1e" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(51, 65, 85); background: rgb(255, 255, 255); border: 1px solid rgb(203, 213, 225); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;"><span class="sc-interp">PREFERENCJE</span></button>
+        <div data-dc-tpl="2782" style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <button data-dc-tpl="2783" class="scp1n" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(255, 255, 255); background: rgb(15, 23, 42); border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: transform 0.15s;">AKCEPTUJĘ</button>
+          <button data-dc-tpl="2784" class="scp1" style="font: 700 13px &quot;Open Sans&quot;; color: rgb(15, 23, 42); background: rgb(255, 255, 255); border: 1px solid rgb(15, 23, 42); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;">ODMÓW</button>
+          <button data-dc-tpl="2785" class="scp1e" style="font: 600 13px &quot;Open Sans&quot;; color: rgb(51, 65, 85); background: rgb(255, 255, 255); border: 1px solid rgb(203, 213, 225); border-radius: 9px; padding: 13px 22px; cursor: pointer; transition: background 0.15s;"><span class="sc-interp">PREFERENCJE</span></button>
         </div>
       </div>
     
@@ -970,7 +993,7 @@ svg text,svg tspan,svg textPath{font-family:'Montserrat',system-ui,sans-serif !i
   var started = false;
   function boot() {
     if (started) return; started = true;
-    fetch('/biosys-podglad/_app/component.html').then(function (r) { return r.text(); }).then(function (h) {
+    fetch('/biosys-podglad/_app/component.html?v=1f9a144c29').then(function (r) { return r.text(); }).then(function (h) {
       document.body.insertAdjacentHTML('beforeend', h);
       /* Runtime ma wbudowaną listę adresów CDN (unpkg.com) i pobierał stamtąd
          React przy każdej wizycie. Dawało to obcemu serwerowi adres IP każdego
